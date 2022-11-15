@@ -90,6 +90,9 @@
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(204, 0, 0)</string>
+   </property>
    <property name="text">
     <string>Estop</string>
    </property>

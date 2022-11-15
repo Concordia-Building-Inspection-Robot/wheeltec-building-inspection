@@ -90,4 +90,6 @@ if __name__ == '__main__':
     rospy.loginfo('Beginning to subscribe to "' + command_topic + '" topic')
     sub = rospy.Subscriber(command_topic, String, command_handler)
 
+    # TODO: enable two way communication back to UI to report status via publisher here
+
     main()
