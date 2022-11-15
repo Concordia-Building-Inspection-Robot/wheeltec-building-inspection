@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+import rospy
+
+from std_msgs.msg import String
+
 import multiprocessing
 import os
 
@@ -61,3 +65,29 @@ class RobotHandler():
         if self.currentState != RobotState.IDLE and self.rosLaunchThread is not None:
             self.rosLaunchThread.stop()
             self.currentState = RobotState.IDLE
+
+if __name__ == '__main__':
+    def main():
+        rospy.spin()
+
+    def command_handler(cmd):
+        if cmd == 'start_mapping':
+            robot_handler.start_mapping()
+        elif cmd == 'save_map':
+            robot_handler.save_map()
+        elif cmd == 'start_nav':
+            robot_handler.start_navigation()
+        elif cmd == 'stop_all':
+            robot_handler.stop_all()
+
+    robot_handler = RobotHandler()
+
+    node_name = 'robot_handler'
+    rospy.init_node(node_name, anonymous=False)  # only allow one node of this type
+    rospy.loginfo('Initialized "' + node_name + '" node for pub/sub/service functionality')
+
+    command_topic = '/robot_handler_cmd'
+    rospy.loginfo('Beginning to subscribe to "' + command_topic + '" topic')
+    sub = rospy.Subscriber(command_topic, String, command_handler)
+
+    main()
