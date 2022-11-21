@@ -1,50 +1,77 @@
 #!/usr/bin/env python
 
 import rospy
+import roslaunch
 
 from std_msgs.msg import String
 
-import multiprocessing
-import os
-
 class RobotState():
-    IDLE = 1
+    IDLE = 0
+    MANUAL_CONTROL = 1
     MAPPING = 2
     NAVIGATION = 3
-    SLAM = 4 # currently unused
+    MAPPING_AND_NAVIGATION = 4 # currently unused
 
 class RobotHandler():
     def __init__(self):
         self.currentState = RobotState.IDLE
-        self.rosLaunchThread = None
 
-    def run_launch_file(self, package, launch_file):
+        self.control_thread = None
+        self.save_map_thread = None
+        self.uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
+        roslaunch.configure_logging(self.uuid)
+
+        # Python doesn't like signals not being created in its main process, which some nodes under this launch file
+        # attempts to do in separate threads. We don't need to handle these signals ourselves here, so this resolves it.
+        # NOTE: this is pretty cursed but works for now lol
+        def dummy_function(): pass
+        roslaunch.pmon._init_signal_handlers = dummy_function
+
+    def run_launch_file(self, package, launch_file, is_saving_map=False):
         success = True
         try:
             print('start ' + launch_file)
 
-            self.rosLaunchThread = multiprocessing.Process(
-                target=lambda: os.system('roslaunch ' + package + ' ' + launch_file)
-            )
-            self.rosLaunchThread.start()
+            ros_thread = \
+                roslaunch.parent.ROSLaunchParent(self.uuid,
+                                                 roslaunch.rlutil.resolve_launch_arguments([package, launch_file]))
+
+            if is_saving_map:
+                self.save_map_thread = ros_thread
+                self.save_map_thread.start()
+            else:
+                self.control_thread = ros_thread
+                self.control_thread.start()
+
         except():
             print('exception occurred running ' + launch_file)
             success = False
 
         return success
 
+    def start_manual_control(self):
+        if self.currentState == RobotState.IDLE:
+            success = self.run_launch_file('turn_on_wheeltec_robot', 'turn_on_wheeltec_robot.launch')
+            if success:
+                self.currentState = RobotState.MAPPING
+                print('successfully started manual control')
+        else:
+            # TODO: Display pop-up telling user that robot must be idle to start mapping
+            print('')
+
     def start_mapping(self):
-        if (self.currentState == RobotState.IDLE):
+        if self.currentState == RobotState.IDLE:
             success = self.run_launch_file('turn_on_wheeltec_robot', 'mapping.launch')
             if success:
                 self.currentState = RobotState.MAPPING
+                print('successfully started mapping')
         else:
             # TODO: Display pop-up telling user that robot must be idle to start mapping
             print('')
 
     def save_map(self):
-        if (self.currentState == RobotState.Mapping):
-            success = self.run_launch_file('turn_on_wheeltec_robot', 'map_saver.launch')
+        if self.currentState == RobotState.MAPPING:
+            success = self.run_launch_file('turn_on_wheeltec_robot', 'map_saver.launch', True)
             if success:
                 # TODO: Display pop-up telling user that map was saved
                 print('successfully saved map')
@@ -53,31 +80,36 @@ class RobotHandler():
             print('')
 
     def start_navigation(self):
-        if (self.currentState == RobotState.IDLE):
+        if self.currentState == RobotState.IDLE:
             success = self.run_launch_file('turn_on_wheeltec_robot', 'navigation.launch')
             if success:
                 self.currentState = RobotState.NAVIGATION
+                print('successfully started navigation')
         else:
             # TODO: Display pop-up telling user that robot must be idle to start navigation
             print('')
 
     def stop_all(self):
-        if self.currentState != RobotState.IDLE and self.rosLaunchThread is not None:
-            self.rosLaunchThread.stop()
+        if self.currentState != RobotState.IDLE and self.control_thread is not None:
+            self.control_thread.shutdown()
             self.currentState = RobotState.IDLE
+
+        print('STOP')
 
 if __name__ == '__main__':
     def main():
         rospy.spin()
 
     def command_handler(cmd):
-        if cmd == 'start_mapping':
+        if cmd.data == 'start_manual_control':
+            robot_handler.start_manual_control()
+        elif cmd.data == 'start_mapping':
             robot_handler.start_mapping()
-        elif cmd == 'save_map':
+        elif cmd.data == 'save_map':
             robot_handler.save_map()
-        elif cmd == 'start_nav':
+        elif cmd.data == 'start_nav':
             robot_handler.start_navigation()
-        elif cmd == 'stop_all':
+        elif cmd.data == 'stop_all':
             robot_handler.stop_all()
 
     robot_handler = RobotHandler()

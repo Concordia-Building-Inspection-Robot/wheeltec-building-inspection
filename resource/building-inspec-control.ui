@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>394</width>
-    <height>300</height>
+    <width>203</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>50</y>
-     <width>351</width>
+     <y>120</y>
+     <width>161</width>
      <height>31</height>
     </rect>
    </property>
@@ -30,8 +30,8 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>170</y>
-     <width>351</width>
+     <y>240</y>
+     <width>161</width>
      <height>31</height>
     </rect>
    </property>
@@ -43,8 +43,8 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>90</y>
-     <width>351</width>
+     <y>160</y>
+     <width>161</width>
      <height>31</height>
     </rect>
    </property>
@@ -55,8 +55,8 @@
   <widget class="QLabel" name="MapLabel">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>20</y>
+     <x>40</x>
+     <y>90</y>
      <width>121</width>
      <height>17</height>
     </rect>
@@ -68,8 +68,8 @@
   <widget class="QLabel" name="NavLabel">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>140</y>
+     <x>60</x>
+     <y>210</y>
      <width>81</width>
      <height>17</height>
     </rect>
@@ -82,8 +82,8 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>210</y>
-     <width>351</width>
+     <y>280</y>
+     <width>161</width>
      <height>31</height>
     </rect>
    </property>
@@ -94,7 +94,33 @@
     <string notr="true">background-color: rgb(204, 0, 0)</string>
    </property>
    <property name="text">
-    <string>Estop</string>
+    <string>Stop Operation</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="TeleopLabel">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>10</y>
+     <width>101</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Teleoperation</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="StartManualControl">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>40</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Start Manual Control</string>
    </property>
   </widget>
  </widget>

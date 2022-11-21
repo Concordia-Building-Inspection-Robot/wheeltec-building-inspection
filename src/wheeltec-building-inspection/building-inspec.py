@@ -50,11 +50,28 @@ class NavControl(Plugin):
          # Add widget to the user interface
          context.add_widget(self._widget)
 
+         # TODO: Use loop to create handlers
+         # controlCommands = [{'button_name': 'StartManualControl', 'command': 'start_manual_control'},
+         #                    {'button_name': 'StartMapping', 'command': 'start_mapping'},
+         #                    {'button_name': 'SaveMap', 'command': 'save_map'},
+         #                    {'button_name': 'StartNav', 'command': 'start_nav'},
+         #                    {'button_name': 'StopAll', 'command':'stop_all'}]
+
          # Event handlers for buttons
-         self._widget.findChild(QPushButton, 'StartMapping').clicked.connect(lambda: self.robotHandlerCommandPub.publish('start_mapping'))
-         self._widget.findChild(QPushButton, 'SaveMap').clicked.connect(lambda: self.robotHandlerCommandPub.publish('save_map'))
-         self._widget.findChild(QPushButton, 'StartNav').clicked.connect(lambda: self.robotHandlerCommandPub.publish('start_nav'))
-         self._widget.findChild(QPushButton, 'StopAll').clicked.connect(lambda: self.robotHandlerCommandPub.publish('stop_all'))
+         self._widget.findChild(QPushButton, 'StartManualControl').clicked.connect(
+             lambda: self.robotHandlerCommandPub.publish('start_manual_control'))
+
+         self._widget.findChild(QPushButton, 'StartMapping').clicked.connect(
+             lambda: self.robotHandlerCommandPub.publish('start_mapping'))
+
+         self._widget.findChild(QPushButton, 'SaveMap').clicked.connect(
+             lambda: self.robotHandlerCommandPub.publish('save_map'))
+
+         self._widget.findChild(QPushButton, 'StartNav').clicked.connect(
+             lambda: self.robotHandlerCommandPub.publish('start_nav'))
+
+         self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
+             lambda: self.robotHandlerCommandPub.publish('stop_all'))
  
      def shutdown_plugin(self):
          # TODO unregister all publishers here
