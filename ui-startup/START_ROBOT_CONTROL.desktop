@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=ROBOT-CONTROL
+Icon=folder
+Exec=/home/concordia/catkin_ws/src/wheeltec-building-inspection/ui-startup/run_rqt_gui.sh
