@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=root
 Type=simple
-ExecStart=/home/concordia/catkin_ws/src/wheeltec-building-inspection/robot_handler_startup/run_start_robot_handler.sh
+ExecStart=/home/wheeltec/catkin_workspace/src/wheeltec-building-inspection/robot_handler_startup/run_start_robot_handler.sh
 
 [Install]
 WantedBy=multi-user.target
