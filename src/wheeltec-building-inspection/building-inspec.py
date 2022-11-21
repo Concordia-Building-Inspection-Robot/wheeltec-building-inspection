@@ -4,7 +4,7 @@ import rospkg
 
 from std_msgs.msg import String
 
-from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QPushButton, QListWidget
 
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
@@ -18,6 +18,9 @@ class NavControl(Plugin):
 
          # Register publishers
          self.robotHandlerCommandPub = rospy.Publisher('robot_handler_cmd', String, queue_size=10)
+
+         # Register subscribers
+         self.robotHandlerStatusSub = rospy.Subscriber('robot_handler_status', String, self.add_to_log_console)
 
         # Likely don't need
          # # Process standalone plugin command-line arguments
@@ -72,6 +75,11 @@ class NavControl(Plugin):
 
          self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
              lambda: self.robotHandlerCommandPub.publish('stop_all'))
+
+         ## Handle log console
+         self.log_console = self._widget.findChild(QListWidget, 'LogConsole')
+
+
  
      def shutdown_plugin(self):
          # TODO unregister all publishers here
@@ -92,4 +100,6 @@ class NavControl(Plugin):
          # This will enable a setting button (gear icon) in each dock widget title bar
          # Usually used to open a modal configuration dialog
 
+     def add_to_log_console(self, log_message):
+         self.log_console.addItems([log_message.data])
 

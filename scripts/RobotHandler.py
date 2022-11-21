@@ -21,6 +21,9 @@ class RobotHandler():
         self.uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(self.uuid)
 
+        # Register publishers
+        self.robotHandlerCommandPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
+
         # Python doesn't like signals not being created in its main process, which some nodes under this launch file
         # attempts to do in separate threads. We don't need to handle these signals ourselves here, so this resolves it.
         # NOTE: this is pretty cursed but works for now lol
@@ -30,7 +33,7 @@ class RobotHandler():
     def run_launch_file(self, package, launch_file, is_saving_map=False):
         success = True
         try:
-            print('start ' + launch_file)
+            self.robotHandlerCommandPub.publish('start ' + launch_file)
 
             ros_thread = \
                 roslaunch.parent.ROSLaunchParent(self.uuid,
@@ -44,7 +47,7 @@ class RobotHandler():
                 self.control_thread.start()
 
         except():
-            print('exception occurred running ' + launch_file)
+            self.robotHandlerCommandPub.publish('exception occurred running ' + launch_file)
             success = False
 
         return success
@@ -54,47 +57,42 @@ class RobotHandler():
             success = self.run_launch_file('turn_on_wheeltec_robot', 'turn_on_wheeltec_robot.launch')
             if success:
                 self.currentState = RobotState.MAPPING
-                print('successfully started manual control')
+                self.robotHandlerCommandPub.publish('successfully started manual control')
         else:
-            # TODO: Display pop-up telling user that robot must be idle to start mapping
-            print('')
+            self.robotHandlerCommandPub.publish('robot must be idle to start manual teleop!')
 
     def start_mapping(self):
         if self.currentState == RobotState.IDLE:
             success = self.run_launch_file('turn_on_wheeltec_robot', 'mapping.launch')
             if success:
                 self.currentState = RobotState.MAPPING
-                print('successfully started mapping')
+                self.robotHandlerCommandPub.publish('successfully started mapping')
         else:
-            # TODO: Display pop-up telling user that robot must be idle to start mapping
-            print('')
+            self.robotHandlerCommandPub.publish('robot must be idle to start mapping!')
 
     def save_map(self):
         if self.currentState == RobotState.MAPPING:
             success = self.run_launch_file('turn_on_wheeltec_robot', 'map_saver.launch', True)
             if success:
-                # TODO: Display pop-up telling user that map was saved
-                print('successfully saved map')
+                self.robotHandlerCommandPub.publish('successfully saved map')
         else:
-            # TODO: Display pop-up telling user that map cannot be saved without mapping running
-            print('')
+            self.robotHandlerCommandPub.publish('Mapping must be running in order to save map!')
 
     def start_navigation(self):
         if self.currentState == RobotState.IDLE:
             success = self.run_launch_file('turn_on_wheeltec_robot', 'navigation.launch')
             if success:
                 self.currentState = RobotState.NAVIGATION
-                print('successfully started navigation')
+                self.robotHandlerCommandPub.publish('successfully started navigation')
         else:
-            # TODO: Display pop-up telling user that robot must be idle to start navigation
-            print('')
+            self.robotHandlerCommandPub.publish('robot must be idle to start navigation!')
 
     def stop_all(self):
         if self.currentState != RobotState.IDLE and self.control_thread is not None:
             self.control_thread.shutdown()
             self.currentState = RobotState.IDLE
 
-        print('STOP')
+        self.robotHandlerCommandPub.publish('STOP')
 
 if __name__ == '__main__':
     def main():
