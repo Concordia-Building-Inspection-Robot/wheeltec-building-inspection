@@ -5,6 +5,14 @@ For more detail on the sensors are used, view [2d-slam-sensors.md](docs/2d-slam-
 
 # UI
 ## Start UI
+Before starting the UI please ensure that the WheelTec robot is powered on and the operator PC
+is connected to the wheeltec robot's WIFI hotspot. 
+\
+\
+If commiuncation with the WheelTec robot fails
+an error will appear telling the operator that it failed to connect to "ROS Master".
+\
+\
 You can run the UI either by searching for "ROBOT-CONTROL" in the application search bar.
 Or by running the icon on the desktop.
 ![img.png](docs/res/ui-guide/screenshot-desktop-icon.png)
@@ -55,3 +63,13 @@ On the very bottom is the status display.
 
 #### Navigation
 - ''
+
+### General
+### Save map during mapping
+In a separate terminal session than where mapping is running
+- `roslaunch turn_on_wheeltec_robot map_saver.launch`
+
+### Manual teleop via keyboard
+In two separate terminal sessions:
+- `roslaunch turn_on_wheeltec_robot turn_on_wheeltec_robot.launch`
+- `rosrun teleop_twist_keyboard teleop_twist_keyboard.py`
