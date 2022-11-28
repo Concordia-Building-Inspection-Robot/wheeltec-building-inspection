@@ -87,6 +87,16 @@ class RobotHandler():
         else:
             self.robotHandlerCommandPub.publish('robot must be idle to start navigation!')
 
+    def cap_lidar_pointcloud(self):
+        if self.currentState != RobotState.IDLE:
+            # success = self.run_launch_file('turn_on_wheeltec_robot', 'navigation.launch')
+            # if success:
+            #     self.currentState = RobotState.NAVIGATION
+            #     self.robotHandlerCommandPub.publish('successfully started navigation')
+            self.robotHandlerCommandPub.publish('unimplemented!')
+        else:
+            self.robotHandlerCommandPub.publish('robot must be idle to start navigation!')
+
     def stop_all(self):
         if self.currentState != RobotState.IDLE and self.control_thread is not None:
             self.control_thread.shutdown()
@@ -107,6 +117,8 @@ if __name__ == '__main__':
             robot_handler.save_map()
         elif cmd.data == 'start_nav':
             robot_handler.start_navigation()
+        elif cmd.data == 'cap_lidar_pointcloud':
+            robot_handler.cap_lidar_pointcloud()
         elif cmd.data == 'stop_all':
             robot_handler.stop_all()
 
@@ -119,7 +131,5 @@ if __name__ == '__main__':
     command_topic = '/robot_handler_cmd'
     rospy.loginfo('Beginning to subscribe to "' + command_topic + '" topic')
     sub = rospy.Subscriber(command_topic, String, command_handler)
-
-    # TODO: enable two way communication back to UI to report status via publisher here
 
     main()
