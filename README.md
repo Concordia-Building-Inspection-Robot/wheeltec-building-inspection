@@ -29,7 +29,12 @@ any of the three state of operations)
 Currently the UI only allows for control using 2D mapping and navigation.
 
 ### Manual teleop control
-Allowing for manual robot control through UI. W, S, A, D keys can be used for driving.
+Allowing for manual robot control through UI. W, S, A, D and spacebar keys can be used for driving as follows:
+* W - Drive forwards
+* D - Drive backwards
+* A - Rotate to left
+* D - Rotate to right
+* Spacebar - Stop movement
 
 ### Mapping
 Maps the environment around the robot while the operator manually controls it.
