@@ -14,7 +14,8 @@ being connected to the network hotspot of the Wheeltec robot.
 ### Troubleshooting Internet Issues With Dual Adapter Setup
 Sometimes on wake or startup of the PC it fails to connect to the internet. If this happens it is likely due to an issue with the
 networking route table. Where it's attempting to route DNS connections through connection to the Wheeltec robot instead of the
-Concordia University WIFI network. 
+Concordia University WIFI network. This can be confirmed by using the `sudo route` command and seeing if the gateway of the default
+destination is "wheeltec" or "192.168.0.100".
 \
 \
 If this happens, simply run the following command: `sudo route del default`. 
