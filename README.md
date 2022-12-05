@@ -1,7 +1,23 @@
 # Architecture
-## 2D mapping
+## 2D mapping ROS graph
 ![2d slam graph](./docs/res/2d-mapping-node-graph.svg)
-For more detail on the sensors are used, view [2d-slam-sensors.md](docs/2d-slam-sensors.md).
+
+## Sensors
+
+
+# Lab PC Info
+## Networking
+The laptop is fitted with both its internal WIFI network adapter along with an external USB WIFI adapter. Both are used 
+simultaneously. With the internal adapter connected to the Concordia University network for internet access and the external
+being connected to the network hotspot of the Wheeltec robot.
+\
+\
+The vendor and project IDs for the external USB WIFI adapter are 0b05 184c respectively. This adapter is an 
+ASUSTek Computer 802.11ac NIC. 
+\
+\
+The driver installed for the device to be functional on Ubuntu 18.04 was an updated driver for rtl88x2bu. Which can be found
+[here](https://github.com/cilynx/rtl88x2bu). It was installed using the deploy.sh script localed in the repository.
 
 # UI
 ## Start UI
