@@ -10,8 +10,19 @@
 The laptop is fitted with both its internal WIFI network adapter along with an external USB WIFI adapter. Both are used 
 simultaneously. With the internal adapter connected to the Concordia University network for internet access and the external
 being connected to the network hotspot of the Wheeltec robot.
+
+### Troubleshooting Internet Issues With Dual Adapter Setup
+Sometimes on wake or startup of the PC it fails to connect to the internet. If this happens it is likely due to an issue with the
+networking route table. Where it's attempting to route DNS connections through connection to the Wheeltec robot instead of the
+Concordia University WIFI network. 
 \
 \
+If this happens, simply run the following command: `sudo route del default`. 
+\
+This should remove the
+incorrect routing being used and make the PC use the proper one instead.
+
+### External Adapter Info
 The vendor and project IDs for the external USB WIFI adapter are 0b05 184c respectively. This adapter is an 
 ASUSTek Computer 802.11ac NIC. 
 \
