@@ -2,8 +2,52 @@
 ## 2D mapping ROS graph
 ![2d slam graph](./docs/res/2d-mapping-node-graph.svg)
 
-## Sensors
+## Sensors Feedback Usage
+### Wheel Odometry
+Wheel odometry is published to /odom from the Wheeltec robot.
+\
+\
+Wheel odometry is a method of estimating the movement of a mobile robot by measuring the rotations of its wheels. 
+It works by using sensors, such as encoders or tachometers, to measure the rotations of the robot's wheels and then 
+using this information to calculate the distance and direction that the robot has moved.
+\
+\
+it is also prone to errors and drift over time, so it must be used in combination with other sensors and algorithms to 
+provide accurate pose estimates.
 
+### IMU
+There is an IMU built in the Wheeltec robot and it is published to /imu .
+\
+\
+IMU (inertial measurement unit) and wheel odometry are often used together in order to provide accurate pose estimates 
+for a mobile robot. An IMU is a sensor that measures the linear and angular accelerations of a moving body, using a 
+combination of accelerometers, gyroscopes, and sometimes magnetometers. It can be used to estimate the robot's orientation 
+and linear velocity, but it is subject to errors and drift over time.
+\
+\
+To combine the measurements from an IMU and wheel odometry, a sensor fusion algorithm is used. The sensor fusion algorithm
+used here is a Kalman filter.
+\
+\
+[Kalman filters](https://en.wikipedia.org/wiki/Kalman_filter) use the measurements from each sensor as well as a model of the robot's dynamics to predict the robot's 
+pose, and then it updates the prediction based on the new measurements as they arrive.
+
+### LiDAR
+The LiDAR installed on the Wheeltec robot is the result of a cooperation between Wheeltec and LSLiDAR. It is part of the 
+N10 series, a high-performance single-line mechanical TOF LiDAR. Which means it is only capable of 2D mapping on its own.
+Its output is published to /scan.
+\
+\
+The LiDAR is used to build a map of its surroundings and estimate its own pose (i.e., its position and orientation) 
+in the environment.
+
+### Depth Sensing Camera
+The depth sensing camera installed on the Wheeltec robot is the ASTRA PRO PLUS. 
+\
+\
+The camera is used in a similar way to the LiDAR, it builds a map of its surroundings and estimate its own pose in the 
+environment. The depth sensing camera can generate a point cloud, which is a 3D representation of the environment.
+It is capable of 3D mapping unlike the 2D LiDAR used.
 
 # Lab PC Info
 ## Networking
@@ -20,8 +64,7 @@ destination is "wheeltec" or "192.168.0.100".
 \
 If this happens, simply run the following command: `sudo route del default`. 
 \
-This should remove the
-incorrect routing being used and make the PC use the proper one instead.
+This should remove the incorrect routing being used and make the PC use the proper one instead.
 
 ### External Adapter Info
 The vendor and project IDs for the external USB WIFI adapter are 0b05 184c respectively. This adapter is an 
@@ -47,11 +90,14 @@ Or by running the icon on the desktop.
 
 The UI for controlling the robot should look something like the following below.
 ![img.png](docs/res/ui-guide/screenshot-ui-display.png)
+If it doesn't have all or none of the components on the screen, it may because you need to load the perspective for it in RQT.
+You can do this by selecting the "Perspectives" option on the top and selecting the "wheeltec" option.
+
 
 ## UI Use
-The main operation control UI is the component on the right. There are currently three states of operation within the UI: Manual teleop, Mapping and 
-Navigation. Each of them can only be run while the robot is in its idle state. (not currently in 
-any of the three state of operations)
+The UI uses RQT. The main operation control UI is the component on the right. There are currently three states of operation 
+within the UI: Manual teleop, Mapping and Navigation. Each of them can only be run while the robot is in its idle state. 
+(not currently in any of the three state of operations)
 \
 \
 Currently the UI only allows for control using 2D mapping and navigation.
