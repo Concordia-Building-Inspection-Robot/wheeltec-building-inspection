@@ -14,7 +14,7 @@
 #include <pcl_conversions/pcl_conversions.h>
 #include <tf/transform_listener.h>
 
-ros::Publisher pub
+ros::Publisher pub;
 
 laser_geometry::LaserProjection projector;
 tf::TransformListener listener;
@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
   ros::NodeHandle nh;
 
   // Create a publisher for the PointCloud2 message
-  pub = &nh.advertise<sensor_msgs::PointCloud2>("cloud", 1);
+  pub = nh.advertise<sensor_msgs::PointCloud2>("cloud", 1);
 
   // Create subscribers for the two topics
   message_filters::Subscriber<sensor_msgs::LaserScan> depthCameraSub(nh, "topic1", 1);
