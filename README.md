@@ -74,6 +74,17 @@ ASUSTek Computer 802.11ac NIC.
 The driver installed for the device to be functional on Ubuntu 18.04 was an updated driver for rtl88x2bu. Which can be found
 [here](https://github.com/cilynx/rtl88x2bu). It was installed using the deploy.sh script localed in the repository.
 
+# Wheeltec Robot Info
+## Basic Use
+You can remotely access a terminal shell session using the following command:
+- `ssh wheeltec@wheeltec` The first "wheeltec" is the username, the second is the hostname for 192.168.0.10
+\
+\
+To remotely update the UI and other in house packages on board you can use:
+- `scp -r src/wheeltec-building-inspection/ wheeltec@wheeltec:catkin_workspace/src/`
+\
+There is currently no setup for the robot to have its own network access.
+
 # UI
 ## Start UI
 Before starting the UI please ensure that the WheelTec robot is powered on and the operator PC

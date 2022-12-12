@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="wheeltec-building-inspection-ui" type="RobotHandler.py" name="robot_handler" output="screen"/>
+</launch>

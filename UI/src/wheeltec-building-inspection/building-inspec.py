@@ -24,7 +24,7 @@ class NavControl(Plugin):
  
          # Create QWidget
          self._widget = QWidget()
-         ui_file = os.path.join(rospkg.RosPack().get_path('wheeltec-building-inspection'), 'resource', 'building-inspec-control.ui')
+         ui_file = os.path.join(rospkg.RosPack().get_path('wheeltec-building-inspection-ui'), 'resource', 'building-inspec-control.ui')
          loadUi(ui_file, self._widget)
          self._widget.setObjectName('NavControlUi')
 
