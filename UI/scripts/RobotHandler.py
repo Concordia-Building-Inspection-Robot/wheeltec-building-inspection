@@ -7,10 +7,11 @@ from std_msgs.msg import String
 
 class RobotState():
     IDLE = 0
-    MANUAL_CONTROL = 1
-    MAPPING = 2
-    NAVIGATION = 3
-    MAPPING_AND_NAVIGATION = 4 # currently unused
+    NORMAL_SLAM = 1
+    MANUAL_CONTROL = 2
+    MAPPING = 3
+    NAVIGATION = 4
+    MAPPING_AND_NAVIGATION = 5 # currently unused
 
 class RobotHandler():
     def __init__(self):
@@ -51,12 +52,19 @@ class RobotHandler():
             success = False
 
         return success
-
+    def start_normal_slam(self):
+        if self.currentState == RobotState.IDLE:
+            success = self.run_launch_file('turn_on_wheeltec_robot', 'rrt_slam.launch')
+            if success:
+                self.currentState = RobotState.NORMAL_SLAM
+                self.robotHandlerCommandPub.publish('successfully started SLAM')
+        else:
+            self.robotHandlerCommandPub.publish('robot must be idle to start SLAM!')
     def start_manual_control(self):
         if self.currentState == RobotState.IDLE:
             success = self.run_launch_file('turn_on_wheeltec_robot', 'turn_on_wheeltec_robot.launch')
             if success:
-                self.currentState = RobotState.MAPPING
+                self.currentState = RobotState.MANUAL_CONTROL
                 self.robotHandlerCommandPub.publish('successfully started manual control')
         else:
             self.robotHandlerCommandPub.publish('robot must be idle to start manual teleop!')
@@ -99,7 +107,9 @@ if __name__ == '__main__':
         rospy.spin()
 
     def command_handler(cmd):
-        if cmd.data == 'start_manual_control':
+        if cmd.data == 'start_normal_slam':
+            robot_handler.start_normal_slam()
+        elif cmd.data == 'start_manual_control':
             robot_handler.start_manual_control()
         elif cmd.data == 'start_mapping':
             robot_handler.start_mapping()

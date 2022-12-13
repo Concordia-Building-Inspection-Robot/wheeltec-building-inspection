@@ -39,7 +39,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Start Manual Control</string>
+      <string>Start Normal SLAM</string>
      </property>
     </widget>
     <widget class="QPushButton" name="SaveMap">
@@ -84,14 +84,14 @@
     <widget class="QLabel" name="TeleopLabel">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>80</x>
        <y>10</y>
-       <width>101</width>
+       <width>41</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>Teleoperation</string>
+      <string>SLAM</string>
      </property>
     </widget>
     <widget class="QLabel" name="MapLabel">
@@ -168,7 +168,7 @@
     <rect>
      <x>20</x>
      <y>350</y>
-     <width>161</width>
+     <width>71</width>
      <height>31</height>
     </rect>
    </property>
@@ -179,7 +179,7 @@
     <string notr="true">background-color: rgb(204, 0, 0)</string>
    </property>
    <property name="text">
-    <string>Stop Operation</string>
+    <string>STOP OP</string>
    </property>
   </widget>
   <widget class="QLabel" name="MiscLabel">
@@ -193,6 +193,25 @@
    </property>
    <property name="text">
     <string>Misc</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="StopAll_2">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>350</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 121, 0)</string>
+   </property>
+   <property name="text">
+    <string>HALT</string>
    </property>
   </widget>
  </widget>

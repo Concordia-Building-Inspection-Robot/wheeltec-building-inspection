@@ -42,8 +42,11 @@ class NavControl(Plugin):
 
          # Event handlers for buttons
          # NavControl Tab
-         self._widget.findChild(QPushButton, 'StartManualControl').clicked.connect(
-             lambda: self.robotHandlerCommandPub.publish('start_manual_control'))
+         # self._widget.findChild(QPushButton, 'StartManualControl').clicked.connect(
+         #     lambda: self.robotHandlerCommandPub.publish('start_manual_control'))
+
+         self._widget.findChild(QPushButton, 'StartNormalSlam').clicked.connect(
+             lambda: self.robotHandlerCommandPub.publish('start_normal_slam'))
 
          self._widget.findChild(QPushButton, 'StartMapping').clicked.connect(
              lambda: self.robotHandlerCommandPub.publish('start_mapping'))
