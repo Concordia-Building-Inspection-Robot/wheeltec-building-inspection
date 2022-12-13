@@ -1,0 +1,8 @@
+<launch>
+  <arg name="device_name" default="imu" />
+  <arg name="data_topic" default="imu" />
+  <arg name="save_directory" default="/home/wheeltec/data_collection/$(arg device_name)" />
+
+  <include file="$(find data_collection)/launch/include/start_collection.launch" pass_all_args="true" />
+
+</launch>

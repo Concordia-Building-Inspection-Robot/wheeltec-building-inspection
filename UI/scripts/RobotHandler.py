@@ -2,7 +2,6 @@
 
 import rospy
 import roslaunch
-from utils.SubProcessManager import *
 
 from std_msgs.msg import String
 
@@ -12,14 +11,20 @@ class RobotState():
     MANUAL_CONTROL = 2
     MAPPING = 3
     NAVIGATION = 4
-    MAPPING_AND_NAVIGATION = 5 # currently unused
+
+class DataCollectionState():
+    IDLE = 0
+    RAW_LIDAR_COLLECTION = 1
 
 class RobotHandler():
     def __init__(self):
         self.currentState = RobotState.IDLE
+        self.currentCollectionState = DataCollectionState.IDLE
 
+        # ROS launch thread control
         self.control_thread = None
         self.save_map_thread = None
+        self.data_collection_thread = None
         self.uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(self.uuid)
 
@@ -32,7 +37,7 @@ class RobotHandler():
         def dummy_function(): pass
         roslaunch.pmon._init_signal_handlers = dummy_function
 
-    def run_launch_file(self, package, launch_file, is_saving_map=False):
+    def run_launch_file(self, package, launch_file, mode='control'):
         success = True
         try:
             self.robotHandlerCommandPub.publish('start ' + launch_file)
@@ -41,12 +46,16 @@ class RobotHandler():
                 roslaunch.parent.ROSLaunchParent(self.uuid,
                                                  roslaunch.rlutil.resolve_launch_arguments([package, launch_file]))
 
-            if is_saving_map:
-                self.save_map_thread = ros_thread
-                self.save_map_thread.start()
-            else:
+            if mode == 'control':
                 self.control_thread = ros_thread
                 self.control_thread.start()
+            elif mode == 'save_map':
+                self.save_map_thread = ros_thread
+                self.save_map_thread.start()
+            elif mode == 'data_collection':
+                self.data_collection_thread = ros_thread
+                self.data_collection_thread.start()
+
 
         except():
             self.robotHandlerCommandPub.publish('exception occurred running ' + launch_file)
@@ -81,7 +90,7 @@ class RobotHandler():
 
     def save_map(self):
         if self.currentState == RobotState.MAPPING:
-            success = self.run_launch_file('turn_on_wheeltec_robot', 'map_saver.launch', True)
+            success = self.run_launch_file('turn_on_wheeltec_robot', 'map_saver.launch', "save_map")
             if success:
                 self.robotHandlerCommandPub.publish('successfully saved map')
         else:
@@ -103,23 +112,49 @@ class RobotHandler():
 
         self.robotHandlerCommandPub.publish('STOP')
 
+    def start_lidar_collection(self):
+        if self.currentCollectionState == DataCollectionState.IDLE:
+            success = self.run_launch_file('data_collection', 'lidar_collection.launch', "data_collection")
+            if success:
+                self.currentCollectionState = DataCollectionState.RAW_LIDAR_COLLECTION
+                self.robotHandlerCommandPub.publish('successfully started data collection for lidar')
+        else:
+            self.robotHandlerCommandPub.publish('There must be no other collection and lidar data must be publishing!')
+
+    def stop_lidar_collection(self):
+        if self.currentCollectionState != DataCollectionState.IDLE and self.data_collection_thread is not None:
+            self.data_collection_thread.shutdown()
+            self.currentCollectionState = RobotState.IDLE
+
+        self.robotHandlerCommandPub.publish('Stop data collection')
+
 if __name__ == '__main__':
     def main():
         rospy.spin()
 
     def command_handler(cmd):
-        if cmd.data == 'start_normal_slam':
+        # Split command
+        cmd = cmd.split(" ")
+
+        # Robot operations
+        if cmd[0].data == 'start_normal_slam':
             robot_handler.start_normal_slam()
-        elif cmd.data == 'start_manual_control':
+        elif cmd[0].data == 'start_manual_control':
             robot_handler.start_manual_control()
-        elif cmd.data == 'start_mapping':
+        elif cmd[0].data == 'start_mapping':
             robot_handler.start_mapping()
-        elif cmd.data == 'save_map':
+        elif cmd[0].data == 'save_map':
             robot_handler.save_map()
-        elif cmd.data == 'start_nav':
+        elif cmd[0].data == 'start_nav':
             robot_handler.start_navigation()
-        elif cmd.data == 'stop_all':
+        elif cmd[0].data == 'stop_all':
             robot_handler.stop_all()
+
+        # Data collection
+        elif cmd[0].data == 'start_lidar_collection':
+            robot_handler.start_lidar_collection()
+        elif cmd[0].data == 'stop_lidar_collection':
+            robot_handler.stop_lidar_collection()
 
     robot_handler = RobotHandler()
 
