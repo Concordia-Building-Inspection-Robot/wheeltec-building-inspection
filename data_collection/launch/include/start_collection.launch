@@ -1,7 +1,7 @@
 <launch>
   <arg name="device_name" default="imu" />
   <arg name="data_topic" default="imu" />
-  <arg name="save_directory" default="/home/wheeltec/data_collection/$(arg device_name)" />
+  <arg name="save_directory" default="$(arg home_directory)/data_collection/$(arg device_name)" />
 
   <node pkg="rosbag" type="record" name="rosbag_collect_$(arg device_name)"
        args="record -o $(arg save_directory)/$(arg device_name) /$(arg data_topic)"/>

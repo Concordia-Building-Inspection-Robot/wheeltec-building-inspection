@@ -1,0 +1,11 @@
+<launch>
+  <arg name="home_directory" default="/home/wheeltec" />
+
+  <arg name="device_name" default="imu" />
+  <arg name="file_name" />
+  <arg name="save_directory" default="$(arg home_directory)/data_collection/$(arg device_name)" />
+
+  <node pkg="rosbag" type="record" name="rosbag_play_$(arg device_name)"
+       args="play $(arg save_directory)/$(arg device_name)/$(arg file_name)"/>
+
+</launch>

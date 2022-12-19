@@ -112,21 +112,19 @@ class RobotHandler():
 
         self.robotHandlerCommandPub.publish('STOP')
 
-    def start_lidar_collection(self):
+    def toggle_collection(self, device):
         if self.currentCollectionState == DataCollectionState.IDLE:
-            success = self.run_launch_file('data_collection', 'lidar_collection.launch', "data_collection")
+            success = self.run_launch_file('data_collection', device + '_collection.launch', "data_collection")
             if success:
                 self.currentCollectionState = DataCollectionState.RAW_LIDAR_COLLECTION
                 self.robotHandlerCommandPub.publish('successfully started data collection for lidar')
         else:
-            self.robotHandlerCommandPub.publish('There must be no other collection and lidar data must be publishing!')
+            if self.currentCollectionState != DataCollectionState.IDLE and self.data_collection_thread is not None:
+                self.data_collection_thread.shutdown()
+                self.currentCollectionState = DataCollectionState.IDLE
 
-    def stop_lidar_collection(self):
-        if self.currentCollectionState != DataCollectionState.IDLE and self.data_collection_thread is not None:
-            self.data_collection_thread.shutdown()
-            self.currentCollectionState = RobotState.IDLE
+            self.robotHandlerCommandPub.publish('Stop data collection')
 
-        self.robotHandlerCommandPub.publish('Stop data collection')
 
 if __name__ == '__main__':
     def main():
@@ -134,27 +132,25 @@ if __name__ == '__main__':
 
     def command_handler(cmd):
         # Split command
-        cmd = cmd.split(" ")
+        cmd = cmd.data.split(" ")
 
         # Robot operations
-        if cmd[0].data == 'start_normal_slam':
+        if cmd[0] == 'start_normal_slam':
             robot_handler.start_normal_slam()
-        elif cmd[0].data == 'start_manual_control':
+        elif cmd[0] == 'start_manual_control':
             robot_handler.start_manual_control()
-        elif cmd[0].data == 'start_mapping':
+        elif cmd[0] == 'start_mapping':
             robot_handler.start_mapping()
-        elif cmd[0].data == 'save_map':
+        elif cmd[0] == 'save_map':
             robot_handler.save_map()
-        elif cmd[0].data == 'start_nav':
+        elif cmd[0] == 'start_nav':
             robot_handler.start_navigation()
-        elif cmd[0].data == 'stop_all':
+        elif cmd[0] == 'stop_all':
             robot_handler.stop_all()
 
         # Data collection
-        elif cmd[0].data == 'start_lidar_collection':
-            robot_handler.start_lidar_collection()
-        elif cmd[0].data == 'stop_lidar_collection':
-            robot_handler.stop_lidar_collection()
+        elif cmd[0] == 'toggle_collection':
+            robot_handler.toggle_collection(cmd[1])
 
     robot_handler = RobotHandler()
 

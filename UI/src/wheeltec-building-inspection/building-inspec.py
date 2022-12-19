@@ -4,7 +4,7 @@ import rospkg
 
 from std_msgs.msg import String
 
-from PyQt5.QtWidgets import QPushButton, QListWidget
+from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox
 
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
@@ -58,8 +58,11 @@ class NavControl(Plugin):
              lambda: self.robotHandlerCommandPub.publish('start_nav'))
 
          # Data Cap Tab
-         self._widget.findChild(QPushButton, 'CapLidarPointCloud').clicked.connect(
-             lambda: self.robotHandlerCommandPub.publish('cap_lidar_pointcloud'))
+         device_selection = self._widget.findChild(QComboBox, 'selectDeviceBox')
+         device_selection.addItem('lidar')
+
+         self._widget.findChild(QPushButton, 'ToggleCollectionButton').clicked.connect(
+             lambda: self.robotHandlerCommandPub.publish('toggle_collection ' + device_selection.currentText()))
 
          # General
          self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
