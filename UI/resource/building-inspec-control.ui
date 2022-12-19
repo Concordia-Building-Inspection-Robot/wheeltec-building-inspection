@@ -177,16 +177,6 @@
       <string>Playback</string>
      </property>
     </widget>
-    <widget class="QListWidget" name="listCaptureFilesWidget">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>80</y>
-       <width>161</width>
-       <height>121</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QComboBox" name="selectDeviceBox">
      <property name="geometry">
       <rect>
@@ -198,6 +188,16 @@
      </property>
      <property name="currentText">
       <string/>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="ListCaptureFiles">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>161</width>
+       <height>121</height>
+      </rect>
      </property>
     </widget>
    </widget>

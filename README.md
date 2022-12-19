@@ -163,3 +163,7 @@ In a separate terminal session than where mapping is running
 In two separate terminal sessions:
 - `roslaunch turn_on_wheeltec_robot turn_on_wheeltec_robot.launch`
 - `rosrun teleop_twist_keyboard teleop_twist_keyboard.py`
+
+## Development tips
+You can run the UI on its own by running `roscore` in its own terminal session then run the following:
+- ` rqt --standalone wheeltec-building-inspection-ui`

@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import os
+
 import rospy
 import roslaunch
 
@@ -29,7 +31,8 @@ class RobotHandler():
         roslaunch.configure_logging(self.uuid)
 
         # Register publishers
-        self.robotHandlerCommandPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
+        self.robotHandlerStatusPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
+        self.capListPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
 
         # Python doesn't like signals not being created in its main process, which some nodes under this launch file
         # attempts to do in separate threads. We don't need to handle these signals ourselves here, so this resolves it.
@@ -40,7 +43,7 @@ class RobotHandler():
     def run_launch_file(self, package, launch_file, mode='control'):
         success = True
         try:
-            self.robotHandlerCommandPub.publish('start ' + launch_file)
+            self.robotHandlerStatusPub.publish('start ' + launch_file)
 
             ros_thread = \
                 roslaunch.parent.ROSLaunchParent(self.uuid,
@@ -62,6 +65,7 @@ class RobotHandler():
             success = False
 
         return success
+
     def start_normal_slam(self):
         if self.currentState == RobotState.IDLE:
             success = self.run_launch_file('turn_on_wheeltec_robot', 'rrt_slam.launch')
@@ -125,6 +129,14 @@ class RobotHandler():
 
             self.robotHandlerCommandPub.publish('Stop data collection')
 
+    def send_data_cap_list(self, device):
+        files_message = ''
+        files = os.listdir('/home/wheeltec/data_collection/' + device + '/')
+
+        for file in files:
+            files_message += file + "|"
+
+        self.capListPub.publish(files_message)
 
 if __name__ == '__main__':
     def main():
@@ -151,6 +163,8 @@ if __name__ == '__main__':
         # Data collection
         elif cmd[0] == 'toggle_collection':
             robot_handler.toggle_collection(cmd[1])
+        elif cmd[0] == 'get_cap_file_list':
+            robot_handler.send_data_cap_list(cmd[1])
 
     robot_handler = RobotHandler()
 

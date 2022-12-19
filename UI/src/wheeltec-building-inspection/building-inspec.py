@@ -4,7 +4,8 @@ import rospkg
 
 from std_msgs.msg import String
 
-from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox
+from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QFileSystemModel
+from PyQt5.QtCore import QTimer
 
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
@@ -58,11 +59,14 @@ class NavControl(Plugin):
              lambda: self.robotHandlerCommandPub.publish('start_nav'))
 
          # Data Cap Tab
-         device_selection = self._widget.findChild(QComboBox, 'selectDeviceBox')
-         device_selection.addItem('lidar')
+         self.device_selection = self._widget.findChild(QComboBox, 'selectDeviceBox')
+         self.device_selection.addItem('lidar')
+
+         self.fileCapView = self._widget.findChild(QListWidget, 'ListCaptureFiles')
+         self.refresh_local_cap_list()
 
          self._widget.findChild(QPushButton, 'ToggleCollectionButton').clicked.connect(
-             lambda: self.robotHandlerCommandPub.publish('toggle_collection ' + device_selection.currentText()))
+             lambda: self.robotHandlerCommandPub.publish('toggle_collection ' + self.device_selection.currentText()))
 
          # General
          self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
@@ -72,7 +76,10 @@ class NavControl(Plugin):
          self.log_console = self._widget.findChild(QListWidget, 'LogConsole')
 
 
- 
+     def refresh_robot_cap_list(self, capFileList):
+        self.fileCapView.clear()
+        self.fileCapView.insertItems(0, os.listdir('/home/$USER/data_collection/' + self.device_selection.currentText() + '/'))
+
      def shutdown_plugin(self):
          # TODO unregister all publishers here
          pass
