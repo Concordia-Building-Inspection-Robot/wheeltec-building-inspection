@@ -19,6 +19,30 @@ class DataCollectionState():
     RAW_LIDAR_COLLECTION = 1
 
 class RobotHandler():
+    operation_user_friendly_names = {'start_normal_slam': 'SLAM',
+                                     'start_manual_control': 'manual control',
+                                     'start_mapping': 'mapping',
+                                     'save_map': 'save map',
+                                     'start_nav': 'navigation'}
+
+    operation_required_states = {'start_normal_slam': RobotState.IDLE,
+                                 'start_manual_control': RobotState.IDLE,
+                                 'start_mapping': RobotState.IDLE,
+                                 'save_map': RobotState.MAPPING,
+                                 'start_nav': RobotState.IDLE}
+
+    operation_new_states = {'start_normal_slam': RobotState.NORMAL_SLAM,
+                            'start_manual_control': RobotState.MANUAL_CONTROL,
+                            'start_mapping': RobotState.MAPPING,
+                            'save_map': RobotState.MAPPING,
+                            'start_nav': RobotState.NAVIGATION}
+
+    operation_launch_params = {'start_normal_slam': ['turn_on_wheeltec_robot', 'rrt_slam.launch', 'control'],
+                               'start_manual_control': ['turn_on_wheeltec_robot', 'turn_on_wheeltec_robot.launch', 'control'],
+                               'start_mapping': ['turn_on_wheeltec_robot', 'mapping.launch', 'control'],
+                               'save_map': ['turn_on_wheeltec_robot', 'map_saver.launch', 'save_map'],
+                               'start_nav': ['turn_on_wheeltec_robot', 'navigation.launch', 'control']}
+
     def __init__(self):
         self.currentState = RobotState.IDLE
         self.currentCollectionState = DataCollectionState.IDLE
@@ -32,7 +56,7 @@ class RobotHandler():
 
         # Register publishers
         self.robotHandlerStatusPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
-        self.capListPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
+        self.capListPub = rospy.Publisher('robot_handler_cap_file_list', String, queue_size=10)
 
         # Python doesn't like signals not being created in its main process, which some nodes under this launch file
         # attempts to do in separate threads. We don't need to handle these signals ourselves here, so this resolves it.
@@ -61,73 +85,43 @@ class RobotHandler():
 
 
         except():
-            self.robotHandlerCommandPub.publish('exception occurred running ' + launch_file)
+            self.robotHandlerStatusPub.publish('exception occurred running ' + launch_file)
             success = False
 
         return success
 
-    def start_normal_slam(self):
-        if self.currentState == RobotState.IDLE:
-            success = self.run_launch_file('turn_on_wheeltec_robot', 'rrt_slam.launch')
+    def start_operation(self, command):
+        roslaunch_params = self.operation_launch_params[command]
+        friendly_name = self.operation_user_friendly_names[command]
+        if self.currentState == self.operation_required_states[command]:
+            success = self.run_launch_file(roslaunch_params[0], roslaunch_params[1], roslaunch_params[2])
             if success:
-                self.currentState = RobotState.NORMAL_SLAM
-                self.robotHandlerCommandPub.publish('successfully started SLAM')
+                self.currentState = self.operation_new_states[command]
+                self.robotHandlerStatusPub.publish('successfully started ' + friendly_name)
         else:
-            self.robotHandlerCommandPub.publish('robot must be idle to start SLAM!')
-    def start_manual_control(self):
-        if self.currentState == RobotState.IDLE:
-            success = self.run_launch_file('turn_on_wheeltec_robot', 'turn_on_wheeltec_robot.launch')
-            if success:
-                self.currentState = RobotState.MANUAL_CONTROL
-                self.robotHandlerCommandPub.publish('successfully started manual control')
-        else:
-            self.robotHandlerCommandPub.publish('robot must be idle to start manual teleop!')
-
-    def start_mapping(self):
-        if self.currentState == RobotState.IDLE:
-            success = self.run_launch_file('turn_on_wheeltec_robot', 'mapping.launch')
-            if success:
-                self.currentState = RobotState.MAPPING
-                self.robotHandlerCommandPub.publish('successfully started mapping')
-        else:
-            self.robotHandlerCommandPub.publish('robot must be idle to start mapping!')
-
-    def save_map(self):
-        if self.currentState == RobotState.MAPPING:
-            success = self.run_launch_file('turn_on_wheeltec_robot', 'map_saver.launch', "save_map")
-            if success:
-                self.robotHandlerCommandPub.publish('successfully saved map')
-        else:
-            self.robotHandlerCommandPub.publish('Mapping must be running in order to save map!')
-
-    def start_navigation(self):
-        if self.currentState == RobotState.IDLE:
-            success = self.run_launch_file('turn_on_wheeltec_robot', 'navigation.launch')
-            if success:
-                self.currentState = RobotState.NAVIGATION
-                self.robotHandlerCommandPub.publish('successfully started navigation')
-        else:
-            self.robotHandlerCommandPub.publish('robot must be idle to start navigation!')
+            self.robotHandlerStatusPub.publish('robot must be idle to start ' + friendly_name + '!')
 
     def stop_all(self):
         if self.currentState != RobotState.IDLE and self.control_thread is not None:
             self.control_thread.shutdown()
             self.currentState = RobotState.IDLE
 
-        self.robotHandlerCommandPub.publish('STOP')
+        self.robotHandlerStatusPub.publish('STOP')
 
     def toggle_collection(self, device):
         if self.currentCollectionState == DataCollectionState.IDLE:
             success = self.run_launch_file('data_collection', device + '_collection.launch', "data_collection")
             if success:
                 self.currentCollectionState = DataCollectionState.RAW_LIDAR_COLLECTION
-                self.robotHandlerCommandPub.publish('successfully started data collection for lidar')
+                self.robotHandlerStatusPub.publish('successfully started data collection for lidar')
         else:
             if self.currentCollectionState != DataCollectionState.IDLE and self.data_collection_thread is not None:
                 self.data_collection_thread.shutdown()
                 self.currentCollectionState = DataCollectionState.IDLE
 
-            self.robotHandlerCommandPub.publish('Stop data collection')
+            self.robotHandlerStatusPub.publish('Stop data collection')
+
+        self.send_data_cap_list(device)
 
     def send_data_cap_list(self, device):
         files_message = ''
@@ -146,25 +140,17 @@ if __name__ == '__main__':
         # Split command
         cmd = cmd.data.split(" ")
 
-        # Robot operations
-        if cmd[0] == 'start_normal_slam':
-            robot_handler.start_normal_slam()
-        elif cmd[0] == 'start_manual_control':
-            robot_handler.start_manual_control()
-        elif cmd[0] == 'start_mapping':
-            robot_handler.start_mapping()
-        elif cmd[0] == 'save_map':
-            robot_handler.save_map()
-        elif cmd[0] == 'start_nav':
-            robot_handler.start_navigation()
-        elif cmd[0] == 'stop_all':
-            robot_handler.stop_all()
-
         # Data collection
-        elif cmd[0] == 'toggle_collection':
+        if cmd[0] == 'toggle_collection':
             robot_handler.toggle_collection(cmd[1])
         elif cmd[0] == 'get_cap_file_list':
             robot_handler.send_data_cap_list(cmd[1])
+
+        # Robot operations
+        elif cmd[0] == 'stop_all':
+            robot_handler.stop_all()
+        else:
+            robot_handler.start_operation(cmd[0])
 
     robot_handler = RobotHandler()
 

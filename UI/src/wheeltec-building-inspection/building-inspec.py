@@ -22,6 +22,7 @@ class NavControl(Plugin):
 
          # Register subscribers
          self.robotHandlerStatusSub = rospy.Subscriber('robot_handler_status', String, self.add_to_log_console)
+         self.robotHandlerCapListRequest = rospy.Subscriber('robot_handler_cap_file_list', String, self.refresh_robot_cap_list)
  
          # Create QWidget
          self._widget = QWidget()
@@ -63,7 +64,7 @@ class NavControl(Plugin):
          self.device_selection.addItem('lidar')
 
          self.fileCapView = self._widget.findChild(QListWidget, 'ListCaptureFiles')
-         self.refresh_local_cap_list()
+         self.robotHandlerCommandPub.publish('get_cap_file_list ' + self.device_selection.currentText())
 
          self._widget.findChild(QPushButton, 'ToggleCollectionButton').clicked.connect(
              lambda: self.robotHandlerCommandPub.publish('toggle_collection ' + self.device_selection.currentText()))
@@ -76,9 +77,10 @@ class NavControl(Plugin):
          self.log_console = self._widget.findChild(QListWidget, 'LogConsole')
 
 
-     def refresh_robot_cap_list(self, capFileList):
+     def refresh_robot_cap_list(self, cap_files_message):
+        cap_file_list = cap_files_message.data.split("|")
         self.fileCapView.clear()
-        self.fileCapView.insertItems(0, os.listdir('/home/$USER/data_collection/' + self.device_selection.currentText() + '/'))
+        self.fileCapView.insertItems(0, cap_file_list)
 
      def shutdown_plugin(self):
          # TODO unregister all publishers here
