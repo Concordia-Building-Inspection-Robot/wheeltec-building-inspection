@@ -113,29 +113,65 @@ within the UI: Manual teleop, Mapping and Navigation. Each of them can only be r
 \
 Currently the UI only allows for control using 2D mapping and navigation.
 
-### Manual teleop control
-Allowing for manual robot control through UI. W, S, A, D and spacebar keys can be used for driving as follows:
+### Robot Visualization
+The middle window seen in the above screenshot is a program called RViz that is usually prepackaged with ROS. It is used
+for visualizing robots and data surrounding them. 
+
+### Control Tab
+#### Manual teleop control
+Manual robot control is allowed in any operation mode through UI. W, S, A, D and spacebar keys can be used for driving as follows:
 * W - Drive forwards
 * D - Drive backwards
 * A - Rotate to left
 * D - Rotate to right
 * Spacebar - Stop movement
 
-### Mapping
+#### SLAM
+Maps the surrounding environment while simultaneously allowing for navigation.
+
+#### Mapping
 Maps the environment around the robot while the operator manually controls it.
 
-### Save map
+#### Save map
 Can only be used while the robot is mapping. Saves the current map built of the environment, 
 overwriting pre-existing map.
 
-### Navigation
+#### Navigation
 Loads saved map, localizes robot within map and allows for autonomous transversal. The 2D nav goal tool
 in the middle window can be used to place a goal for the robot to attempt navigation towards.
 
-### Stop Operations
-Stops current operation. (Manual teleop, Mapping, Navigation)
+### Data Capture Tab
+![screenshot-ui-data-cap-tab.png](docs/res/ui-guide/screenshot-ui-data-cap-tab.png)
+\
+\
+All captures are stored on board the internal store of the robot. 
 
-### Status Display
+#### Device Selection
+Dropdown menu to select the desired device to capture outputs from.
+
+#### Toggle Capture
+Toggles the capturing the raw output of the selected device.
+
+#### Item List View
+Display a list of all the files for each capture stored on the robot for the currently selected device.
+
+#### Transfer (not implemented yet!)
+Transfer selected capture to lab laptop over wireless connection.
+
+#### Playback (not implemented yet!)
+Play back the currently selected captured data in real time to be viewed in visualisation.
+
+#### Delete (not implemented yet!)
+Delete the currently selected data capture file from the robot.
+
+### General Control
+#### Stop Operations
+Stops current operation. (SLAM, Mapping, Navigation)
+
+#### Halt movement (not implemented yet!)
+Stops robot movement and removes goal without stopping current operation
+
+#### Status Display
 On the very bottom is the status display.
 
 # Manual use without UI
@@ -167,3 +203,13 @@ In two separate terminal sessions:
 ## Development tips
 You can run the UI on its own by running `roscore` in its own terminal session then run the following:
 - ` rqt --standalone wheeltec-building-inspection-ui`
+
+### Building and running packages in this repo
+There is a requirements.txt file that lists all of the known python requirements for these packages to run.
+It is recommended to create a python virtual environment in the root of this project, install the required 
+packages and set up the python project with the following:
+- `python -m venv venv`
+- `source venv/bin/activate`
+- `pip install -r requirements.txt`
+- `pip install -r UI/requirements.txt`
+- `python setup.py develop`
