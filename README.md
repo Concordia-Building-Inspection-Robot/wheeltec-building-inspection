@@ -144,7 +144,7 @@ in the middle window can be used to place a goal for the robot to attempt naviga
 ![screenshot-ui-data-cap-tab.png](docs/res/ui-guide/screenshot-ui-data-cap-tab.png)
 \
 \
-All captures are stored on board the internal store of the robot. 
+All captures are stored on board the internal storage of the robot. 
 
 #### Device Selection
 Dropdown menu to select the desired device to capture outputs from.
