@@ -11,9 +11,15 @@ from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
 from python_qt_binding.QtWidgets import QWidget
 
+from utils.Definitions import ROBOT_HOME_DIRECTORY, ROBOT_CAP_SAVE_DIRECTORY
+from utils.SubProcessManager import *
+
 class NavControl(Plugin):
      def __init__(self, context):
          super(NavControl, self).__init__(context)
+
+         self.proc_manager = SubProcessManager()
+
          # Give QObjects reasonable names
          self.setObjectName('NavControl')
 
@@ -74,6 +80,11 @@ class NavControl(Plugin):
                                                          + (self.fileCapView.currentItem().text() if
                                                             self.fileCapView.currentItem() is not None else 'None')))
 
+         self._widget.findChild(QPushButton, 'DelCapButton').clicked.connect(
+             lambda: self.robotHandlerCommandPub.publish('delete_data_cap ' + self.device_selection.currentText() + ' '
+                                                         + (self.fileCapView.currentItem().text() if
+                                                            self.fileCapView.currentItem() is not None else 'None')))
+
          # General
          self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
              lambda: self.robotHandlerCommandPub.publish('stop_all'))
@@ -81,30 +92,24 @@ class NavControl(Plugin):
          # Handle log console
          self.log_console = self._widget.findChild(QListWidget, 'LogConsole')
 
+         # TODO: Add update method
+
 
      def refresh_robot_cap_list(self, cap_files_message):
         cap_file_list = cap_files_message.data.split("|")
         self.fileCapView.clear()
         self.fileCapView.insertItems(0, cap_file_list)
 
-     def shutdown_plugin(self):
-         # TODO unregister all publishers here
-         pass
- 
-     def save_settings(self, plugin_settings, instance_settings):
-         # TODO save intrinsic configuration, usually using:
-         # instance_settings.set_value(k, v)
-         pass
-
-     def restore_settings(self, plugin_settings, instance_settings):
-         # TODO restore intrinsic configuration, usually using:
-         # v = instance_settings.value(k)
-         pass
- 
-     #def trigger_configuration(self):
-         # Comment in to signal that the plugin has a way to configure
-         # This will enable a setting button (gear icon) in each dock widget title bar
-         # Usually used to open a modal configuration dialog
+     def transfer_cap_file(self):
+         if self.fileCapView.currentItem() is not None:
+             # INFO: running SCP requires ssh keys for authenticating access to robot
+              if self.proc_manager.create_new_subprocess('data_transfer', 'scp wheeltec@wheeltec:' +
+                                                     ROBOT_CAP_SAVE_DIRECTORY +
+                                                     self.device_selection.currentText() + '/' +
+                                                     self.fileCapView.currentItem().text()):
+                  self.add_to_log_console('Start transfer of data cap')
+              else:
+                  self.add_to_log_console('Data cap already in transmission')
 
      def add_to_log_console(self, log_message):
          self.log_console.addItems([log_message.data])

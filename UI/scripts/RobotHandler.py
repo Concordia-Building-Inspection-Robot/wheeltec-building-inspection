@@ -7,6 +7,9 @@ import roslaunch
 
 from std_msgs.msg import String
 
+from utils.Definitions import ROBOT_HOME_DIRECTORY, ROBOT_CAP_SAVE_DIRECTORY
+from utils.SubProcessManager import *
+
 class RobotState():
     IDLE = 0
     NORMAL_SLAM = 1
@@ -55,6 +58,8 @@ class RobotHandler():
         self.uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(self.uuid)
 
+        self.proc_manager = SubProcessManager()
+
         # Register publishers
         self.robotHandlerStatusPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
         self.capListPub = rospy.Publisher('robot_handler_cap_file_list', String, queue_size=10)
@@ -65,14 +70,15 @@ class RobotHandler():
         def dummy_function(): pass
         roslaunch.pmon._init_signal_handlers = dummy_function
 
-    def run_launch_file(self, package, launch_file, mode='control'):
+    def run_launch_file(self, package, launch_file, args=None, mode='control'):
         success = True
         try:
             self.robotHandlerStatusPub.publish('start ' + launch_file)
 
             ros_thread = \
                 roslaunch.parent.ROSLaunchParent(self.uuid,
-                                                 roslaunch.rlutil.resolve_launch_arguments([package, launch_file]))
+                                                 roslaunch.rlutil.resolve_launch_arguments(
+                                                     [package, ([launch_file], args)]))
 
             if mode == 'control':
                 self.control_thread = ros_thread
@@ -95,7 +101,7 @@ class RobotHandler():
         roslaunch_params = self.operation_launch_params[command]
         friendly_name = self.operation_user_friendly_names[command]
         if self.currentState == self.operation_required_states[command]:
-            success = self.run_launch_file(roslaunch_params[0], roslaunch_params[1], roslaunch_params[2])
+            success = self.run_launch_file(roslaunch_params[0], roslaunch_params[1], mode=roslaunch_params[2])
             if success:
                 self.currentState = self.operation_new_states[command]
                 self.robotHandlerStatusPub.publish('successfully started ' + friendly_name)
@@ -111,7 +117,7 @@ class RobotHandler():
 
     def toggle_collection(self, device):
         if self.currentCollectionState == DataCollectionState.IDLE:
-            success = self.run_launch_file('data_collection', device + '_collection.launch', "data_collection")
+            success = self.run_launch_file('data_collection', device + '_collection.launch', mode="data_collection")
             if success:
                 self.currentCollectionState = DataCollectionState.RAW_COLLECTION
                 self.robotHandlerStatusPub.publish('successfully started data collection for lidar')
@@ -126,9 +132,11 @@ class RobotHandler():
 
         self.send_data_cap_list(device)
 
-    def toggle_playback(self, device, fileName):
+    def toggle_playback(self, device, file_name):
         if self.currentCollectionState == DataCollectionState.IDLE:
-            success = self.run_launch_file('data_collection', device + '_playback.launch', "data_collection")
+            success = self.run_launch_file('data_collection',  'playback_data.launch',
+                                           args=['file_name:=' + file_name, 'device_name:=' + device],
+                                           mode="data_collection")
             if success:
                 self.currentCollectionState = DataCollectionState.RAW_PLAYBACK
                 self.robotHandlerStatusPub.publish('successfully started data playback for lidar')
@@ -143,16 +151,33 @@ class RobotHandler():
 
     def send_data_cap_list(self, device):
         files_message = ''
-        files = os.listdir('/home/wheeltec/data_collection/' + device + '/')
+        files = os.listdir(ROBOT_CAP_SAVE_DIRECTORY + device + '/')
 
         for file in files:
             files_message += file + "|"
 
         self.capListPub.publish(files_message)
 
+    def del_data_cap(self, device, file_name):
+        if self.proc_manager.create_new_subprocess('delete_data_cap', 'rm ' + ROBOT_CAP_SAVE_DIRECTORY + device + '/' +
+                                                    file_name):
+            self.robotHandlerStatusPub.publish('Start deletion of data cap')
+        else:
+            self.robotHandlerStatusPub.publish('Data cap already being deleted')
+
+    def update(self):
+        self.proc_manager.update()
+        if self.proc_manageris_subprocess_running('delete_data_cap'):
+            self.capListPub.publish('Data cap deletion complete')
+
 if __name__ == '__main__':
     def main():
-        rospy.spin()
+        try:
+            while not rospy.is_shutdown():
+                robot_handler.update()
+
+        except KeyboardInterrupt:
+            print("Node shutting down due to keyboard interrupt signal.")
 
     def command_handler(cmd):
         # Split command
@@ -164,7 +189,7 @@ if __name__ == '__main__':
         elif cmd[0] == 'get_cap_file_list':
             robot_handler.send_data_cap_list(cmd[1])
         elif cmd[0] == 'toggle_playback':
-            robot_handler.send_data_cap_list(cmd[1], cmd[2])
+            robot_handler.toggle_playback(cmd[1], cmd[2])
 
         # Robot operations
         elif cmd[0] == 'stop_all':

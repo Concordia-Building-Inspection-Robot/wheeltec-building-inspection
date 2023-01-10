@@ -1,0 +1,2 @@
+ROBOT_HOME_DIRECTORY = '/home/wheeltec'
+ROBOT_CAP_SAVE_DIRECTORY = ROBOT_HOME_DIRECTORY + '/data_collection/'

@@ -1,7 +1,7 @@
 <launch>
   <arg name="home_directory" default="/home/wheeltec" />
 
-  <arg name="device_name" default="imu" />
+  <arg name="device_name" />
   <arg name="file_name" />
   <arg name="save_directory" default="$(arg home_directory)/data_collection/$(arg device_name)" />
 

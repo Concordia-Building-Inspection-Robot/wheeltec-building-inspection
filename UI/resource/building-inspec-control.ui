@@ -151,7 +151,7 @@
       <string>Transfer</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="delCapButton">
+    <widget class="QPushButton" name="DelCapButton">
      <property name="geometry">
       <rect>
        <x>80</x>
