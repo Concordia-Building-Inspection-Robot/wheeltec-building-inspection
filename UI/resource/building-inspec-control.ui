@@ -164,7 +164,7 @@
       <string>Del</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="playbackCaptureButton">
+    <widget class="QPushButton" name="TogglePlaybackButton">
      <property name="geometry">
       <rect>
        <x>110</x>

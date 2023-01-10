@@ -69,6 +69,11 @@ class NavControl(Plugin):
          self._widget.findChild(QPushButton, 'ToggleCollectionButton').clicked.connect(
              lambda: self.robotHandlerCommandPub.publish('toggle_collection ' + self.device_selection.currentText()))
 
+         self._widget.findChild(QPushButton, 'TogglePlaybackButton').clicked.connect(
+             lambda: self.robotHandlerCommandPub.publish('toggle_playback ' + self.device_selection.currentText() + ' '
+                                                         + (self.fileCapView.currentItem().text() if
+                                                            self.fileCapView.currentItem() is not None else 'None')))
+
          # General
          self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
              lambda: self.robotHandlerCommandPub.publish('stop_all'))

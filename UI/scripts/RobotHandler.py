@@ -16,7 +16,8 @@ class RobotState():
 
 class DataCollectionState():
     IDLE = 0
-    RAW_LIDAR_COLLECTION = 1
+    RAW_COLLECTION = 1
+    RAW_PLAYBACK = 2
 
 class RobotHandler():
     operation_user_friendly_names = {'start_normal_slam': 'SLAM',
@@ -112,16 +113,33 @@ class RobotHandler():
         if self.currentCollectionState == DataCollectionState.IDLE:
             success = self.run_launch_file('data_collection', device + '_collection.launch', "data_collection")
             if success:
-                self.currentCollectionState = DataCollectionState.RAW_LIDAR_COLLECTION
+                self.currentCollectionState = DataCollectionState.RAW_COLLECTION
                 self.robotHandlerStatusPub.publish('successfully started data collection for lidar')
-        else:
+        elif self.currentCollectionState == DataCollectionState.RAW_COLLECTION:
             if self.currentCollectionState != DataCollectionState.IDLE and self.data_collection_thread is not None:
                 self.data_collection_thread.shutdown()
                 self.currentCollectionState = DataCollectionState.IDLE
 
-            self.robotHandlerStatusPub.publish('Stop data collection')
+                self.robotHandlerStatusPub.publish('Stop data collection')
+        else:
+            self.robotHandlerStatusPub.publish('There must be no data playback active to toggle capturing')
 
         self.send_data_cap_list(device)
+
+    def toggle_playback(self, device, fileName):
+        if self.currentCollectionState == DataCollectionState.IDLE:
+            success = self.run_launch_file('data_collection', device + '_playback.launch', "data_collection")
+            if success:
+                self.currentCollectionState = DataCollectionState.RAW_PLAYBACK
+                self.robotHandlerStatusPub.publish('successfully started data playback for lidar')
+        elif self.currentCollectionState == DataCollectionState.RAW_PLAYBACK:
+            if self.currentCollectionState != DataCollectionState.IDLE and self.data_collection_thread is not None:
+                self.data_collection_thread.shutdown()
+                self.currentCollectionState = DataCollectionState.IDLE
+
+            self.robotHandlerStatusPub.publish('Stop data playback')
+        else:
+            self.robotHandlerStatusPub.publish('There must be no data collection active to toggle playback')
 
     def send_data_cap_list(self, device):
         files_message = ''
@@ -145,6 +163,8 @@ if __name__ == '__main__':
             robot_handler.toggle_collection(cmd[1])
         elif cmd[0] == 'get_cap_file_list':
             robot_handler.send_data_cap_list(cmd[1])
+        elif cmd[0] == 'toggle_playback':
+            robot_handler.send_data_cap_list(cmd[1], cmd[2])
 
         # Robot operations
         elif cmd[0] == 'stop_all':
