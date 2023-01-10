@@ -205,7 +205,7 @@ You can run the UI on its own by running `roscore` in its own terminal session t
 - ` rqt --standalone wheeltec-building-inspection-ui`
 
 ### Building and running packages in this repo
-There is a requirements.txt file that lists all of the known python requirements for these packages to run.
+There is a requirements.txt file that lists all the known python requirements for these packages to run.
 It is recommended to create a python virtual environment in the root of this project, install the required 
 packages and set up the python project with the following:
 - `python -m venv venv`
