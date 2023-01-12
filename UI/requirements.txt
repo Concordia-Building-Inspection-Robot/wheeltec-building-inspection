@@ -1,2 +1,3 @@
 rospkg
 defusedxml
+pyyaml

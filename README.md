@@ -208,9 +208,16 @@ You can run the UI on its own by running `roscore` in its own terminal session t
 There is a requirements.txt file that lists all the known python requirements for these packages to run.
 It is recommended to create a python virtual environment in the root of this project, install the required 
 packages and set up the python project with the following:
-- `python -m venv venv`
+- `python -m venv venv` in root directory of project
 - `source venv/bin/activate`
 - `pip install -r requirements.txt`
 - `pip install -r UI/requirements.txt`
-- - `python setup.py build` in root directory of project
-- `python setup.py develop` in root directory of project
+- - `python setup.py build`
+- `python setup.py develop`
+
+NOTE: Due to odd behaviour with how the python interpreter loads modules, 
+the following had to be added to `~/.bashrc`:
+- `export PYTHONPATH=$PYTHONPATH:/home/$USER/catkin_ws/src/wheeltec-building-inspection`
+
+This is more of a workaround for import errors as it is manually adding this project's root path
+to the python path environment variable, but it does allow all the modules here to be loaded properly.

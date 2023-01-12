@@ -138,7 +138,7 @@
       <string>Toggle Capture</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="transferButton">
+    <widget class="QPushButton" name="TransferCapButton">
      <property name="geometry">
       <rect>
        <x>20</x>

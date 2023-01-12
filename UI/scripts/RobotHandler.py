@@ -167,7 +167,7 @@ class RobotHandler():
 
     def update(self):
         self.proc_manager.update()
-        if self.proc_manageris_subprocess_running('delete_data_cap'):
+        if not self.proc_manager.is_subprocess_running('delete_data_cap'):
             self.capListPub.publish('Data cap deletion complete')
 
 if __name__ == '__main__':

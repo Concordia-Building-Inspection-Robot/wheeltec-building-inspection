@@ -85,6 +85,9 @@ class NavControl(Plugin):
                                                          + (self.fileCapView.currentItem().text() if
                                                             self.fileCapView.currentItem() is not None else 'None')))
 
+         self._widget.findChild(QPushButton, 'TransferCapButton').clicked.connect(
+             lambda: self.transfer_cap_file())
+
          # General
          self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
              lambda: self.robotHandlerCommandPub.publish('stop_all'))
@@ -92,8 +95,14 @@ class NavControl(Plugin):
          # Handle log console
          self.log_console = self._widget.findChild(QListWidget, 'LogConsole')
 
-         # TODO: Add update method
+         # TODO: Add update method for checking status of subprocesses using QTimer object
+         self.timer = QTimer()
+         self.timer.timeout.connect(self.update)
 
+     def update(self):
+         self.proc_manager.update()
+         if not self.proc_manager.is_subprocess_running('data_transfer'):
+             self.capListPub.publish('Data cap transfer complete')
 
      def refresh_robot_cap_list(self, cap_files_message):
         cap_file_list = cap_files_message.data.split("|")
