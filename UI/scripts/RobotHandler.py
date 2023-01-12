@@ -22,6 +22,10 @@ class DataCollectionState():
     RAW_COLLECTION = 1
     RAW_PLAYBACK = 2
 
+class DeleteState():
+    IDLE = 0
+    DELETE = 1
+
 class RobotHandler():
     operation_user_friendly_names = {'start_normal_slam': 'SLAM',
                                      'start_manual_control': 'manual control',
@@ -60,6 +64,8 @@ class RobotHandler():
 
         self.proc_manager = SubProcessManager()
 
+        self.delete_state = DeleteState.IDLE
+
         # Register publishers
         self.robotHandlerStatusPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
         self.capListPub = rospy.Publisher('robot_handler_cap_file_list', String, queue_size=10)
@@ -70,15 +76,14 @@ class RobotHandler():
         def dummy_function(): pass
         roslaunch.pmon._init_signal_handlers = dummy_function
 
-    def run_launch_file(self, package, launch_file, args=None, mode='control'):
+    def run_launch_file(self, package, launch_file, args=[], mode='control'):
         success = True
         try:
             self.robotHandlerStatusPub.publish('start ' + launch_file)
 
-            ros_thread = \
-                roslaunch.parent.ROSLaunchParent(self.uuid,
-                                                 roslaunch.rlutil.resolve_launch_arguments(
-                                                     [package, ([launch_file], args)]))
+            launch_files = [(roslaunch.rlutil.resolve_launch_arguments([package, launch_file]), args)]
+
+            ros_thread = roslaunch.parent.ROSLaunchParent(self.uuid, launch_files)
 
             if mode == 'control':
                 self.control_thread = ros_thread
@@ -162,13 +167,14 @@ class RobotHandler():
         if self.proc_manager.create_new_subprocess('delete_data_cap', 'rm ' + ROBOT_CAP_SAVE_DIRECTORY + device + '/' +
                                                     file_name):
             self.robotHandlerStatusPub.publish('Start deletion of data cap')
+            self.delete_state == DeleteState.DELETE
         else:
             self.robotHandlerStatusPub.publish('Data cap already being deleted')
 
     def update(self):
-        self.proc_manager.update()
-        if not self.proc_manager.is_subprocess_running('delete_data_cap'):
-            self.capListPub.publish('Data cap deletion complete')
+        if not self.proc_manager.is_subprocess_running('delete_data_cap') and self.delete_state == DeleteState.DELETE:
+            self.robotHandlerStatusPub.publish('Data cap deletion complete')
+            self.delete_state = DeleteState.IDLE
 
 if __name__ == '__main__':
     def main():
@@ -190,6 +196,8 @@ if __name__ == '__main__':
             robot_handler.send_data_cap_list(cmd[1])
         elif cmd[0] == 'toggle_playback':
             robot_handler.toggle_playback(cmd[1], cmd[2])
+        elif cmd[0] == 'delete_data_cap':
+            robot_handler.del_data_cap(cmd[1], cmd[2])
 
         # Robot operations
         elif cmd[0] == 'stop_all':

@@ -11,14 +11,19 @@ from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
 from python_qt_binding.QtWidgets import QWidget
 
-from utils.Definitions import ROBOT_HOME_DIRECTORY, ROBOT_CAP_SAVE_DIRECTORY
+from utils.Definitions import *
 from utils.SubProcessManager import *
+
+class TransferState():
+    IDLE = 0
+    TRANSFER = 1
 
 class NavControl(Plugin):
      def __init__(self, context):
          super(NavControl, self).__init__(context)
 
          self.proc_manager = SubProcessManager()
+         self.transfer_state = TransferState.IDLE
 
          # Give QObjects reasonable names
          self.setObjectName('NavControl')
@@ -98,14 +103,17 @@ class NavControl(Plugin):
          # TODO: Add update method for checking status of subprocesses using QTimer object
          self.timer = QTimer()
          self.timer.timeout.connect(self.update)
+         self.timer.start()
 
      def update(self):
-         self.proc_manager.update()
-         if not self.proc_manager.is_subprocess_running('data_transfer'):
-             self.capListPub.publish('Data cap transfer complete')
+         if not self.proc_manager.is_subprocess_running('data_transfer') and \
+                 self.transfer_state == TransferState.TRANSFER:
+             self.add_to_log_console(String('Data cap transfer complete'))
+             self.transfer_state = TransferState.IDLE
 
      def refresh_robot_cap_list(self, cap_files_message):
         cap_file_list = cap_files_message.data.split("|")
+        # print(self.fileCapView)
         self.fileCapView.clear()
         self.fileCapView.insertItems(0, cap_file_list)
 
@@ -115,11 +123,14 @@ class NavControl(Plugin):
               if self.proc_manager.create_new_subprocess('data_transfer', 'scp wheeltec@wheeltec:' +
                                                      ROBOT_CAP_SAVE_DIRECTORY +
                                                      self.device_selection.currentText() + '/' +
-                                                     self.fileCapView.currentItem().text()):
-                  self.add_to_log_console('Start transfer of data cap')
+                                                     self.fileCapView.currentItem().text() + " " +
+                                                     LAB_PC_CAP_TRANSFER_DIRECTORY +
+                                                     self.device_selection.currentText()):
+                  self.add_to_log_console(String('Start transfer of data cap'))
+                  self.transfer_state = TransferState.TRANSFER
               else:
-                  self.add_to_log_console('Data cap already in transmission')
+                  self.add_to_log_console(String('Data cap already in transmission'))
 
      def add_to_log_console(self, log_message):
-         self.log_console.addItems([log_message.data])
+        self.log_console.addItems([log_message.data])
 

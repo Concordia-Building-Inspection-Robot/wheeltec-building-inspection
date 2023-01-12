@@ -1,2 +1,5 @@
-ROBOT_HOME_DIRECTORY = '/home/wheeltec'
-ROBOT_CAP_SAVE_DIRECTORY = ROBOT_HOME_DIRECTORY + '/data_collection/'
+ROBOT_HOME_DIRECTORY = '/home/wheeltec/'
+ROBOT_CAP_SAVE_DIRECTORY = ROBOT_HOME_DIRECTORY + 'data_collection/'
+
+LAB_PC_HOME_DIRECTORY = '/home/concordia/'
+LAB_PC_CAP_TRANSFER_DIRECTORY = LAB_PC_HOME_DIRECTORY + 'data_captures/'

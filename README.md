@@ -80,10 +80,21 @@ You can remotely access a terminal shell session using the following command:
 - `ssh wheeltec@wheeltec` The first "wheeltec" is the username, the second is the hostname for 192.168.0.10
 \
 \
-To remotely update the UI and other in house packages on board you can use:
-- `scp -r src/wheeltec-building-inspection/ wheeltec@wheeltec:catkin_workspace/src/`
+Sudo and login password is: 'dongguan'
 \
-There is currently no setup for the robot to have its own network access.
+\
+To remotely update the UI and other in house packages on board you can use:
+- `scp -r ~/catkin_ws/src/wheeltec-building-inspection/ wheeltec@wheeltec:catkin_workspace/src/`
+\
+\
+Then its ROS software can be restarted using:
+- `sudo systemctl restart robot_handler.service`
+\
+Then its console output and status can be checked using:
+- `sudo systemctl restart robot_handler.service`
+\
+\
+There is currently no setup for the robot to have its own internet access.
 
 # UI
 ## Start UI
@@ -202,7 +213,11 @@ In two separate terminal sessions:
 
 ## Development tips
 You can run the UI on its own by running `roscore` in its own terminal session then run the following:
-- ` rqt --standalone wheeltec-building-inspection-ui`
+- `rqt --standalone wheeltec-building-inspection-ui`
+
+To run the full UI that communicates with the robot with console output for troubleshooting, you can run the following
+ in root directory of project:
+- `bash UI/ui-startup/run_rqt_gui.sh`
 
 ### Building and running packages in this repo
 There is a requirements.txt file that lists all the known python requirements for these packages to run.
@@ -212,7 +227,6 @@ packages and set up the python project with the following:
 - `source venv/bin/activate`
 - `pip install -r requirements.txt`
 - `pip install -r UI/requirements.txt`
-- - `python setup.py build`
 - `python setup.py develop`
 
 NOTE: Due to odd behaviour with how the python interpreter loads modules, 

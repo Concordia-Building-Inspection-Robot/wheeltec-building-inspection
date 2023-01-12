@@ -26,9 +26,13 @@ class SubProcessManager():
                 del self.subprocesses[name]
 
     def is_subprocess_running(self, name):
-        return name in self.subprocesses
+        return name in self.subprocesses and self.subprocesses[name].poll() is None
 
-    def update(self):
-        for name in self.subprocesses:
-            if self.subprocesses[name].poll():
-                del self.subprocesses[name]
+    # def update(self):
+    #     names_to_delete = []
+    #     for name in self.subprocesses:
+    #         if self.subprocesses[name].poll() is not None:
+    #             names_to_delete.append(name)
+
+        # for name in names_to_delete:
+        #     del self.subprocesses[name]
