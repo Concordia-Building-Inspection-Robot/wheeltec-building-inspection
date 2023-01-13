@@ -55,13 +55,6 @@ class RobotHandler():
         self.currentState = RobotState.IDLE
         self.currentCollectionState = DataCollectionState.IDLE
 
-        # ROS launch thread control
-        self.control_thread = None
-        self.save_map_thread = None
-        self.data_collection_thread = None
-        self.uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
-        roslaunch.configure_logging(self.uuid)
-
         self.proc_manager = SubProcessManager()
 
         self.delete_state = DeleteState.IDLE
@@ -70,31 +63,14 @@ class RobotHandler():
         self.robotHandlerStatusPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
         self.capListPub = rospy.Publisher('robot_handler_cap_file_list', String, queue_size=10)
 
-        # Python doesn't like signals not being created in its main process, which some nodes under this launch file
-        # attempts to do in separate threads. We don't need to handle these signals ourselves here, so this resolves it.
-        # NOTE: this is pretty cursed but works for now lol
-        def dummy_function(): pass
-        roslaunch.pmon._init_signal_handlers = dummy_function
-
-    def run_launch_file(self, package, launch_file, args=[], mode='control'):
+    def run_launch_file(self, package, launch_file, args='', mode='control'):
         success = True
         try:
             self.robotHandlerStatusPub.publish('start ' + launch_file)
 
-            launch_files = [(roslaunch.rlutil.resolve_launch_arguments([package, launch_file]), args)]
+            launch_file_path = roslaunch.rlutil.resolve_launch_arguments([package, launch_file])
 
-            ros_thread = roslaunch.parent.ROSLaunchParent(self.uuid, launch_files)
-
-            if mode == 'control':
-                self.control_thread = ros_thread
-                self.control_thread.start()
-            elif mode == 'save_map':
-                self.save_map_thread = ros_thread
-                self.save_map_thread.start()
-            elif mode == 'data_collection':
-                self.data_collection_thread = ros_thread
-                self.data_collection_thread.start()
-
+            self.proc_manager.create_new_subprocess(mode, 'roslaunch ' + launch_file_path + ' ' + args)
 
         except():
             self.robotHandlerStatusPub.publish('exception occurred running ' + launch_file)
@@ -114,8 +90,8 @@ class RobotHandler():
             self.robotHandlerStatusPub.publish('robot must be idle to start ' + friendly_name + '!')
 
     def stop_all(self):
-        if self.currentState != RobotState.IDLE and self.control_thread is not None:
-            self.control_thread.shutdown()
+        if self.currentState != RobotState.IDLE and self.proc_manager.is_subprocess_running('control'):
+            self.proc_manager.close_subprocess('control')
             self.currentState = RobotState.IDLE
 
         self.robotHandlerStatusPub.publish('STOP')
@@ -127,8 +103,9 @@ class RobotHandler():
                 self.currentCollectionState = DataCollectionState.RAW_COLLECTION
                 self.robotHandlerStatusPub.publish('successfully started data collection for lidar')
         elif self.currentCollectionState == DataCollectionState.RAW_COLLECTION:
-            if self.currentCollectionState != DataCollectionState.IDLE and self.data_collection_thread is not None:
-                self.data_collection_thread.shutdown()
+            if self.currentCollectionState != DataCollectionState.IDLE and \
+                    self.proc_manager.is_subprocess_running('data_collection'):
+                self.proc_manager.close_subprocess('data_collection')
                 self.currentCollectionState = DataCollectionState.IDLE
 
                 self.robotHandlerStatusPub.publish('Stop data collection')
@@ -146,8 +123,9 @@ class RobotHandler():
                 self.currentCollectionState = DataCollectionState.RAW_PLAYBACK
                 self.robotHandlerStatusPub.publish('successfully started data playback for lidar')
         elif self.currentCollectionState == DataCollectionState.RAW_PLAYBACK:
-            if self.currentCollectionState != DataCollectionState.IDLE and self.data_collection_thread is not None:
-                self.data_collection_thread.shutdown()
+            if self.currentCollectionState != DataCollectionState.IDLE and \
+                    self.proc_manager.is_subprocess_running('data_collection'):
+                self.proc_manager.close_subprocess('data_collection')
                 self.currentCollectionState = DataCollectionState.IDLE
 
             self.robotHandlerStatusPub.publish('Stop data playback')

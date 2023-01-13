@@ -18,21 +18,15 @@ class SubProcessManager():
 
     def close_subprocess(self, name):
         if name in self.subprocesses:
-            self.subprocesses[name].kill()
+            self.subprocesses[name].terminate()
 
-            if self.subprocesses[name].wait() != 0:
+            if self.subprocesses[name].wait() != name in self.subprocesses and self.subprocesses[name].poll() is None:
                 print("There were errors when closing" + name + " process")
             else:
                 del self.subprocesses[name]
 
     def is_subprocess_running(self, name):
-        return name in self.subprocesses and self.subprocesses[name].poll() is None
-
-    # def update(self):
-    #     names_to_delete = []
-    #     for name in self.subprocesses:
-    #         if self.subprocesses[name].poll() is not None:
-    #             names_to_delete.append(name)
-
-        # for name in names_to_delete:
-        #     del self.subprocesses[name]
+        running = name in self.subprocesses and self.subprocesses[name].poll() is None
+        if not running and name in self.subprocesses:
+            del self.subprocesses[name]
+        return running
