@@ -70,7 +70,7 @@ class RobotHandler():
 
             launch_file_path = roslaunch.rlutil.resolve_launch_arguments([package, launch_file])
 
-            self.proc_manager.create_new_subprocess(mode, 'roslaunch ' + launch_file_path + ' ' + args)
+            self.proc_manager.create_new_subprocess(mode, 'roslaunch ' + launch_file_path[0] + ' ' + args)
 
         except():
             self.robotHandlerStatusPub.publish('exception occurred running ' + launch_file)
@@ -117,7 +117,7 @@ class RobotHandler():
     def toggle_playback(self, device, file_name):
         if self.currentCollectionState == DataCollectionState.IDLE:
             success = self.run_launch_file('data_collection',  'playback_data.launch',
-                                           args=['file_name:=' + file_name, 'device_name:=' + device],
+                                           args='file_name:=' + file_name + ' device_name:=' + device,
                                            mode="data_collection")
             if success:
                 self.currentCollectionState = DataCollectionState.RAW_PLAYBACK
@@ -137,7 +137,12 @@ class RobotHandler():
         files = os.listdir(ROBOT_CAP_SAVE_DIRECTORY + device + '/')
 
         for file in files:
-            files_message += file + "|"
+            updated_file = file.replace('-', '_')
+            if updated_file != file:
+                self.proc_manager.create_new_subprocess('rename_' + file, 'mv ' + ROBOT_CAP_SAVE_DIRECTORY + device +
+                                                        '/' + file + ' ' + ROBOT_CAP_SAVE_DIRECTORY + device +
+                                                        '/' + updated_file)
+            files_message += updated_file + "|"
 
         self.capListPub.publish(files_message)
 

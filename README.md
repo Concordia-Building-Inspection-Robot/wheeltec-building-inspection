@@ -90,8 +90,8 @@ To remotely update the UI and other in house packages on board you can use:
 Then its ROS software can be restarted using:
 - `sudo systemctl restart robot_handler.service`
 \
-Then its console output and status can be checked using:
-- `sudo systemctl restart robot_handler.service`
+Then part of its console output and status can be checked using:
+- `sudo systemctl status robot_handler.service`
 \
 \
 There is currently no setup for the robot to have its own internet access.
