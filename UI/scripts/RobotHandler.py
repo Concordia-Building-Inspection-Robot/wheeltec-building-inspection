@@ -3,7 +3,6 @@
 import os
 
 import rospy
-import roslaunch
 
 from std_msgs.msg import String
 
@@ -68,9 +67,7 @@ class RobotHandler():
         try:
             self.robotHandlerStatusPub.publish('start ' + launch_file)
 
-            launch_file_path = roslaunch.rlutil.resolve_launch_arguments([package, launch_file])
-
-            self.proc_manager.create_new_subprocess(mode, 'roslaunch ' + launch_file_path[0] + ' ' + args)
+            self.proc_manager.create_new_subprocess(mode, 'roslaunch ' + package + ' ' + launch_file + ' ' + args)
 
         except():
             self.robotHandlerStatusPub.publish('exception occurred running ' + launch_file)
@@ -137,12 +134,7 @@ class RobotHandler():
         files = os.listdir(ROBOT_CAP_SAVE_DIRECTORY + device + '/')
 
         for file in files:
-            updated_file = file.replace('-', '_')
-            if updated_file != file:
-                self.proc_manager.create_new_subprocess('rename_' + file, 'mv ' + ROBOT_CAP_SAVE_DIRECTORY + device +
-                                                        '/' + file + ' ' + ROBOT_CAP_SAVE_DIRECTORY + device +
-                                                        '/' + updated_file)
-            files_message += updated_file + "|"
+            files_message += file + "|"
 
         self.capListPub.publish(files_message)
 
@@ -151,6 +143,7 @@ class RobotHandler():
                                                     file_name):
             self.robotHandlerStatusPub.publish('Start deletion of data cap')
             self.delete_state == DeleteState.DELETE
+            self.send_data_cap_list(device)
         else:
             self.robotHandlerStatusPub.publish('Data cap already being deleted')
 
@@ -158,6 +151,10 @@ class RobotHandler():
         if not self.proc_manager.is_subprocess_running('delete_data_cap') and self.delete_state == DeleteState.DELETE:
             self.robotHandlerStatusPub.publish('Data cap deletion complete')
             self.delete_state = DeleteState.IDLE
+        if not self.proc_manager.is_subprocess_running('data_collection') and self.currentCollectionState != \
+                DataCollectionState.IDLE:
+            self.robotHandlerStatusPub.publish('Data collection task complete')
+            self.currentCollectionState = DataCollectionState.IDLE
 
 if __name__ == '__main__':
     def main():
