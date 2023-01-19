@@ -77,7 +77,7 @@ The driver installed for the device to be functional on Ubuntu 18.04 was an upda
 # Wheeltec Robot Info
 ## Basic Use
 You can remotely access a terminal shell session using the following command:
-- `ssh wheeltec@wheeltec` The first "wheeltec" is the username, the second is the hostname for 192.168.0.10
+- `ssh wheeltec@wheeltec` The first "wheeltec" is the username, the second one is the hostname for 192.168.0.10
 \
 \
 Sudo and login password is: 'dongguan'
@@ -95,6 +95,18 @@ Then part of its console output and status can be checked using:
 \
 \
 There is currently no setup for the robot to have its own internet access.
+
+## Battery Info
+Battery level should not go too much below ~10.5V. Robot will beep as a warning if its battery level is starting to get
+low and should be placed on charge.
+\
+\
+NOTE: DO NOT KEEP ROBOT POWERED WHILE ON CHARGE. THIS IS NOT HEALTHY FOR THE BATTERY AND WILL SIGNIFICANTLY DEGRADE ITS 
+LIFESPAN.
+\
+\
+Power info and other telemetry info can be read off of the robot's small LED display as shown in the image below:
+![img.png](docs/res/ui-guide/img.png)
 
 # UI
 ## Start UI
@@ -211,15 +223,32 @@ In two separate terminal sessions:
 - `roslaunch turn_on_wheeltec_robot turn_on_wheeltec_robot.launch`
 - `rosrun teleop_twist_keyboard teleop_twist_keyboard.py`
 
-## Development tips
+# Development tips
+## What runs where?
+The UI package under the repo contains packages that holds the nodes for the UI that runs on the lab PC and robot itself.
+
+### Running on the lab PC
+- building-inspec.py
+
+### Running on the robot
+- RobotHandler.py
+
+### UI communication with robot
+The following three topics are currently used for sending information such as statuses, file lists and commands between the robot 
+and UI respectively.
+- /robot_handler_status - string message formatted with space character as delimiter between command and arguments
+- /file_cap_list - string message formatted with character '|' used as delimiter between file names
+- /robot_handler_cmd - string message
+
+## UI startup via terminal
 You can run the UI on its own by running `roscore` in its own terminal session then run the following:
 - `rqt --standalone wheeltec-building-inspection-ui`
 
-To run the full UI that communicates with the robot with console output for troubleshooting, you can run the following
+To run the full RQT layout that communicates with the robot with console output for troubleshooting, you can run the following
  in root directory of project:
 - `bash UI/ui-startup/run_rqt_gui.sh`
 
-### Building and running packages in this repo
+## Building and running packages in this repo
 There is a requirements.txt file that lists all the known python requirements for these packages to run.
 It is recommended to create a python virtual environment in the root of this project, install the required 
 packages and set up the python project with the following:
@@ -235,3 +264,26 @@ the following had to be added to `~/.bashrc`:
 
 This is more of a workaround for import errors as it is manually adding this project's root path
 to the python path environment variable, but it does allow all the modules here to be loaded properly.
+
+# Research goals and ideas
+The long term goal of this project is to develop a fleet of autonomous robots capable of helping perform building 
+inspection with the use of its sensors on board. Using the Lidar and Stereo camera in order to map the environment it 
+navigates; the environment being the building that engineers wish to inspect.
+\
+\
+So far the work that has been done is the UI that makes it possible to capture the data from the Lidar during the operation
+of the robot. This data currently being captured is of a series of [sensor_msgs/LaserScan](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/LaserScan.html) 
+ROS messages in the file format of bag files. The set of tools used for data capture is: http://wiki.ros.org/rosbag.
+\
+\
+The UI can be updated to additionally capture data from the stereo camera as well. If data is recorded with the message format of 
+[sensor_msgs/PointCloud](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/PointCloud.html), it can be converted to a PCD format file
+using the following command: `rosrun pcl_ros bag_to_pcd <input_file.bag> <topic> <output_directory>` as detailed here: http://wiki.ros.org/pcl_ros
+\
+\
+PCD files are a standard format that are used with the Point Cloud Library and there are many tools available that can be used
+to analyze and display them. See here for more information: https://pointclouds.org/documentation/tutorials/pcd_file_format.html
+\
+\
+The current hypothesis is the Lidar and Stereo camara can be used in such a way as to provide some form of a 3D map of buildings
+which can be used for carrying out building inspection.
