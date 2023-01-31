@@ -12,9 +12,9 @@
          <label>Subgroup</label>
        </group>
        -->
-       <label>My first Python Plugin</label>
+       <label>Rover Controller</label>
        <icon type="theme">system-help</icon>
-       <statustip>Great user interface to provide real value.</statustip>
+       <statustip>User Interface designed to control the buiding inspection rover</statustip>
      </qtgui>
    </class>
 </library>

@@ -244,7 +244,7 @@
     <string>Misc</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="StopAll_2">
+  <widget class="QPushButton" name="Halt">
    <property name="geometry">
     <rect>
      <x>110</x>
