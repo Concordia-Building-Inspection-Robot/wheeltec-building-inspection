@@ -48,6 +48,7 @@ The depth sensing camera installed on the Wheeltec robot is the ASTRA PRO PLUS.
 The camera is used in a similar way to the LiDAR, it builds a map of its surroundings and estimate its own pose in the 
 environment. The depth sensing camera can generate a point cloud, which is a 3D representation of the environment.
 It is capable of 3D mapping unlike the 2D LiDAR used.
+The camera has a built in launch file which allows us to publish infrared, depth, and RGB images to the /camera root topic
 
 # Lab PC Info
 ## Networking

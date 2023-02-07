@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>211</width>
-    <height>547</height>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -263,15 +263,49 @@
     <string>HALT</string>
    </property>
   </widget>
+  <widget class="QDoubleSpinBox" name="maxSpeedInput">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>570</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <double>1.000000000000000</double>
+   </property>
+   <property name="singleStep">
+    <double>0.050000000000000</double>
+   </property>
+   <property name="value">
+    <double>0.500000000000000</double>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>550</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Max Speed</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>StartNormalSlam</tabstop>
   <tabstop>SaveMap</tabstop>
   <tabstop>StopAll</tabstop>
+  <tabstop>Halt</tabstop>
   <tabstop>StartMapping</tabstop>
   <tabstop>LogConsole</tabstop>
   <tabstop>ControlTabs</tabstop>
   <tabstop>StartNav</tabstop>
+  <tabstop>maxSpeedInput</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -3,9 +3,8 @@ import rospy
 import rospkg
 
 from std_msgs.msg import String
-from actionlib_msgs.msg import GoalID
 
-from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QFileSystemModel, QShortcut
+from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut
 from PyQt5.QtCore import QTimer
 
 from qt_gui.plugin import Plugin
@@ -32,9 +31,6 @@ class NavControl(Plugin):
         # Register publishers
         self.robotHandlerCommandPub = rospy.Publisher('robot_handler_cmd', String, queue_size=10)
 
-        # Publisher used later for the halt button
-        self.halt_goal_publisher = rospy.Publisher('move_base/cancel', GoalID, queue_size=10)
-
         # Register subscribers
         self.robotHandlerStatusSub = rospy.Subscriber('robot_handler_status', String, self.add_to_log_console)
         self.robotHandlerCapListRequest = rospy.Subscriber('robot_handler_cap_file_list', String,
@@ -53,7 +49,8 @@ class NavControl(Plugin):
         context.add_widget(self._widget)
 
         # TODO: Use loop to create handlers
-        # controlCommands = [{'button_name': 'StartManualControl', 'command': 'start_manual_control'},
+        # Has some weird behavior with all buttons inheriting the last event in this list
+        # controlCommands = [{'button_name': 'StartNormalSlam', 'command': 'start_normal_slam'},
         #                    {'button_name': 'StartMapping', 'command': 'start_mapping'},
         #                    {'button_name': 'SaveMap', 'command': 'save_map'},
         #                    {'button_name': 'StartNav', 'command': 'start_nav'},
@@ -103,23 +100,29 @@ class NavControl(Plugin):
         self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
             lambda: self.robotHandlerCommandPub.publish('stop_all'))
 
-        self._widget.findChild(QPushButton, 'Halt').clicked.connect(self.halt_goal)
-        halt_shortcut = QShortcut("k", self._widget)
-        halt_shortcut.activated.connect(self.halt_goal)
+        self._widget.findChild(QPushButton, 'Halt').clicked.connect(
+            lambda: self.robotHandlerCommandPub.publish('halt'))
+        self.halt_shortcut = QShortcut('k', self._widget)
+        self.halt_shortcut.activated.connect(
+            lambda: self.robotHandlerCommandPub.publish('halt'))
+
+        self._widget.findChild(QDoubleSpinBox, 'maxSpeedInput').editingFinished.connect(
+            self.set_max_speed
+        )
 
         # Handle log console
         self.log_console = self._widget.findChild(QListWidget, 'LogConsole')
 
         # TODO: Add update method for checking status of subprocesses using QTimer object
-        self.timer = QTimer()
+        self.timer = QTimer(500)
         self.timer.timeout.connect(self.update)
         self.timer.start()
-
-    def halt_goal(self):
-        """Method for the halt button to stop the current goal without changing states"""
-        self.halt_goal_publisher.publish(GoalID())
-        self.add_to_log_console(String('Halting current goal'))
-
+    
+    def set_max_speed(self):
+        input_box = self._widget.findChild(QDoubleSpinBox, 'maxSpeedInput')
+        self.robotHandlerCommandPub.publish('set_max_speed ' + str(input_box.value()))
+        input_box.clearFocus()
+    
     def update(self):
         if not self.proc_manager.is_subprocess_running('data_transfer') and \
                 self.transfer_state == TransferState.TRANSFER:

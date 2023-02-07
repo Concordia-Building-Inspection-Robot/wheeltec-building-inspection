@@ -5,6 +5,7 @@ import os
 import rospy
 
 from std_msgs.msg import String
+from actionlib_msgs.msg import GoalID
 
 from utils.Definitions import ROBOT_HOME_DIRECTORY, ROBOT_CAP_SAVE_DIRECTORY
 from utils.SubProcessManager import *
@@ -62,6 +63,9 @@ class RobotHandler():
         self.robotHandlerStatusPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
         self.capListPub = rospy.Publisher('robot_handler_cap_file_list', String, queue_size=10)
 
+        # Publisher used later for the halt button
+        self.halt_goal_publisher = rospy.Publisher('move_base/cancel', GoalID, queue_size=10)
+
     def run_launch_file(self, package, launch_file, args='', mode='control'):
         success = True
         try:
@@ -69,7 +73,7 @@ class RobotHandler():
 
             self.proc_manager.create_new_subprocess(mode, 'roslaunch ' + package + ' ' + launch_file + ' ' + args)
 
-        except():
+        except:
             self.robotHandlerStatusPub.publish('exception occurred running ' + launch_file)
             success = False
 
@@ -92,6 +96,13 @@ class RobotHandler():
             self.currentState = RobotState.IDLE
 
         self.robotHandlerStatusPub.publish('STOP')
+    
+    def halt(self):
+        self.halt_goal_publisher.publish(GoalID())
+        self.robotHandlerStatusPub.publish('Halting Rover')
+
+    def set_max_speed(self, max_speed):
+        self.robotHandlerStatusPub.publish('max speed set at ' + max_speed)
 
     def toggle_collection(self, device):
         if self.currentCollectionState == DataCollectionState.IDLE:
@@ -182,6 +193,10 @@ if __name__ == '__main__':
         # Robot operations
         elif cmd[0] == 'stop_all':
             robot_handler.stop_all()
+        elif cmd[0] == 'halt':
+            robot_handler.halt()
+        elif cmd[0] == 'set_max_speed':
+            robot_handler.set_max_speed(cmd[1])
         else:
             robot_handler.start_operation(cmd[0])
 
