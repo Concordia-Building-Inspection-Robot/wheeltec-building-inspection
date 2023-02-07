@@ -114,7 +114,7 @@ class NavControl(Plugin):
         self.log_console = self._widget.findChild(QListWidget, 'LogConsole')
 
         # TODO: Add update method for checking status of subprocesses using QTimer object
-        self.timer = QTimer(500)
+        self.timer = QTimer()
         self.timer.timeout.connect(self.update)
         self.timer.start()
     
