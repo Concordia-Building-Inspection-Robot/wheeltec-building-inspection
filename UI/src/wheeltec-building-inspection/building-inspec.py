@@ -25,7 +25,6 @@ class NavControl(Plugin):
 
         self.proc_manager = SubProcessManager()
         self.transfer_state = TransferState.IDLE
-        self.current_goal = None
 
         # Give QObjects reasonable names
         self.setObjectName('NavControl')
@@ -119,13 +118,8 @@ class NavControl(Plugin):
         self.timer.timeout.connect(self.update)
         self.timer.start()
 
-        self.goal_subscriber = rospy.Subscriber("/move_base_simple/goal", PoseStamped, self.setGoal)
-
-    def halt(self, state = None):
+    def halt(self, state):
         self.robotHandlerCommandPub.publish('halt ' + str(int(state)))
-
-    def setGoal(self, goal):
-        self.goal = goal
     
     def set_max_speed(self):
         input_box = self._widget.findChild(QDoubleSpinBox, 'maxSpeedInput')

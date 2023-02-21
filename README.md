@@ -48,7 +48,10 @@ The depth sensing camera installed on the Wheeltec robot is the ASTRA PRO PLUS.
 The camera is used in a similar way to the LiDAR, it builds a map of its surroundings and estimate its own pose in the 
 environment. The depth sensing camera can generate a point cloud, which is a 3D representation of the environment.
 It is capable of 3D mapping unlike the 2D LiDAR used.
-The camera has a built in launch file which allows us to publish infrared, depth, and RGB images to the /camera root topic
+The camera has a built in launch file which allows us to publish infrared, depth, and RGB images to the /camera namespace
+Running astra_camera astra.launch file will initiate the camera node with the needed parameters (30fps, 720x480)
+The rgb camera requires computational priority when it comes to running the launch files, this means that whenever the camera
+is on, the rover will not be as quick to operate with some delays in input-response times
 
 # Lab PC Info
 ## Networking
@@ -148,7 +151,8 @@ Manual robot control is allowed in any operation mode through UI. W, S, A, D and
 * D - Drive backwards
 * A - Rotate to left
 * D - Rotate to right
-* Spacebar - Stop movement
+* K - Halt movement
+* Spacebar - Kill current operation and stop movement
 
 #### SLAM
 Maps the surrounding environment while simultaneously allowing for navigation.
@@ -192,8 +196,8 @@ Delete the currently selected data capture file from the robot.
 #### Stop Operations
 Stops current operation. (SLAM, Mapping, Navigation)
 
-#### Halt movement (not implemented yet!)
-Stops robot movement and removes goal without stopping current operation
+#### Halt movement
+Stops the movement of the robot and saves the current goal so that it may be resumed after the user toggles halt back off
 
 #### Status Display
 On the very bottom is the status display.
