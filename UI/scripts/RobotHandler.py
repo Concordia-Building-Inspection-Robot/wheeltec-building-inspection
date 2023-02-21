@@ -6,6 +6,7 @@ import rospy
 
 from std_msgs.msg import String
 from actionlib_msgs.msg import GoalID
+from move_base_msgs.msg import MoveBaseActionGoal
 
 from utils.Definitions import ROBOT_HOME_DIRECTORY, ROBOT_CAP_SAVE_DIRECTORY
 from utils.SubProcessManager import *
@@ -54,6 +55,7 @@ class RobotHandler():
     def __init__(self):
         self.currentState = RobotState.IDLE
         self.currentCollectionState = DataCollectionState.IDLE
+        self.current_goal = MoveBaseActionGoal()
 
         self.proc_manager = SubProcessManager()
 
@@ -65,6 +67,7 @@ class RobotHandler():
 
         # Publisher used later for the halt button
         self.halt_goal_publisher = rospy.Publisher('move_base/cancel', GoalID, queue_size=10)
+        self.goal_publisher = rospy.Publisher('move_base/goal', MoveBaseActionGoal, queue_size=10)
 
     def run_launch_file(self, package, launch_file, args='', mode='control'):
         success = True
@@ -97,12 +100,21 @@ class RobotHandler():
 
         self.robotHandlerStatusPub.publish('STOP')
     
-    def halt(self):
-        self.halt_goal_publisher.publish(GoalID())
-        self.robotHandlerStatusPub.publish('Halting Rover')
+    def halt(self, state):
+        if state:
+            self.halt_goal_publisher.publish(GoalID())
+            self.robotHandlerStatusPub.publish('Halting Rover')
+        else:
+            self.goal_publisher.publish(self.current_goal)
+            self.robotHandlerStatusPub.publish('Resuming Path')
 
     def set_max_speed(self, max_speed):
+        # TODO: Set max speed
         self.robotHandlerStatusPub.publish('max speed set at ' + max_speed)
+
+    def set_goal(self, goal):
+        if goal.goal.target_pose.header.frame_id: # if the goal is valid this returns 'map'
+            self.current_goal = goal
 
     def toggle_collection(self, device):
         if self.currentCollectionState == DataCollectionState.IDLE:
@@ -194,7 +206,7 @@ if __name__ == '__main__':
         elif cmd[0] == 'stop_all':
             robot_handler.stop_all()
         elif cmd[0] == 'halt':
-            robot_handler.halt()
+            robot_handler.halt(int(cmd[1]))
         elif cmd[0] == 'set_max_speed':
             robot_handler.set_max_speed(cmd[1])
         else:
@@ -209,5 +221,8 @@ if __name__ == '__main__':
     command_topic = '/robot_handler_cmd'
     rospy.loginfo('Beginning to subscribe to "' + command_topic + '" topic')
     sub = rospy.Subscriber(command_topic, String, command_handler)
+
+    goal_topic = '/move_base/goal'
+    goal_sub = rospy.Subscriber(goal_topic, MoveBaseActionGoal, robot_handler.set_goal)
 
     main()

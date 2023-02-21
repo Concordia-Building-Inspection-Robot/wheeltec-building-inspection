@@ -244,7 +244,7 @@
     <string>Misc</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="Halt">
+  <widget class="QRadioButton" name="Halt">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -257,7 +257,10 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(245, 121, 0)</string>
+    <string notr="true">background-color: rgb(245, 121, 0);
+border-radius: 2px;
+text-align: center;
+padding-left: 5px</string>
    </property>
    <property name="text">
     <string>HALT</string>
