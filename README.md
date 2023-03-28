@@ -17,6 +17,12 @@ provide accurate pose estimates.
 
 ### IMU
 There is an IMU built in the Wheeltec robot and it is published to /imu .
+As an initial idea, we can use the imu topic to figure out the rate of change of the acceleration,
+this helps us detect sudden decelerations, which indicate the possibility of a collision.
+A new node named acceleration_monitor keeps track of the current and previous accelerations,
+and uses them to find the rate of change. 
+This node is used in collision detection with manual and SLAM navigation, it stops the rover
+in its place with a collision occurs.
 \
 \
 IMU (inertial measurement unit) and wheel odometry are often used together in order to provide accurate pose estimates 
@@ -47,11 +53,9 @@ The depth sensing camera installed on the Wheeltec robot is the ASTRA PRO PLUS.
 \
 The camera is used in a similar way to the LiDAR, it builds a map of its surroundings and estimate its own pose in the 
 environment. The depth sensing camera can generate a point cloud, which is a 3D representation of the environment.
-It is capable of 3D mapping unlike the 2D LiDAR used.
+It is capable of creating a 3d map of the environment unlike the 2D LiDAR used.
 The camera has a built in launch file which allows us to publish infrared, depth, and RGB images to the /camera namespace
-Running astra_camera astra.launch file will initiate the camera node with the needed parameters (30fps, 720x480)
-The rgb camera requires computational priority when it comes to running the launch files, this means that whenever the camera
-is on, the rover will not be as quick to operate with some delays in input-response times
+Running turn_on_wheeltec_rover wheeltec_camera.launch file will initiate the camera node with the needed parameters (30fps, 720x480)
 
 # Lab PC Info
 ## Networking
@@ -146,7 +150,7 @@ for visualizing robots and data surrounding them.
 
 ### Control Tab
 #### Manual teleop control
-Manual robot control is allowed in any operation mode through UI. W, S, A, D and spacebar keys can be used for driving as follows:
+Manual robot control is allowed in any operation mode through UI. W, S, A, D, and spacebar keys can be used for driving as follows:
 * W - Drive forwards
 * D - Drive backwards
 * A - Rotate to left
@@ -183,13 +187,13 @@ Toggles the capturing the raw output of the selected device.
 #### Item List View
 Display a list of all the files for each capture stored on the robot for the currently selected device.
 
-#### Transfer (not implemented yet!)
+#### Transfer
 Transfer selected capture to lab laptop over wireless connection.
 
-#### Playback (not implemented yet!)
+#### Playback
 Play back the currently selected captured data in real time to be viewed in visualisation.
 
-#### Delete (not implemented yet!)
+#### Delete
 Delete the currently selected data capture file from the robot.
 
 ### General Control
@@ -197,7 +201,7 @@ Delete the currently selected data capture file from the robot.
 Stops current operation. (SLAM, Mapping, Navigation)
 
 #### Halt movement
-Stops the movement of the robot and saves the current goal so that it may be resumed after the user toggles halt back off
+Stops the movement of the robot and saves the current goal so that it may be resumed after the user toggles halt back on
 
 #### Status Display
 On the very bottom is the status display.
@@ -211,12 +215,19 @@ On the very bottom is the status display.
 #### Navigation
 - `roslaunch turn_on_wheeltec_robot navigation.launch`
 
-### 3D Mapping with lidar and depth camera
+### 3D Mapping with depth camera
 #### Mappping
-- ''
+- `roslaunch turn_on_wheeltec_robot pure3d_mapping.launch`
 
 #### Navigation
-- ''
+- `roslaunch turn_on_wheeltec_robot pure3d_navigation.launch`
+
+### 3D Mapping with depth camera and lidar
+#### Mapping
+- `roslaunch turn_on_wheeltec_robot 3d_mapping.launch`
+
+#### Navigation
+- `roslaunch turn_on_wheeltec_robot 3d_navigation.launch`
 
 ### General
 ### Save map during mapping

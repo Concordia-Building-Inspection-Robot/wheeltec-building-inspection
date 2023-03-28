@@ -223,6 +223,7 @@ if __name__ == '__main__':
     sub = rospy.Subscriber(command_topic, String, command_handler)
 
     goal_topic = '/move_base/goal'
+    rospy.loginfo('Beginning to subscribe to "' + goal_topic + '" topic')
     goal_sub = rospy.Subscriber(goal_topic, MoveBaseActionGoal, robot_handler.set_goal)
 
     main()

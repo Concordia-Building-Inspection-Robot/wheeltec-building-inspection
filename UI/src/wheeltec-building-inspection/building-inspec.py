@@ -3,7 +3,6 @@ import rospy
 import rospkg
 
 from std_msgs.msg import String
-from geometry_msgs.msg import PoseStamped
 
 from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut, QRadioButton
 from PyQt5.QtCore import QTimer

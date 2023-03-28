@@ -14,7 +14,7 @@
        -->
        <label>Rover Controller</label>
        <icon type="theme">system-help</icon>
-       <statustip>User Interface designed to control the buiding inspection rover</statustip>
+       <statustip>User Interface designed to control the building inspection rover</statustip>
      </qtgui>
    </class>
 </library>
