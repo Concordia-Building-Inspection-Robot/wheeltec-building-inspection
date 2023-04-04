@@ -22,7 +22,7 @@ this helps us detect sudden decelerations, which indicate the possibility of a c
 A new node named acceleration_monitor keeps track of the current and previous accelerations,
 and uses them to find the rate of change. 
 This node is used in collision detection with manual and SLAM navigation, it stops the rover
-in its place with a collision occurs.
+in its place when a collision occurs.
 \
 \
 IMU (inertial measurement unit) and wheel odometry are often used together in order to provide accurate pose estimates 
@@ -48,14 +48,15 @@ The LiDAR is used to build a map of its surroundings and estimate its own pose (
 in the environment.
 
 ### Depth Sensing Camera
-The depth sensing camera installed on the Wheeltec robot is the ASTRA PRO PLUS. 
+The depth sensing camera installed on the Wheeltec robot is the ASTRA PRO. 
 \
 \
 The camera is used in a similar way to the LiDAR, it builds a map of its surroundings and estimate its own pose in the 
 environment. The depth sensing camera can generate a point cloud, which is a 3D representation of the environment.
 It is capable of creating a 3d map of the environment unlike the 2D LiDAR used.
 The camera has a built in launch file which allows us to publish infrared, depth, and RGB images to the /camera namespace
-Running turn_on_wheeltec_rover wheeltec_camera.launch file will initiate the camera node with the needed parameters (30fps, 720x480)
+Running turn_on_wheeltec_rover wheeltec_camera.launch file will initiate the camera node with the needed parameters (30fps, 720x480). In order to run this launch file a small change needs to be made to the astra_camera.launch file and correcting the name of the camera driver's source file from astra_camera to libuvc since the latter is not preinstalled. It is our assumption that there is a calibration issue with recorded data of the 3d map being a collection of points that make 
+no sense.
 
 # Lab PC Info
 ## Networking
@@ -85,7 +86,7 @@ The driver installed for the device to be functional on Ubuntu 18.04 was an upda
 # Wheeltec Robot Info
 ## Basic Use
 You can remotely access a terminal shell session using the following command:
-- `ssh wheeltec@wheeltec` The first "wheeltec" is the username, the second one is the hostname for 192.168.0.10
+- `ssh wheeltec@wheeltec` The first "wheeltec" is the username, the second one is the hostname for 192.168.0.100
 \
 \
 Sudo and login password is: 'dongguan'
@@ -122,6 +123,9 @@ Before starting the UI please ensure that the WheelTec robot is powered on and t
 is connected to the wheeltec robot's WIFI hotspot. 
 \
 \
+\
+You can run the UI either by searching for "ROBOT-CONTROL" in the application search bar.
+Or by running the icon on the desktop.
 If commiuncation with the WheelTec robot fails
 an error will appear telling the operator that it failed to connect to "ROS Master".
 \
@@ -138,8 +142,8 @@ You can do this by selecting the "Perspectives" option on the top and selecting 
 
 ## UI Use
 The UI uses RQT. The main operation control UI is the component on the right. There are currently three states of operation 
-within the UI: Manual teleop, Mapping and Navigation. Each of them can only be run while the robot is in its idle state. 
-(not currently in any of the three state of operations)
+within the UI: SLAM, Mapping and Navigation. Each of them can only be run while the robot is in its idle state. 
+(not currently in any of the three state of operations). The GUI is currently being updated to include RTABMAP (which is the algorithm used for 3d mapping and navigation)
 \
 \
 Currently the UI only allows for control using 2D mapping and navigation.
@@ -200,8 +204,8 @@ Delete the currently selected data capture file from the robot.
 #### Stop Operations
 Stops current operation. (SLAM, Mapping, Navigation)
 
-#### Halt movement
-Stops the movement of the robot and saves the current goal so that it may be resumed after the user toggles halt back on
+#### Halt Movement
+Interrupts the current goal if the robot is in halt state, otherwise, it will fetch the most recent incomplete goal and navigate to it.
 
 #### Status Display
 On the very bottom is the status display.
@@ -222,7 +226,7 @@ On the very bottom is the status display.
 #### Navigation
 - `roslaunch turn_on_wheeltec_robot pure3d_navigation.launch`
 
-### 3D Mapping with depth camera and lidar
+### 3D Mapping with depth camera and lidar (not fully working / camera and lidar maps overlap)
 #### Mapping
 - `roslaunch turn_on_wheeltec_robot 3d_mapping.launch`
 
@@ -245,6 +249,7 @@ The UI package under the repo contains packages that holds the nodes for the UI 
 
 ### Running on the lab PC
 - building-inspec.py
+- monitor.py
 
 ### Running on the robot
 - RobotHandler.py
@@ -285,6 +290,9 @@ to the python path environment variable, but it does allow all the modules here 
 The long term goal of this project is to develop a fleet of autonomous robots capable of helping perform building 
 inspection with the use of its sensors on board. Using the Lidar and Stereo camera in order to map the environment it 
 navigates; the environment being the building that engineers wish to inspect.
+\
+\
+Our current short term goal is to upgrade the rover's operating system as well as the version of ROS to ROS2.
 \
 \
 So far the work that has been done is the UI that makes it possible to capture the data from the Lidar during the operation
