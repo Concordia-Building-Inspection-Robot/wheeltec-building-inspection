@@ -95,17 +95,21 @@ class NavControl(Plugin):
 
         self._widget.findChild(QPushButton, 'TransferCapButton').clicked.connect(
             lambda: self.transfer_cap_file())
+        
+        self._widget.findChild(QRadioButton, 'EnableCamButton').toggled.connect(
+            lambda: self.robotHandlerCommandPub.publish('start_cam')
+        )
 
         # General
         self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
             lambda: self.robotHandlerCommandPub.publish('stop_all'))
 
         self._widget.findChild(QPushButton, 'Halt').clicked.connect(
-            lambda: self.robotHandlerCommandPub.publish('halt'))
+            lambda: self.robotHandlerCommandPub.publish('halt 0'))
         
         self.halt_shortcut = QShortcut('k', self._widget)
         self.halt_shortcut.activated.connect(
-            lambda: self.robotHandlerCommandPub.publish('halt'))
+            lambda: self.robotHandlerCommandPub.publish('halt 0'))
 
         self._widget.findChild(QDoubleSpinBox, 'maxSpeedInput').editingFinished.connect(
             self.set_max_speed

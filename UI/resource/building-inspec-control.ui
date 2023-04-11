@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="MapAndNavTab">
     <attribute name="title">
@@ -198,6 +198,28 @@
        <width>161</width>
        <height>121</height>
       </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="EnableCam">
+    <attribute name="title">
+     <string>Enable Controls</string>
+    </attribute>
+    <widget class="QRadioButton" name="EnableCamButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: white;
+border-radius: 5px;</string>
+     </property>
+     <property name="text">
+      <string>Launch Camera</string>
      </property>
     </widget>
    </widget>

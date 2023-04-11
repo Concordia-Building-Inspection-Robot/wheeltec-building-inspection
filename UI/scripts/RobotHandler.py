@@ -55,6 +55,7 @@ class RobotHandler():
 
     def __init__(self):
         self.halt_state = False
+        self.camera_state = False
         self.currentState = RobotState.IDLE
         self.currentCollectionState = DataCollectionState.IDLE
         self.current_goal = MoveBaseActionGoal()
@@ -92,8 +93,9 @@ class RobotHandler():
             if success:
                 self.currentState = self.operation_new_states[command]
                 self.robotHandlerStatusPub.publish('successfully started ' + friendly_name)
-        else:
-            self.robotHandlerStatusPub.publish('robot must be idle to start ' + friendly_name + '!')
+        elif self.currentState != self.operation_new_states[command]: # Prevents files from being stopped and ran again
+            self.stop_all()
+            self.start_operation(command)
 
     def stop_all(self):
         if self.currentState != RobotState.IDLE and self.proc_manager.is_subprocess_running('control'):
@@ -102,8 +104,8 @@ class RobotHandler():
 
         self.robotHandlerStatusPub.publish('STOP')
     
-    def halt(self):
-        if not self.halt_state:
+    def halt(self, force):
+        if force or (not self.halt_state):
             self.halt_goal_publisher.publish(GoalID())
             self.robotHandlerStatusPub.publish('Halting Rover')
             self.halt_state = True
@@ -123,6 +125,15 @@ class RobotHandler():
     def reset_goal(self, data):
         if data.status_list[0].text == "Goal reached.":
             self.current_goal = MoveBaseActionGoal()
+
+    def start_cam(self):
+        if not self.camera_state:
+            self.camera_state = True
+            self.run_launch_file('turn_on_wheeltec_robot', 'wheeltec_camera.launch', mode='camera')
+        else:
+            self.camera_state = False
+            self.proc_manager.close_subprocess('camera')
+            self.robotHandlerStatusPub.publish("Killing Camera Node")
 
     def toggle_collection(self, device):
         if self.currentCollectionState == DataCollectionState.IDLE:
@@ -210,11 +221,14 @@ if __name__ == '__main__':
         elif cmd[0] == 'delete_data_cap':
             robot_handler.del_data_cap(cmd[1], cmd[2])
 
+        elif cmd[0] == 'start_cam':
+            robot_handler.start_cam()
+
         # Robot operations
         elif cmd[0] == 'stop_all':
             robot_handler.stop_all()
         elif cmd[0] == 'halt':
-            robot_handler.halt()
+            robot_handler.halt(int(cmd[1]))
         elif cmd[0] == 'set_max_speed':
             robot_handler.set_max_speed(cmd[1])
         else:
