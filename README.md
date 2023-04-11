@@ -143,8 +143,9 @@ You can do this by selecting the "Perspectives" option on the top and selecting 
 
 ## 4.2 UI Use
 
-The UI uses RQT. The main operation control UI is the component on the right. There are currently three states of operation
-within the UI: SLAM, Mapping and Navigation. Each of them can only be run while the robot is in its idle state.
+## UI Use
+The UI uses RQT. The main operation control UI is the component on the right. There are currently three states of operation 
+within the UI: SLAM, Mapping and Navigation. When any of these is clicked, the current state is stopped, and operation is moved to the new launch file.
 (not currently in any of the three state of operations). The GUI is currently being updated to include RTABMAP (which is the algorithm used for 3d mapping and navigation)
 
 Currently the UI only allows for control using 2D mapping and navigation.
