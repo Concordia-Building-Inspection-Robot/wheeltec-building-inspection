@@ -53,7 +53,7 @@ in the environment.
 
 The stereo camera installed on the Wheeltec robot is the ASTRA PRO.
 
-The camer is captures images of the environemnt, these images contain RGB and depth information about the environment. An algorithm is used to translate this data into maps, a 2d map used for the navigation algorithm, and a 3d map (Point Cloud data) that can be saved and later looked at or instantaneously rendered to the GUI. When stereo camera navigation is enabeled, the rover uses an algorithm known as RTABMAP for trajectory estimation.
+The camera captures images of the environemnt, these images contain RGB and depth information about the environment. An algorithm is used to translate this data into maps, a 2d map used for the navigation algorithm, and a 3d map (Point Cloud data) that can be saved and later looked at or instantaneously rendered to the GUI. When stereo camera navigation is enabeled, the rover uses an algorithm known as RTABMAP for trajectory estimation.
 
 The camera has a built in launch file which allows us to publish infrared, depth, and RGB images to the /camera namespace
 Running turn_on_wheeltec_rover wheeltec_camera.launch file will initiate the camera node with the needed parameters (30fps, 720x480). In order to run this launch file a small change needs to be made to the astra_camera.launch file and correcting the name of the camera driver's source file from astra_camera to libuvc since the latter is not preinstalled.
