@@ -80,6 +80,22 @@ class NavControl(Plugin):
             lambda: self._widget.findChild(QSlider, 'angular_velocity_slider').setValue(0)
         )
 
+        self._widget.findChild(QPushButton, 'increase_linear_velocity_button').clicked.connect(
+            lambda: self.update_velocity_slider("linear", "+")
+        )
+
+        self._widget.findChild(QPushButton, 'decrease_linear_velocity_button').clicked.connect(
+            lambda: self.update_velocity_slider("linear", "-")
+        )
+
+        self._widget.findChild(QPushButton, 'increase_angular_velocity_button').clicked.connect(
+            lambda: self.update_velocity_slider("angular", "+")
+        )
+
+        self._widget.findChild(QPushButton, 'decrease_angular_velocity_button').clicked.connect(
+            lambda: self.update_velocity_slider("angular", "-")
+        )
+
         self._widget.findChild(QPushButton, 'StartNormalSlam').clicked.connect(
             lambda: self.robotHandlerCommandPub.publish('start_normal_slam'))
 
@@ -92,10 +108,17 @@ class NavControl(Plugin):
         self._widget.findChild(QPushButton, 'StartNav').clicked.connect(
             lambda: self.robotHandlerCommandPub.publish('start_nav'))
         
-        self.reset_velocity_sequence = QShortcut("Space", self._widget)
-        self.reset_velocity_sequence.activated.connect(
+        # Halts the rover's movement
+        self.halt_sequence = QShortcut("Space", self._widget)
+        self.halt_sequence.activated.connect(
             self.reset_velocities
         )
+
+        # # Kills the current Launch file on board of the rover
+        # self.estop_sequence = QShortcut("K", self._widget)
+        # self.estop_sequence.activated.connect(
+        #     lambda: self.robotHandlerCommandPub.publish('stop_all')
+        # )
 
         # Data Cap Tab
         self.device_selection = self._widget.findChild(QComboBox, 'selectDeviceBox')
@@ -137,8 +160,12 @@ class NavControl(Plugin):
         self.halt_shortcut.activated.connect(
             lambda: self.robotHandlerCommandPub.publish('halt 0'))
 
-        # self._widget.findChild(QDoubleSpinBox, 'max_linear_speed_input').editingFinished.connect(self.set_max_linear)
-        # self._widget.findChild(QDoubleSpinBox, 'max_angular_speed_input').editingFinished.connect(self.set_max_angular)
+        self._widget.findChild(QDoubleSpinBox, 'max_linear_speed_input').editingFinished.connect(
+            lambda: self.set_max_slider("linear")
+        )
+        self._widget.findChild(QDoubleSpinBox, 'max_angular_speed_input').editingFinished.connect(
+            lambda: self.set_max_slider("angular")
+        )
 
         # Handle log console
         self.log_console = self._widget.findChild(QListWidget, 'LogConsole')
@@ -168,21 +195,21 @@ class NavControl(Plugin):
         self._widget.findChild(QLabel, 'current_linear_velocity').setText(str(msg.linear.x) + " m/s")
         self._widget.findChild(QLabel, 'current_angular_velocity').setText(str(msg.angular.z) + " m/s")
 
+    def update_velocity_slider(self, velocity, type):
+        slider = self._widget.findChild(QSlider, velocity + "_velocity_slider")
+        if type == "+":
+            slider.setValue(slider.value() + 10)
+        elif type == "-":
+            slider.setValue(slider.value() - 10)
+
     def reset_velocities(self):
         self._widget.findChild(QSlider, 'linear_velocity_slider').setValue(0)
         self._widget.findChild(QSlider, 'angular_velocity_slider').setValue(0)
 
-    
-    def set_max_linear(self):
-        input_box = self._widget.findChild(QDoubleSpinBox, 'max_linear_speed_input')
-        self._widget.findChild(QSlider, 'linear_velocity_slider').setMaximum(input_box.value())
-        self._widget.findChild(QSlider, 'linear_velocity_slider').setMinimum(-input_box.value())
-        input_box.clearFocus()
-
-    def set_max_angular(self):
-        input_box = self._widget.findChild(QDoubleSpinBox, 'max_angular_speed_input')
-        self._widget.findChild(QSlider, 'angular_velocity_slider').setMaximum(input_box.value())
-        self._widget.findChild(QSlider, 'angular_velocity_slider').setMinimum(-input_box.value())
+    def set_max_slider(self, velocity):
+        input_box = self._widget.findChild(QDoubleSpinBox, 'max_' + velocity + '_speed_input')
+        self._widget.findChild(QSlider, velocity + '_velocity_slider').setMaximum(input_box.value() * 100)
+        self._widget.findChild(QSlider, velocity + '_velocity_slider').setMinimum(-input_box.value() * 100)
         input_box.clearFocus()
     
     def update(self):
