@@ -27,7 +27,7 @@ this helps us detect sudden decelerations, which indicate the possibility of a c
 A new node named acceleration_monitor keeps track of the current and previous accelerations,
 and uses them to find the rate of change.
 This node is used in collision detection with manual and SLAM navigation, it stops the rover
-in its place when a collision occurs.
+in its place when a collision occurs. The current node uses python, however the goal is to migrate it over to C++ to avoid lag with user input.
 
 IMU (inertial measurement unit) and wheel odometry are often used together in order to provide accurate pose estimates
 for a mobile robot. An IMU is a sensor that measures the linear and angular accelerations of a moving body, using a
@@ -58,7 +58,7 @@ The camera captures images of the environemnt, these images contain RGB and dept
 The camera has a built in launch file which allows us to publish infrared, depth, and RGB images to the /camera namespace
 Running turn_on_wheeltec_rover wheeltec_camera.launch file will initiate the camera node with the needed parameters (30fps, 720x480). In order to run this launch file a small change needs to be made to the astra_camera.launch file and correcting the name of the camera driver's source file from astra_camera to libuvc since the latter is not preinstalled.
 
-The camera launch files are mostly operational, however
+The camera launch files are mostly operational; however some problems occur when attempting to use both lidar and camera data for navigation.
 
 # 2. Lab PC Info
 
@@ -144,7 +144,8 @@ You can do this by selecting the "Perspectives" option on the top and selecting 
 ## 4.2 UI Use
 
 ## UI Use
-The UI uses RQT. The main operation control UI is the component on the right. There are currently three states of operation 
+
+The UI uses RQT. The main operation control UI is the component on the right. There are currently three states of operation
 within the UI: SLAM, Mapping and Navigation. When any of these is clicked, the current state is stopped, and operation is moved to the new launch file.
 (not currently in any of the three state of operations). The GUI is currently being updated to include RTABMAP (which is the algorithm used for 3d mapping and navigation)
 
@@ -174,7 +175,7 @@ The rover has three different operation types which the operator can start using
 
 1. SLAM
 
-[SLAM](https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping) is short for Simultaneous Localisation and Mapping, this is the algorithm used with the data received from the Lidar to be able to navigate the 2d map created. Slam allows both goal setting and map creation at the same time. This allows the operator to the environment, while at the environment and set goals for the rover to navigate to within that map.
+[SLAM](https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping) is short for Simultaneous Localization and Mapping, this is the algorithm used with the data received from the Lidar to be able to navigate the 2d map created. Slam allows both goal setting and map creation at the same time. This allows the operator to the environment, while at the environment and set goals for the rover to navigate to within that map.
 
 2. Mapping
 
@@ -182,7 +183,7 @@ Mapping mode turns on the rover's Lidar and allows creating a map of the environ
 
 3. Navigation
 
-Navigation mode loads the saved map, it then localizes robot within that map and allows for autonomous transversal. Any new obstacles added to the map that were not there during the mapping phase will not be acknoleged by the rover.
+Navigation mode loads the saved map, it then localizes robot within that map and allows for autonomous transversal. Any new obstacles added to the map that were not there during the mapping phase will not be acknowledged by the rover.
 
 ### 4.2.3 Data Capture Tab
 
@@ -250,7 +251,7 @@ This button publishes the halt command to the rover, which stops the rover in it
 
 -   `roslaunch turn_on_wheeltec_robot pure3d_navigation.launch`
 
-### 5.1.3 3D Mapping with depth camera and lidar2
+### 5.1.3 3D Mapping with depth camera and lidar
 
 #### Mapping
 
@@ -279,7 +280,7 @@ In two separate terminal sessions:
 
 ## 6.1 What runs where?
 
-The UI package under the repo contains packages that holds the nodes for the UI that runs on the lab PC and robot itself.
+The UI package under the repo contains packages that hold the nodes for the UI that runs on the lab PC and robot itself.
 
 ### Running on the lab PC
 
