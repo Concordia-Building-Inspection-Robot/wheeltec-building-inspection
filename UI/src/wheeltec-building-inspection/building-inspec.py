@@ -3,8 +3,9 @@ import rospy
 import rospkg
 
 from std_msgs.msg import String
+from geometry_msgs.msg import Twist
 
-from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut, QRadioButton
+from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut, QRadioButton, QSlider, QLabel
 from PyQt5.QtCore import QTimer
 
 from qt_gui.plugin import Plugin
@@ -30,11 +31,13 @@ class NavControl(Plugin):
 
         # Register publishers
         self.robotHandlerCommandPub = rospy.Publisher('robot_handler_cmd', String, queue_size=10)
+        self.velocityCommandPub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
 
         # Register subscribers
         self.robotHandlerStatusSub = rospy.Subscriber('robot_handler_status', String, self.add_to_log_console)
         self.robotHandlerCapListRequest = rospy.Subscriber('robot_handler_cap_file_list', String,
                                                            self.refresh_robot_cap_list)
+        self.robotHandlerCommandSub = rospy.Subscriber('robot_handler_cmd', String, self.handle_commands)
 
         # Create QWidget
         self._widget = QWidget()
@@ -61,6 +64,22 @@ class NavControl(Plugin):
         # self._widget.findChild(QPushButton, 'StartManualControl').clicked.connect(
         #     lambda: self.robotHandlerCommandPub.publish('start_manual_control'))
 
+        self._widget.findChild(QSlider, 'linear_velocity_slider').valueChanged.connect(
+            self.update_velocity
+        )
+
+        self._widget.findChild(QSlider, 'angular_velocity_slider').valueChanged.connect(
+            self.update_velocity
+        )
+
+        self._widget.findChild(QPushButton, 'reset_linear_velocity_button').clicked.connect(
+            lambda: self._widget.findChild(QSlider, 'linear_velocity_slider').setValue(0)
+        )
+
+        self._widget.findChild(QPushButton, 'reset_angular_velocity_button').clicked.connect(
+            lambda: self._widget.findChild(QSlider, 'angular_velocity_slider').setValue(0)
+        )
+
         self._widget.findChild(QPushButton, 'StartNormalSlam').clicked.connect(
             lambda: self.robotHandlerCommandPub.publish('start_normal_slam'))
 
@@ -72,10 +91,17 @@ class NavControl(Plugin):
 
         self._widget.findChild(QPushButton, 'StartNav').clicked.connect(
             lambda: self.robotHandlerCommandPub.publish('start_nav'))
+        
+        self.reset_velocity_sequence = QShortcut("Space", self._widget)
+        self.reset_velocity_sequence.activated.connect(
+            self.reset_velocities
+        )
 
         # Data Cap Tab
         self.device_selection = self._widget.findChild(QComboBox, 'selectDeviceBox')
         self.device_selection.addItem('lidar')
+        # TODO: add data cap for camera
+        # self.device_selection.addItem('camera')
 
         self.fileCapView = self._widget.findChild(QListWidget, 'ListCaptureFiles')
         self.robotHandlerCommandPub.publish('get_cap_file_list ' + self.device_selection.currentText())
@@ -111,9 +137,8 @@ class NavControl(Plugin):
         self.halt_shortcut.activated.connect(
             lambda: self.robotHandlerCommandPub.publish('halt 0'))
 
-        self._widget.findChild(QDoubleSpinBox, 'maxSpeedInput').editingFinished.connect(
-            self.set_max_speed
-        )
+        # self._widget.findChild(QDoubleSpinBox, 'max_linear_speed_input').editingFinished.connect(self.set_max_linear)
+        # self._widget.findChild(QDoubleSpinBox, 'max_angular_speed_input').editingFinished.connect(self.set_max_angular)
 
         # Handle log console
         self.log_console = self._widget.findChild(QListWidget, 'LogConsole')
@@ -122,10 +147,42 @@ class NavControl(Plugin):
         self.timer = QTimer()
         self.timer.timeout.connect(self.update)
         self.timer.start()
+
+    def handle_commands(self, data):
+        cmd = data.data
+        if cmd == "halt 1":
+            self.reset_velocities()
+
+    def update_velocity(self):
+        msg = Twist()
+        msg.linear.x = float(self._widget.findChild(QSlider, 'linear_velocity_slider').value() / 100.0)
+        msg.linear.y = 0
+        msg.linear.z = 0
+
+        msg.angular.x = 0
+        msg.angular.y = 0
+        msg.angular.z = float(self._widget.findChild(QSlider, 'angular_velocity_slider').value() / 100.0)
+
+        self.velocityCommandPub.publish(msg)
+
+        self._widget.findChild(QLabel, 'current_linear_velocity').setText(str(msg.linear.x) + " m/s")
+        self._widget.findChild(QLabel, 'current_angular_velocity').setText(str(msg.angular.z) + " m/s")
+
+    def reset_velocities(self):
+        self._widget.findChild(QSlider, 'linear_velocity_slider').setValue(0)
+        self._widget.findChild(QSlider, 'angular_velocity_slider').setValue(0)
+
     
-    def set_max_speed(self):
-        input_box = self._widget.findChild(QDoubleSpinBox, 'maxSpeedInput')
-        self.robotHandlerCommandPub.publish('set_max_speed ' + str(input_box.value()))
+    def set_max_linear(self):
+        input_box = self._widget.findChild(QDoubleSpinBox, 'max_linear_speed_input')
+        self._widget.findChild(QSlider, 'linear_velocity_slider').setMaximum(input_box.value())
+        self._widget.findChild(QSlider, 'linear_velocity_slider').setMinimum(-input_box.value())
+        input_box.clearFocus()
+
+    def set_max_angular(self):
+        input_box = self._widget.findChild(QDoubleSpinBox, 'max_angular_speed_input')
+        self._widget.findChild(QSlider, 'angular_velocity_slider').setMaximum(input_box.value())
+        self._widget.findChild(QSlider, 'angular_velocity_slider').setMinimum(-input_box.value())
         input_box.clearFocus()
     
     def update(self):
