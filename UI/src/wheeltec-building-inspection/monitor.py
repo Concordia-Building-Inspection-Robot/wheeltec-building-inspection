@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# This script can be used to monitor the acceleration of the rover for collision detection
+# however it is depricated, and has been replaced by cpp_monitor
 
 import rospy
 import math
