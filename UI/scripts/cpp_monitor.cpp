@@ -17,11 +17,10 @@ int main(int argc, char* argv[]) {
     double prevAcc{0};
 
     auto callback = [&] (const sensor_msgs::Imu::ConstPtr& data) {
-	double x = data->linear_acceleration.x;
-	double y = data->linear_acceleration.y;
-	double acc = sqrt(pow(x, 2) + pow(y, 2));
-
-	double jerk = acc - prevAcc;
+        double x = data->linear_acceleration.x;
+        double y = data->linear_acceleration.y;
+        double acc = sqrt(pow(x, 2) + pow(y, 2));
+        double jerk = acc - prevAcc;
 
         if (jerk > MAXJERK) {
             std_msgs::String msg;

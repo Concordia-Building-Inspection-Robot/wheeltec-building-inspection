@@ -24,10 +24,9 @@ provide accurate pose estimates.
 There is an IMU built in the Wheeltec robot and it is published to /imu .
 As an initial idea, we can use the imu topic to figure out the rate of change of the acceleration,
 this helps us detect sudden decelerations, which indicate the possibility of a collision.
-A new node named acceleration_monitor keeps track of the current and previous accelerations,
+A new node named monitors keeps track of the current and previous accelerations,
 and uses them to find the rate of change.
-This node is used in collision detection with manual and SLAM navigation, it stops the rover
-in its place when a collision occurs. The current node uses python, however the goal is to migrate it over to C++ to avoid lag with user input.
+This node is written in C++ and allows the rover to stop in case of collisions for both autonomous driving and manual controls.
 
 IMU (inertial measurement unit) and wheel odometry are often used together in order to provide accurate pose estimates
 for a mobile robot. An IMU is a sensor that measures the linear and angular accelerations of a moving body, using a
@@ -285,11 +284,11 @@ The UI package under the repo contains packages that hold the nodes for the UI t
 ### Running on the lab PC
 
 -   building-inspec.py
--   monitor.py
 
 ### Running on the robot
 
 -   RobotHandler.py
+-   cpp_monitor.cpp
 
 ### UI communication with robot
 
