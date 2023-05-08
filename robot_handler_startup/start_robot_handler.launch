@@ -1,4 +1,4 @@
 <launch>
     <node pkg="wheeltec-building-inspection-ui" type="RobotHandler.py" name="robot_handler" output="screen"/>
-    <node pkg="wheeltec-building-inspection-ui" type="cpp_monitor" name="monitor" output="screen"/>
+    <node pkg="wheeltec-building-inspection-ui" type="cpp_monitor" name="acceleration_monitor" output="screen"/>
 </launch>

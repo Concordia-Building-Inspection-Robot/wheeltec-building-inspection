@@ -78,6 +78,8 @@ If this happens, simply run the following command: `sudo route del default`.
 
 This should remove the incorrect routing being used and make the PC use the proper one instead.
 
+For some reason, the rover sometimes reassigns the adapter's IP address by incrementing it, when that happens all comms fail between the rover and the lab computer as the IP is statically set beforehand. In this case, it is good to check what the new IP is by running `ifconfig` on the lab PC, and checking the IP address of the external adapter and updating the IP address of concordia lab PC on the rover found in `/etc/hosts`. It is possible to create a script that will ping the old IP address, and if that address fails, updates it.
+
 ### 2.1.2 External Adapter Info
 
 The vendor and project IDs for the external USB WIFI adapter are 0b05 184c respectively. This adapter is an
@@ -139,6 +141,7 @@ Fig. 4: User Interface
 
 If it doesn't have all or none of the components on the screen, it may because you need to load the perspective for it in [RQT](http://wiki.ros.org/rqt).
 You can do this by selecting the "Perspectives" option on the top and selecting the "wheeltec" option.
+If this also fails, you would have to load the components manually, by clicking on "Plugins"->"Visualization"->"RViz" and "Plugins"->"Rover Controller".
 
 ## 4.2 UI Use
 
@@ -168,7 +171,7 @@ Manual robot control is allowed in any operation mode through UI. W, S, A, D, an
 -   K - Halt movement
 -   Spacebar - Kill current operation and stop movement
 
-RViz also allows placing 2d goals from the UI, this can be done by clicking the "Set 2d Goal" button in the top middle of the UI and then clicking on any part of the map.
+RViz also allows placing 2d goals from the UI, this can be done by clicking the "2d Nav Goal" button in the top middle of the UI and then clicking on any part of the map.
 
 The rover has three different operation types which the operator can start using the UI:
 

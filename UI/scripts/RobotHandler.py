@@ -68,7 +68,7 @@ class RobotHandler():
         self.robotHandlerStatusPub = rospy.Publisher('robot_handler_status', String, queue_size=10)
         self.capListPub = rospy.Publisher('robot_handler_cap_file_list', String, queue_size=10)
 
-        # Publisher used later for the halt button
+        # Publishers used later for the halt button
         self.halt_goal_publisher = rospy.Publisher('move_base/cancel', GoalID, queue_size=10)
         self.goal_publisher = rospy.Publisher('move_base/goal', MoveBaseActionGoal, queue_size=10)
 
