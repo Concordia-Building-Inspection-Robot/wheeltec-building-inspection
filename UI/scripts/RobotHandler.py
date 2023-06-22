@@ -4,6 +4,9 @@ import os
 
 import rospy
 
+
+import subprocess
+
 from std_msgs.msg import String
 from actionlib_msgs.msg import GoalID
 from move_base_msgs.msg import MoveBaseActionGoal
@@ -18,6 +21,7 @@ class RobotState():
     MANUAL_CONTROL = 2
     MAPPING = 3
     NAVIGATION = 4
+    KEYBOARD_ON = 1
 
 class DataCollectionState():
     IDLE = 0
@@ -33,29 +37,35 @@ class RobotHandler():
                                      'start_manual_control': 'manual control',
                                      'start_mapping': 'mapping',
                                      'save_map': 'save map',
-                                     'start_nav': 'navigation'}
+                                     'start_nav': 'navigation',
+                                     'start_keyboard': 'keyboard'}
 
     operation_required_states = {'start_normal_slam': RobotState.IDLE,
                                  'start_manual_control': RobotState.IDLE,
                                  'start_mapping': RobotState.IDLE,
                                  'save_map': RobotState.MAPPING,
-                                 'start_nav': RobotState.IDLE}
+                                 'start_nav': RobotState.IDLE,
+                                 'start_keyboard': RobotState.KEYBOARD_ON}
 
     operation_new_states = {'start_normal_slam': RobotState.NORMAL_SLAM,
                             'start_manual_control': RobotState.MANUAL_CONTROL,
                             'start_mapping': RobotState.MAPPING,
                             'save_map': RobotState.MAPPING,
-                            'start_nav': RobotState.NAVIGATION}
+                            'start_nav': RobotState.NAVIGATION,
+                            'start_keyboard': RobotState.KEYBOARD_ON}
 
     operation_launch_params = {'start_normal_slam': ['turn_on_wheeltec_robot', 'rrt_slam.launch', 'control'],
                                'start_manual_control': ['turn_on_wheeltec_robot', 'turn_on_wheeltec_robot.launch', 'control'],
                                'start_mapping': ['turn_on_wheeltec_robot', 'mapping.launch', 'control'],
                                'save_map': ['turn_on_wheeltec_robot', 'map_saver.launch', 'save_map'],
-                               'start_nav': ['turn_on_wheeltec_robot', 'navigation.launch', 'control']}
+                               'start_nav': ['turn_on_wheeltec_robot', 'navigation.launch', 'control'],
+                               'start_keyboard': ['wheeltec_robot_rc', 'keyboard_teleop.launch', 'keyb']}
 
     def __init__(self):
         self.halt_state = False
         self.camera_state = False
+        self.map_loader_state = False
+        self.nav2_state = False
         self.currentState = RobotState.IDLE
         self.currentCollectionState = DataCollectionState.IDLE
         self.current_goal = MoveBaseActionGoal()
@@ -108,11 +118,11 @@ class RobotHandler():
         if force or (not self.halt_state):
             self.halt_goal_publisher.publish(GoalID())
             self.robotHandlerStatusPub.publish('Halting Rover')
-            self.halt_state = True
-        else:
-            self.goal_publisher.publish(self.current_goal)
-            self.robotHandlerStatusPub.publish('Resuming Path')
-            self.halt_state = False
+            #self.halt_state = True
+        # else:
+        #     self.goal_publisher.publish(self.current_goal)
+        #     self.robotHandlerStatusPub.publish('Resuming Path')
+        #     self.halt_state = False
 
     def set_max_speed(self, max_speed):
         # TODO: Set max speed
@@ -123,8 +133,30 @@ class RobotHandler():
             self.current_goal = goal
 
     def reset_goal(self, data):
-        if data.status_list[0].text == "Goal reached.":
+        if len(data.status_list) > 0 and data.status_list[0].text == "Goal reached.":
             self.current_goal = MoveBaseActionGoal()
+
+
+    def start_map_loader(self):
+        if not self.map_loader_state:
+            self.robotHandlerStatusPub.publish('starting ' + 'map_loader.launch' + ' ....')
+            self.robotHandlerStatusPub.publish('starting ' + 'navigation.launch' + ' ....')
+            self.currentState = RobotState.NAVIGATION
+            self.proc_manager.create_new_subprocess('control', 'roslaunch ' + 'turn_on_wheeltec_robot' + ' ' + 'navigation.launch' + ' ' + '')
+
+    def run_darknet(self):
+        if not self.proc_manager.is_subprocess_running('dark_net'):
+            self.robotHandlerStatusPub.publish('start ' + 'dark_net')
+            self.proc_manager.create_new_subprocess('dark_net', 'roslaunch ' + 'darknet_ros' + ' ' + 'yolo_v3.launch' + ' ' + '')
+        else:
+            self.robotHandlerStatusPub.publish('Darknet is already running')
+    
+    def run_skeleton_tracking(self):
+        if not self.proc_manager.is_subprocess_running('skel_track'):
+            self.robotHandlerStatusPub.publish('start ' + 'Skeleton Tracking')
+            self.proc_manager.create_new_subprocess('skel_track', 'roslaunch ' + 'bodyreader' + ' ' + 'final.launch' + ' ' + '')
+        else:
+            self.robotHandlerStatusPub.publish('Skeleton Tracking is already running')
 
     def start_cam(self):
         if not self.camera_state:
@@ -223,7 +255,12 @@ if __name__ == '__main__':
 
         elif cmd[0] == 'start_cam':
             robot_handler.start_cam()
-
+        elif cmd[0] == 'load_map':
+            robot_handler.start_map_loader()
+        elif cmd[0] == 'obj_detection':
+            robot_handler.run_darknet()
+        elif cmd[0] == 'skel_tracking':
+            robot_handler.run_skeleton_tracking()
         # Robot operations
         elif cmd[0] == 'stop_all':
             robot_handler.stop_all()

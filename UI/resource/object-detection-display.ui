@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ObjectDetecion</class>
+ <widget class="QWidget" name="ObjectDetecion">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1028</width>
+    <height>870</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #2F25D6;</string>
+  </property>
+  <widget class="QLabel" name="videoLabel">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>130</y>
+     <width>641</width>
+     <height>511</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>60</y>
+     <width>231</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 75 20pt &quot;URW Bookman L&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Object Detection</string>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>720</y>
+     <width>241</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>yologo_2.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>660</y>
+     <width>211</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>darknet.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>690</y>
+     <width>271</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>sayit.jpg</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="object_found_list">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>120</y>
+     <width>191</width>
+     <height>521</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QTableWidget::item {
+    background-color: #444444;
+    color: #FFFFFF;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+QListWidget::item:selected {
+    background-color: #0066CC;
+    color: #FFFFFF;
+}
+
+QListWidget::item:hover {
+    background-color: #0077FF;
+    color: #FFFFFF;
+}
+
+QTableWidget::item:selected:!active {
+    background-color: #003399;
+    color: #FFFFFF;
+}
+
+QTableWidget:hover{
+	
+	background-color: PowderBlue;
+}
+</string>
+   </property>
+   <property name="dragEnabled">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="darknet_node_prog_bar">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>40</y>
+     <width>118</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QProgressBar {
+        border: 2px solid grey;
+        border-radius: 5px;
+        background-color: lightgrey;
+        text-align: center;
+    }
+    QProgressBar::chunk {
+        background-color: blue;
+        width: 10px;
+        margin: 0.5px;
+    }</string>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+   <property name="invertedAppearance">
+    <bool>false</bool>
+   </property>
+   <property name="format">
+    <string>%p%</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="check_topics">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>30</y>
+     <width>121</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:hover {
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 0 8px;
+  background: rgb(51, 64, 191);
+}
+QPushButton:pressed{
+	border: 2px solid gray;
+	border-radius: 10px;
+	padding: 0 8px;
+	background: DarkSalmon
+}</string>
+   </property>
+   <property name="text">
+    <string>Check Status</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="darknet_on_label">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>70</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(115, 210, 22);
+font: 75 17pt &quot;URW Bookman L&quot;;
+</string>
+   </property>
+   <property name="text">
+    <string>Darknet is ON</string>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="darknet_off_label">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>70</y>
+     <width>171</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(204, 0, 0);
+font: 75 17pt &quot;URW Bookman L&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Darknet is OFF</string>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

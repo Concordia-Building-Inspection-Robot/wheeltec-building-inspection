@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SkeletonDetection</class>
+ <widget class="QWidget" name="SkeletonDetection">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1028</width>
+    <height>870</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(117, 80, 123);</string>
+  </property>
+  <widget class="QLabel" name="videoLabel_1">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>130</y>
+     <width>641</width>
+     <height>511</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>251</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>orbbec.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>700</y>
+     <width>171</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>body-tracking.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="check_status">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>30</y>
+     <width>121</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:hover {
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 0 8px;
+  background: rgb(233, 185, 110);
+}
+QPushButton:pressed{
+	border: 2px solid gray;
+	border-radius: 10px;
+	padding: 0 8px;
+	background: DarkSalmon
+}</string>
+   </property>
+   <property name="text">
+    <string>Check Status</string>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="skeleton_prog_bar">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>40</y>
+     <width>118</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QProgressBar {
+        border: 2px solid grey;
+        border-radius: 5px;
+        background-color: lightgrey;
+        text-align: center;
+    }
+    QProgressBar::chunk {
+        background-color: blue;
+        width: 10px;
+        margin: 0.5px;
+    }</string>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+   <property name="invertedAppearance">
+    <bool>false</bool>
+   </property>
+   <property name="format">
+    <string>%p%</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="skeleton_off_label">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>60</y>
+     <width>281</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(204, 0, 0);
+font: 75 17pt &quot;URW Bookman L&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Skeleton Trackingis OFF</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="skeleton_on_label">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>60</y>
+     <width>281</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(115, 210, 22);
+font: 75 17pt &quot;URW Bookman L&quot;;
+</string>
+   </property>
+   <property name="text">
+    <string>Skeleton Tracking is ON</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

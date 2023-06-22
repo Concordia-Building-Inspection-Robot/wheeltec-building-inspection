@@ -3,9 +3,11 @@ Description=Launch roscore and startup robot handler node
 After=network.target
 
 [Service]
-User=root
 Type=simple
 ExecStart=/home/wheeltec/catkin_workspace/src/wheeltec-building-inspection/robot_handler_startup/run_start_robot_handler.sh
+StandardInput=tty-force
+StandardOutput=tty
+StandardError=tty
 
 [Install]
 WantedBy=multi-user.target
