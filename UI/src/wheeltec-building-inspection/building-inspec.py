@@ -1,10 +1,13 @@
 import os
 import rospy
 import rospkg
+import rosbag
 
 import subprocess
 import re
 import time
+
+import webbrowser
 
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
@@ -15,8 +18,8 @@ from sensor_msgs.msg import CompressedImage
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QDialog
 
-from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut, QRadioButton, QSlider, QLabel, QCheckBox, QLineEdit, QLCDNumber, QTableWidget, QProgressBar
-from PyQt5.QtCore import QTimer, QThread, pyqtSignal, QObject
+from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut, QRadioButton, QSlider, QLabel, QCheckBox, QLineEdit, QLCDNumber, QTableWidget, QProgressBar, QSpinBox
+from PyQt5.QtCore import QTimer, QThread, pyqtSignal, QObject, Qt
 from PyQt5.QtGui import QColor, QImage, QPixmap
 
 from sensor_msgs.msg import Image
@@ -41,6 +44,7 @@ class NavControl(Plugin):
         self.proc_manager = SubProcessManager()
         self.transfer_state = TransferState.IDLE
 
+        
         # Give QObjects reasonable names
         self.setObjectName('NavControl')
 
@@ -54,6 +58,7 @@ class NavControl(Plugin):
         self.robotHandlerStatusSub = rospy.Subscriber('robot_handler_status', String, self.add_to_log_console)
         self.robotHandlerCapListRequest = rospy.Subscriber('robot_handler_cap_file_list', String, self.refresh_robot_cap_list)
         self.robotHandlerCommandSub = rospy.Subscriber('robot_handler_cmd', String, self.handle_commands)
+        self.thread_1 = QThread()
 
         # Create QWidget
         self._widget = QWidget()
@@ -182,7 +187,7 @@ class NavControl(Plugin):
                 
         self._widget.findChild(QPushButton, 'open_new_window_object').clicked.connect(self.open_new_window_object_detection)
         self._widget.findChild(QPushButton, 'open_new_window_skeleton').clicked.connect(self.open_new_window_skeleton_detection)
-
+        self._widget.findChild(QPushButton, 'open_cam_browser').clicked.connect(self.open_browser)
 
         # General
         self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
@@ -210,21 +215,37 @@ class NavControl(Plugin):
         self.timer.timeout.connect(self.update)
         self.timer.start()
 
+
+    def open_browser(self):
+        self.robotHandlerCommandPub.publish("open_browser")
+        url = 'http://192.168.0.100:8080'
+        webbrowser.open(url)
     #Create the thread for signal checking and power level
     def start_thread(self):
+        number = 0
         self.thread = QThread()
-        self.worker = Worker(self._widget, self.robotHandlerCommandPub)
+        self.worker = Worker(self._widget, self.robotHandlerCommandPub, number, any, any)
         self.worker.moveToThread(self.thread)
         self.thread.started.connect(self.worker.run_thread)
         self.worker.finished.connect(self.worker.deleteLater)
         self.thread.finished.connect(self.thread.deleteLater)
         self.thread.start()
 
+
+    def skeleton_exit_window(self):
+
+        self.robotHandlerCommandPub.publish('close_skeleton_window')
+
+
+
     def open_new_window_skeleton_detection(self):
+
         def check_progress():
             bar.setVisible(True)
             label_off.setVisible(False)
             label_on.setVisible(False)
+            record_button.setVisible(False)
+            is_on = False
             def is_topic_available(topic_name):
                 topic_types = rospy.get_published_topics()
                 available_topics = [topic[0] for topic in topic_types]
@@ -247,24 +268,35 @@ class NavControl(Plugin):
                                 counter += 14
                                 bar.setVisible(False)
                                 label_on.setVisible(True)
+                                is_on = True
+                                record_button.setVisible(True)
                             else:
                                 counter = 0
-                                label_off.setVisible(True)     
+                                label_off.setVisible(True)
+                                is_on = False
+                                record_button.setVisible(False)
                         else:
                             counter = 0
                             label_off.setVisible(True)
+                            is_on = False
+                            record_button.setVisible(False)
 
                     else:
                         counter = 0
                         label_off.setVisible(True)
+                        is_on = False
+                        record_button.setVisible(False)
                 else:
                     counter = 0
                     label_off.setVisible(True)
+                    is_on = False
+                    record_button.setVisible(False)
                     
             else:
                 counter = 0
                 label_off.setVisible(True)
-
+                is_on = False
+                record_button.setVisible(False) 
 
         def image_callback(msg):
             cv_image = new_window_1.bridge.compressed_imgmsg_to_cv2(msg)
@@ -273,23 +305,52 @@ class NavControl(Plugin):
             q_image = QImage(cv_image.data, width, height, bytes_per_line, QImage.Format_RGB888).rgbSwapped()
             pixmap = QPixmap.fromImage(q_image)
             new_window_1.videoLabel_1.setPixmap(pixmap)
+
+        def toggle_record():
+            value = new_window_1.findChild(QSpinBox, 'record_duration').value()
+            if not self.thread_1.isRunning():
+                self.worker_1 = Worker(self._widget, self.robotHandlerCommandPub, value, record_label, record_label_1)
+                self.worker_1.moveToThread(self.thread_1)
+                self.thread_1.started.connect(self.worker_1.run_record)
+                self.worker_1.finished.connect(self.worker_1.deleteLater)
+                self.thread_1.finished.connect(self.thread_1.deleteLater)
+                self.thread_1.start()
+                record_label.setVisible(True)
+                record_label_1.setVisible(True)
+            else:
+                print("Recording already in progress...")
+                print(value)
+                
+            
         
+        
+        is_on = False
         self.robotHandlerCommandPub.publish('skel_tracking') 
         new_window_1 = QDialog()
         loadUi("/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/resource/skeleton-tracking-display.ui", new_window_1)
         new_window_1.bridge = CvBridge()
         self.subscriber = rospy.Subscriber('/repub/body/body_display/compressed', CompressedImage, image_callback)
+        #self.subscriber_1 = rospy.Subscriber('/repub/body/body_display/compressed', CompressedImage, record_image_callback)
         label_on = new_window_1.findChild(QLabel, 'skeleton_on_label')
         label_off = new_window_1.findChild(QLabel, 'skeleton_off_label')
         bar = new_window_1.findChild(QProgressBar, 'skeleton_prog_bar')
+        record_button = new_window_1.findChild(QPushButton, 'record_skeleton')
+        record_label = new_window_1.findChild(QLabel, 'record_label')
+        record_label_1 = new_window_1.findChild(QLabel, 'record_label_1')
+        record_label.setVisible(False)
+        record_label_1.setVisible(False)
+        record_button.clicked.connect(toggle_record)
         new_window_1.timer = QTimer()
         new_window_1.timer.start(30)
 
         new_window_1.findChild(QPushButton, 'check_status').clicked.connect(check_progress)
         check_progress()
+        
+        new_window_1.finished.connect(self.skeleton_exit_window)
 
         new_window_1.exec_()
-
+    def obj_detection_exit_window(self):
+        self.robotHandlerCommandPub.publish('close_obj_window')
     def open_new_window_object_detection(self):
 
         object_list = []
@@ -382,6 +443,7 @@ class NavControl(Plugin):
 
         new_window.findChild(QPushButton, 'check_topics').clicked.connect(checkProgress)
         checkProgress()
+        new_window.finished.connect(self.obj_detection_exit_window)
         new_window.exec_()
 
 
@@ -537,19 +599,67 @@ class Worker(QObject):
     finished = pyqtSignal()
     progress = pyqtSignal(int)
 
-    def __init__(self, widget, cmd_pub):
+    def __init__(self, widget, cmd_pub, seconds, label, label1):
         super(Worker, self).__init__()
         self._widget = widget
         self.command = cmd_pub
-    
+        self.time = seconds
+        self.la = label
+        self.la1 = label1
+    def run_record(self):
+
+        bag = rosbag.Bag('VIDEO-GENERATED.bag', 'w')
+        recording_duration = rospy.Duration.from_sec(self.time)
+        start_time = rospy.Time.now()
+        print("Start Time: " + str(start_time))
+
+        def callback(data):
+            if rospy.Time.now() - start_time >= recording_duration:
+                # Close the rosbag file when the recording duration ends
+                bag.close()
+                self.la.setVisible(False)
+                self.la1.setVisible(False)
+                subscriber.unregister()
+                command_1 = ['python2.7', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/src/wheeltec-building-inspection/rosbag2video.py', '/home/concordia/VIDEO-GENERATED.bag']
+                subprocess.call(command_1)
+                
+            else:
+                bag.write('/repub/body/body_display/compressed', data)
+
+        subscriber = rospy.Subscriber('/repub/body/body_display/compressed', CompressedImage, callback)
+        rospy.spin()
+
+
+
     def run_thread(self):
         wifi_lcd_strength = self._widget.findChild(QLCDNumber, 'WifiStrength')
-
+        wifi_lcd_strength_2 = self._widget.findChild(QLCDNumber, 'WifiStrength_2')
         def get_power_level(data):
             power_level_lcd = self._widget.findChild(QLCDNumber, 'power_level')
             voltage = data.data
             power_level_lcd.display(voltage)
                 
+
+
+        def get_wifi_interface():
+            result = subprocess.Popen(['iwconfig'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            # Get the output from the command
+            output, error = result.communicate()
+
+            # Split the output into lines
+            lines = output.split('\n')
+
+            # Find lines containing Wi-Fi interface names
+            wifi_interfaces = []
+            for line in lines:
+                if 'IEEE 802.11' in line:
+                    interface = line.split(' ')[0]
+                    wifi_interfaces.append(interface)
+
+            # Return the Wi-Fi interface names as a list
+            return wifi_interfaces
+
 
         def get_wifi_signal_strength(interface):
             try:
@@ -567,12 +677,26 @@ class Worker(QObject):
             self.command.publish('stop_all')
    
         # Specify your Wi-Fi interface name
-        wifi_interface = 'wlx642943a66a33' 
+
+        
+        wifi_interface = get_wifi_interface()
+        wifi_interface.remove("wlp1s0")
+        
+        #wifi_interface = 'wlx642943a66a33'
         while True:
             time.sleep(1)
+            print(wifi_interface)
             rospy.Subscriber('PowerVoltage', Float32, get_power_level)
 
-            signal_strength = get_wifi_signal_strength(wifi_interface)
+            if wifi_interface[0] == "wlx642943a66a33" and wifi_interface[1] == "wlx0c9d92b71f61":
+                signal_strength = get_wifi_signal_strength(wifi_interface[0])
+                signal_strength_2 = get_wifi_signal_strength(wifi_interface[1])
+            elif wifi_interface[1] == "wlx642943a66a33" and wifi_interface[0] == "wlx0c9d92b71f61":
+                signal_strength = get_wifi_signal_strength(wifi_interface[1])
+                signal_strength_2 = get_wifi_signal_strength(wifi_interface[0])
+            else:
+                print("EXCEPTION!")
+            
             if signal_strength is not None:
                 if "/" in signal_strength:
                     numerator, denominator = signal_strength.split("/")
@@ -580,6 +704,7 @@ class Worker(QObject):
                 else:
                     signal_strength = int(signal_strength)
                     print(signal_strength)
+                    print(signal_strength_2)
                 if signal_strength <= 100 and signal_strength >= 60:
                     wifi_lcd_strength.setStyleSheet("QLCDNumber { background-color: black; color: lime }")
                 elif signal_strength < 60 and signal_strength >= 40:
@@ -587,12 +712,13 @@ class Worker(QObject):
                 elif signal_strength < 40 and signal_strength >= 25 :
                     wifi_lcd_strength.setStyleSheet("QLCDNumber { background-color: black; color: red }")   
                 else:
-                    print("Stopping all operations becasuse signal is weak...")
+                    #print("Stopping all operations becasuse signal is weak...")
                     wifi_lcd_strength.setStyleSheet("QLCDNumber { background-color: white; color: aqua }")
                     #stopping()
                     #break
 
                 wifi_lcd_strength.display(signal_strength)
+                wifi_lcd_strength_2.display(signal_strength_2)
                 print("Signal strength: " + str(signal_strength) + "%")
                 
             else:

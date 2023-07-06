@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
-Name=ROBOT-CONTROL
+Name=ROBOT-CONTROL-BIG-ROBOT
 Icon=folder
 Exec=/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/ui-startup/run_rqt_gui.sh

@@ -135,8 +135,28 @@ class RobotHandler():
     def reset_goal(self, data):
         if len(data.status_list) > 0 and data.status_list[0].text == "Goal reached.":
             self.current_goal = MoveBaseActionGoal()
+    def close_object_window(self):
+        if self.proc_manager.is_subprocess_running('dark_net'):
+            self.proc_manager.close_subprocess('dark_net')
+            self.robotHandlerStatusPub.publish("Closing DarkNet Window")
+        else:
+            self.robotHandlerStatusPub.publish("DarkNet is not running")
+    def close_skeleton_window(self):
+        if self.proc_manager.is_subprocess_running('skel_track'):
+            self.proc_manager.close_subprocess('skel_track')
+            self.robotHandlerStatusPub.publish("Closing Skeleton Window")
+        else:
+            self.robotHandlerStatusPub.publish("Skeleton Tracking is not running")
 
-
+    def run_open_browser(self):
+        if self.proc_manager.is_subprocess_running('camera'):
+            if not self.proc_manager.is_subprocess_running('browser'):
+                self.robotHandlerStatusPub.publish('start ' + 'browser...')
+                self.proc_manager.create_new_subprocess('browser', 'rosrun ' + 'web_video_server' + ' ' + 'web_video_server' + ' ' + '')
+            else:
+                self.robotHandlerStatusPub.publish('Browser is already running')
+        else:
+            self.robotHandlerStatusPub.publish('PLEASE START THE CAMERA FIRST!!')
     def start_map_loader(self):
         if not self.map_loader_state:
             self.robotHandlerStatusPub.publish('starting ' + 'map_loader.launch' + ' ....')
@@ -261,6 +281,12 @@ if __name__ == '__main__':
             robot_handler.run_darknet()
         elif cmd[0] == 'skel_tracking':
             robot_handler.run_skeleton_tracking()
+        elif cmd[0] == 'open_browser':
+            robot_handler.run_open_browser()
+        elif cmd[0] == 'close_skeleton_window':
+            robot_handler.close_skeleton_window()
+        elif cmd[0] == 'close_obj_window':
+            robot_handler.close_object_window()
         # Robot operations
         elif cmd[0] == 'stop_all':
             robot_handler.stop_all()

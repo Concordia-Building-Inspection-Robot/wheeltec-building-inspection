@@ -19,10 +19,10 @@
   <widget class="QLabel" name="videoLabel_1">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>130</y>
-     <width>641</width>
-     <height>511</height>
+     <x>50</x>
+     <y>240</y>
+     <width>661</width>
+     <height>561</height>
     </rect>
    </property>
    <property name="text">
@@ -161,6 +161,130 @@ font: 75 17pt &quot;URW Bookman L&quot;;
     <string>Skeleton Tracking is ON</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="record_skeleton">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>140</y>
+     <width>201</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:hover {
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 0 8px;
+  background: rgb(233, 185, 110);
+}
+QPushButton:pressed{
+	border: 2px solid gray;
+	border-radius: 10px;
+	padding: 0 8px;
+	background: DarkSalmon
+}</string>
+   </property>
+   <property name="text">
+    <string>Record</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="record_duration">
+   <property name="geometry">
+    <rect>
+     <x>860</x>
+     <y>210</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>10</number>
+   </property>
+   <property name="maximum">
+    <number>99999999</number>
+   </property>
+   <property name="singleStep">
+    <number>1</number>
+   </property>
+   <property name="displayIntegerBase">
+    <number>10</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>220</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Record for</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>220</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>seconds</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="record_label_1">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>240</y>
+     <width>191</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 75 18pt &quot;Ubuntu Condensed&quot;;
+color: rgb(204, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>Recording Started...</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="record_label">
+   <property name="geometry">
+    <rect>
+     <x>-40</x>
+     <y>50</y>
+     <width>831</width>
+     <height>881</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>—Pngtree—hand-painted minimalist video recording border_5613152.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>record_label</zorder>
+  <zorder>videoLabel_1</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>check_status</zorder>
+  <zorder>skeleton_prog_bar</zorder>
+  <zorder>skeleton_off_label</zorder>
+  <zorder>skeleton_on_label</zorder>
+  <zorder>record_skeleton</zorder>
+  <zorder>record_duration</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>record_label_1</zorder>
  </widget>
  <resources/>
  <connections/>
