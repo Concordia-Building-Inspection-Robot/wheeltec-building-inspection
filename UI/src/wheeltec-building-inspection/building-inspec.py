@@ -6,6 +6,7 @@ import rosbag
 import subprocess
 import re
 import time
+import threading
 
 import webbrowser
 
@@ -15,15 +16,18 @@ from geometry_msgs.msg import PointStamped
 from std_msgs.msg import Float32
 from darknet_ros_msgs.msg import BoundingBoxes
 from sensor_msgs.msg import CompressedImage
+from sensor_msgs.msg import Image
+from sensor_msgs.msg import PointCloud2
+from sensor_msgs.msg import Imu
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QDialog
 
-from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut, QRadioButton, QSlider, QLabel, QCheckBox, QLineEdit, QLCDNumber, QTableWidget, QProgressBar, QSpinBox
-from PyQt5.QtCore import QTimer, QThread, pyqtSignal, QObject, Qt
+from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut, QRadioButton, QSlider, QLabel, QCheckBox, QLineEdit, QLCDNumber, QTableWidget, QProgressBar, QSpinBox, QTableWidgetItem
+from PyQt5.QtCore import QTimer, QThread, pyqtSignal, QObject, Qt, qRegisterResourceData
 from PyQt5.QtGui import QColor, QImage, QPixmap
 
-from sensor_msgs.msg import Image
-from cv_bridge import CvBridge
+
+from cv_bridge import CvBridge, CvBridgeError
 
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
@@ -85,6 +89,7 @@ class NavControl(Plugin):
         # self._widget.findChild(QPushButton, 'StartManualControl').clicked.connect(
         #     lambda: self.robotHandlerCommandPub.publish('start_manual_control'))
 
+        
         self._widget.findChild(QSlider, 'linear_velocity_slider').valueChanged.connect(
             self.update_velocity
         )
@@ -188,7 +193,13 @@ class NavControl(Plugin):
         self._widget.findChild(QPushButton, 'open_new_window_object').clicked.connect(self.open_new_window_object_detection)
         self._widget.findChild(QPushButton, 'open_new_window_skeleton').clicked.connect(self.open_new_window_skeleton_detection)
         self._widget.findChild(QPushButton, 'open_cam_browser').clicked.connect(self.open_browser)
-
+        self._widget.findChild(QPushButton, 'visual_follower').clicked.connect(self.visual_follower)
+        self._widget.findChild(QPushButton, 'robot_follower').clicked.connect(self.robot_follower)
+        self._widget.findChild(QPushButton, 'show_parameters_button').clicked.connect(self.open_new_window_param_list)
+        self.hide_button_state = True
+        self.hide_button = self._widget.findChild(QPushButton, 'hide_signal_strength').clicked.connect(self.hide_signal_strength)
+        self._widget.findChild(QPushButton, 'open_recorder_window').clicked.connect(lambda: self.open_recorder_window(context))
+        self._widget.findChild(QPushButton, 'movement_control').clicked.connect(self.open_movement_control_window)
         # General
         self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
             lambda: self.robotHandlerCommandPub.publish('stop_all'))
@@ -199,6 +210,8 @@ class NavControl(Plugin):
         self.halt_shortcut = QShortcut('k', self._widget)
         self.halt_shortcut.activated.connect(
             lambda: self.robotHandlerCommandPub.publish('halt 0'))
+
+        
 
         self._widget.findChild(QDoubleSpinBox, 'max_linear_speed_input').editingFinished.connect(
             lambda: self.set_max_slider("linear")
@@ -215,6 +228,249 @@ class NavControl(Plugin):
         self.timer.timeout.connect(self.update)
         self.timer.start()
 
+        self.rec_window = QWidget()
+
+
+    def open_movement_control_window(self):
+        self.holonomic_state = rospy.get_param('/move_base/TebLocalPlannerROS/global_plan_overwrite_orientation')
+
+        def overwrite_orientation():
+            if self.holonomic_state == True:
+                print("Unchecked")
+                subprocess.call(['rosrun', 'dynamic_reconfigure', 'dynparam', 'set', '/move_base/TebLocalPlannerROS', 'global_plan_overwrite_orientation', 'false'])
+                self.holonomic_state = False
+                print("Global Plan Overwrite Orientation is Set to False")
+            else:
+                print("Checked")
+                subprocess.call(['rosrun', 'dynamic_reconfigure', 'dynparam', 'set', '/move_base/TebLocalPlannerROS', 'global_plan_overwrite_orientation', 'true'])
+                self.holonomic_state = True
+                print("Global Plan Overwrite Orientation is Set to True")
+
+
+        def param_change():
+            try:
+                subprocess.call(['rosrun', 'dynamic_reconfigure', 'dynparam', 'set', '/move_base/TebLocalPlannerROS', 'weight_kinematics_nh', str(kinematics_box.value())])
+                subprocess.call(['rosrun', 'dynamic_reconfigure', 'dynparam', 'set', '/move_base/TebLocalPlannerROS', 'acc_lim_y', '0.5'])
+                subprocess.call(['rosrun', 'dynamic_reconfigure', 'dynparam', 'set', '/move_base/TebLocalPlannerROS', 'max_vel_y', '0.5'])
+            except:
+                print("ERRRRRRORRRRRR")
+
+        def activate_holonomic_movement():
+            threads = threading.Thread(target=param_change, args=())
+            threads.start()
+
+            print("Robot is now Holonomic")
+            holonomic_label.setVisible(True)
+        new_window_3 = QDialog()
+        loadUi("/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/resource/movement-control-display.ui", new_window_3)
+
+        new_window_3.findChild(QPushButton, 'activate_holonomic_movement').clicked.connect(activate_holonomic_movement)
+        kinematics_box = new_window_3.findChild(QSpinBox, 'kinematics_box')
+        holonomic_label = new_window_3.findChild(QLabel, 'holonomic_on_off_label')
+        holonomic_label.setVisible(False)
+        
+        overwrite_orientation_box = new_window_3.findChild(QCheckBox, 'overwrite_orientation')
+        if self.holonomic_state == True:
+            overwrite_orientation_box.setChecked(True)
+        else:
+            overwrite_orientation_box.setChecked(False)
+        overwrite_orientation_box.stateChanged.connect(overwrite_orientation)
+
+
+        new_window_3.exec_()
+
+
+
+
+    def open_recorder_window(self, cont):
+
+        def check_topic_active(topic_name):
+            if topic_name == '/imu_raw':
+                type1 = Imu
+            elif topic_name == '/point_cloud_raw':
+                type1 = PointCloud2
+            try:
+                rospy.wait_for_message(topic_name, type1, timeout=2)
+                print("Topic " + topic_name + " is active and receiving messages.")
+                return True
+            except rospy.exceptions.ROSException:
+                print("Topic " + topic_name + " is not active or not receiving messages.")
+                return False
+
+        def record_pcl():
+            th = threading.Thread(target=record_point_cloud, args=())
+            th.start()
+        def record_imu_thread():
+            th_1 = threading.Thread(target=record_imu, args=())
+            th_1.start()
+        
+        def record_imu():
+
+            def callback(data):
+                if rospy.Time.now() - start_time >= recording_duration:
+                    print("BAG CLOSING...")
+                    subscribe_pcl.unregister()
+                    bag.close()
+                else:
+                    print(rospy.Time.now())
+                    bag.write('/imu_raw', data)
+
+
+
+            is_topic_active = check_topic_active('/imu_raw')
+            if is_topic_active:
+                record_duration = self.rec_window.findChild(QSpinBox, 'record_duration').value()
+                bag = rosbag.Bag('/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/imu_recordings/IMU-RECORDING.bag', 'w')
+                recording_duration = rospy.Duration.from_sec(record_duration)
+                start_time = rospy.Time.now()
+                print("Start Time: " + str(start_time))
+                subscribe_pcl = rospy.Subscriber('/imu_raw', Imu, callback)
+
+            else:
+                print("Topic /imu_raw is not active")
+
+        def record_point_cloud():
+
+            def callback(data):
+                if rospy.Time.now() - start_time >= recording_duration:
+                    print("BAG CLOSING...")
+                    subscribe_pcl.unregister()
+                    bag.close()
+                else:
+                    print(rospy.Time.now())
+                    bag.write('/point_cloud_raw', data)
+
+
+
+            is_topic_active = check_topic_active('/point_cloud_raw')
+            if is_topic_active:
+                record_duration = self.rec_window.findChild(QSpinBox, 'record_duration').value()
+                bag = rosbag.Bag('/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/Lidar_recordings/Lidar-RECORDING.bag', 'w')
+                recording_duration = rospy.Duration.from_sec(record_duration)
+                start_time = rospy.Time.now()
+                print("Start Time: " + str(start_time))
+                subscribe_pcl = rospy.Subscriber('/point_cloud_raw', PointCloud2, callback)
+                # rospy.spin()
+            else:
+                print("Topic /point_cloud_raw is not active")
+            
+
+        #rec_window = QWidget()
+        if self.rec_window.isVisible():
+            print("Window is already open")
+        
+        else:
+            loadUi('/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/resource/recorder-window.ui', self.rec_window)
+            cont.add_widget(self.rec_window)
+        
+        self.rec_window.findChild(QPushButton, 'record_lidar_point_cloud').clicked.connect(record_pcl)
+        self.rec_window.findChild(QPushButton, 'record_imu').clicked.connect(record_imu_thread)
+
+    def hide_signal_strength(self):
+        lcd1 = self._widget.findChild(QLCDNumber, 'WifiStrength')
+        lcd2 = self._widget.findChild(QLCDNumber, 'WifiStrength_2')
+        label1 = self._widget.findChild(QLabel, 'label_7')
+        label2 = self._widget.findChild(QLabel, 'label_8')
+
+        if self.hide_button_state == False:
+            self.hide_button_state = True
+        else:
+            self.hide_button_state = False
+
+        lcd1.setVisible(self.hide_button_state)
+        lcd2.setVisible(self.hide_button_state)
+        label1.setVisible(self.hide_button_state)
+        label2.setVisible(self.hide_button_state)
+
+    def open_new_window_param_list(self):
+
+        def handle_param_change(item):
+            try:
+                param_name = param_table_widget.item(item.row(), 0).text()
+                param_value_str = param_table_widget.item(item.row(), 1).text()
+                
+                param_value_type = rospy.get_param(param_name)
+
+                # Convert the user-inputted value to the original data type
+                try:
+                    if isinstance(param_value_type, int):
+                        param_value = int(param_value_str)
+                    elif isinstance(param_value_type, float):
+                        param_value = float(param_value_str)
+                    elif isinstance(param_value_type, bool):
+                        param_value = param_value_str.lower() in ['true', '1']
+                    else:
+                        param_value = param_value_str
+                    rospy.set_param(param_name, param_value)
+                except rospy.ROSException as e:
+                    print("Failed to update parameter: ")
+            except:
+                print("No params")
+                
+        def refresh_parameters_list():
+            param_table_widget.setRowCount(len(ros_param_list))
+            param_table_widget.setColumnCount(2)
+
+            for i, param_name in enumerate(ros_param_list):
+                param_value = rospy.get_param(param_name)
+                param_table_widget.setItem(i, 0, QTableWidgetItem(param_name))
+                param_table_widget.setItem(i, 1, QTableWidgetItem(str(param_value)))
+
+            param_table_widget.itemChanged.connect(handle_param_change)
+
+        def filter_parameters(search_text):
+            filtered_params = [param for param in ros_param_list if search_text.lower() in param.lower()]
+            param_table_widget.setRowCount(len(filtered_params))
+            for i, param_name in enumerate(filtered_params):
+                param_value = rospy.get_param(param_name)
+
+                param_table_widget.setItem(i, 0, QTableWidgetItem(param_name))
+                param_table_widget.setItem(i, 1, QTableWidgetItem(str(param_value)))
+
+
+
+        new_window_2 = QDialog()
+        loadUi("/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/resource/ros-parameters-display.ui", new_window_2)
+
+        show_param_button = new_window_2.findChild(QPushButton, 'show_param')
+        show_param_button.clicked.connect(refresh_parameters_list)
+        param_table_widget = new_window_2.findChild(QTableWidget, 'param_table_widget')
+        search_bar = new_window_2.findChild(QLineEdit, 'param_search_bar')
+        search_bar.setPlaceholderText("Search parameters...")
+        search_bar.textChanged.connect(filter_parameters)
+        ros_param_list = rospy.get_param_names()
+        ros_param_list = [param for param in ros_param_list if not param.startswith('~')]
+        new_window_2.exec_()
+
+
+    def callback1(self, data):
+        # data_list = [str(data)]
+        linear_x = data.linear.x
+        linear_y = data.linear.y
+        linear_z = data.linear.z
+        angular_x = data.angular.x
+        angular_y = data.angular.y
+        angular_z = data.angular.z
+        list_1 = [str(linear_x), str(linear_y), str(linear_z), str(angular_x), str(angular_y), str(angular_z)]
+        # Construct the command with the extracted values as arguments
+        #command = ['sh', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/src/wheeltec-building-inspection/follower.sh']
+        # subprocess.call(['python', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/src/wheeltec-building-inspection/follower_1.py', str(data)])
+        subprocess.call(['sh', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/src/wheeltec-building-inspection/follower.sh'] + list_1)
+
+    
+    def robot_follower(self):
+        def my_thread_function():
+            rospy.Subscriber("/cmd_vel", Twist, self.callback1)
+            rospy.spin()
+        print('Hello')
+        my_thread = threading.Thread(target=my_thread_function)
+        my_thread.start()
+    
+
+
+
+    def visual_follower(self):
+        self.robotHandlerCommandPub.publish("run_visual_follower")
 
     def open_browser(self):
         self.robotHandlerCommandPub.publish("open_browser")
@@ -299,13 +555,15 @@ class NavControl(Plugin):
                 record_button.setVisible(False) 
 
         def image_callback(msg):
-            cv_image = new_window_1.bridge.compressed_imgmsg_to_cv2(msg)
-            height, width, _ = cv_image.shape
-            bytes_per_line = 3 * width
-            q_image = QImage(cv_image.data, width, height, bytes_per_line, QImage.Format_RGB888).rgbSwapped()
-            pixmap = QPixmap.fromImage(q_image)
-            new_window_1.videoLabel_1.setPixmap(pixmap)
-
+            try:
+                cv_image = new_window_1.bridge.compressed_imgmsg_to_cv2(msg)
+                height, width, _ = cv_image.shape
+                bytes_per_line = 3 * width
+                q_image = QImage(cv_image.data, width, height, bytes_per_line, QImage.Format_RGB888).rgbSwapped()
+                pixmap = QPixmap.fromImage(q_image)
+                new_window_1.videoLabel_1.setPixmap(pixmap)
+            except:
+                print("Image Callback Error")
         def toggle_record():
             value = new_window_1.findChild(QSpinBox, 'record_duration').value()
             if not self.thread_1.isRunning():
@@ -320,10 +578,7 @@ class NavControl(Plugin):
             else:
                 print("Recording already in progress...")
                 print(value)
-                
-            
-        
-        
+ 
         is_on = False
         self.robotHandlerCommandPub.publish('skel_tracking') 
         new_window_1 = QDialog()
@@ -351,23 +606,41 @@ class NavControl(Plugin):
         new_window_1.exec_()
     def obj_detection_exit_window(self):
         self.robotHandlerCommandPub.publish('close_obj_window')
+
     def open_new_window_object_detection(self):
 
         object_list = []
 
         def image_callback(msg):
-            cv_image = new_window.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            height, width, _ = cv_image.shape
-            bytes_per_line = 3 * width
-            qt_image = QImage(cv_image.data, width, height, bytes_per_line, QImage.Format_RGB888).rgbSwapped()
-            new_window.videoLabel.setPixmap(QPixmap.fromImage(qt_image))
+            if isinstance(msg, Image):
+
+                try:
+                        cv_image = new_window.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+                        #cv_image = new_window.bridge.imgmsg_to_cv2(msg)
+                        height, width, _ = cv_image.shape
+                        bytes_per_line = 3 * width
+                        qt_image = QImage(cv_image.data, width, height, bytes_per_line, QImage.Format_RGB888).rgbSwapped()
+                        pixmap = QPixmap.fromImage(qt_image)
+                        new_window.videoLabel.setPixmap(pixmap)
+                except CvBridgeError as e:
+                    print("Error converting Image message:", e)
+                except Exception as e:
+                    print("Unexpected error:", e)
+                
+            else:
+                print("Msg Type Error")
+
         def updateObjectDetectedList(msg):
-            match = re.search(r'Class:\s*"([^"]+)"', str(msg))
-            found_object = match.group(1)
-            object_list.append(found_object)
-            list1 = list(dict.fromkeys(object_list))
-            list_wid.setRowCount(len(list1))
-            list_wid.setVerticalHeaderLabels(list1)
+            try:
+                match = re.search(r'Class:\s*"([^"]+)"', str(msg))
+                found_object = match.group(1)
+                if found_object != "" or found_object != " ":
+                    object_list.append(found_object)
+                    list1 = list(dict.fromkeys(object_list))
+                    list_wid.setRowCount(len(list1))
+                    list_wid.setVerticalHeaderLabels(list1)
+            except:
+                print("Object detection list error")
 
         def checkProgress():
             bar.setVisible(True)
@@ -422,8 +695,6 @@ class NavControl(Plugin):
                 label_off.setVisible(True)
         
         
-                 
-        
         self.robotHandlerCommandPub.publish('obj_detection') 
         new_window = QDialog()
         loadUi("/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/resource/object-detection-display.ui", new_window)
@@ -431,13 +702,16 @@ class NavControl(Plugin):
         list_wid = new_window.findChild(QTableWidget, 'object_found_list')
         list_wid.setColumnCount(1)
         list_wid.setHorizontalHeaderLabels(['Number'])
+
         self.objectDetectedListSub = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, updateObjectDetectedList)
         bar = new_window.findChild(QProgressBar, 'darknet_node_prog_bar')
         label_on = new_window.findChild(QLabel, 'darknet_on_label')
         label_off = new_window.findChild(QLabel, 'darknet_off_label')
 
         new_window.bridge = CvBridge()
+        
         self.subscriber = rospy.Subscriber('/darknet_ros/detection_image', Image, image_callback)
+        
         new_window.timer = QTimer()
         new_window.timer.start(30)
 
@@ -519,6 +793,10 @@ class NavControl(Plugin):
         self._widget.findChild(QLineEdit, 'InputCmd').textChanged.connect(self.controller_robot)
     #Controller of the Robot using W, A, S, D and P
     def controller_robot(self, text):
+
+        linear_velocity = self._widget.findChild(QDoubleSpinBox, 'max_linear_speed_input')
+        angular_velocity = self._widget.findChild(QDoubleSpinBox, 'max_angular_speed_input')
+
         key = text.strip().lower()
         if text.strip():
             if key in ('w', 'a', 's', 'd', 'e', 'q'):
@@ -533,13 +811,13 @@ class NavControl(Plugin):
                 msg.angular.z = 0
 
                 if key == 'w':
-                    msg.linear.x += 0.5
+                    msg.linear.x += linear_velocity.value()
                 elif key == 'a':
-                    msg.angular.z += 0.5
+                    msg.angular.z += angular_velocity.value()
                 elif key == 's':
-                    msg.linear.x += -0.5
+                    msg.linear.x += -linear_velocity.value()
                 elif key == 'd':
-                    msg.angular.z += -0.5
+                    msg.angular.z += -angular_velocity.value()
                 elif key == 'e':
                     msg.linear.y = -0.5
                 elif key == 'q':
@@ -572,11 +850,16 @@ class NavControl(Plugin):
             return topic_name in available_topics
         if is_topic_available("/clicked_point"):
             locations = [
-                {'x': -13.092622757, 'y': 3.63729691505, 'z': 0.00315856933594},
-                {'x': -12.4344749451, 'y': 18.3455543518, 'z': 0.00156402587891},
-                {'x': -0.678248405457, 'y': 17.7169075012, 'z': 0.00148773193359},
-                {'x': -1.13597512245, 'y': 3.19778370857, 'z': -0.00111389160156},
-                {'x': -1.00027537346, 'y': 17.4356002808, 'z': 0.00460243225098}
+                {'x': 0.831, 'y': 0.844, 'z': 0},
+                {'x': 4.668, 'y': 0.917, 'z': 0},
+                {'x': 4.705, 'y': -0.257, 'z': 0},
+                {'x': 0.675, 'y': -0.150, 'z': 0}
+                 #{'x': 2.5380358696, 'y': 0.392, 'z': 0}
+                # {'x': -13.092622757, 'y': 3.63729691505, 'z': 0.00315856933594},
+                # {'x': -12.4344749451, 'y': 18.3455543518, 'z': 0.00156402587891},
+                # {'x': -0.678248405457, 'y': 17.7169075012, 'z': 0.00148773193359},
+                # {'x': -1.13597512245, 'y': 3.19778370857, 'z': -0.00111389160156},
+                # {'x': -1.00027537346, 'y': 17.4356002808, 'z': 0.00460243225098}
             ]
             
             for location in locations:
@@ -685,26 +968,36 @@ class Worker(QObject):
         #wifi_interface = 'wlx642943a66a33'
         while True:
             time.sleep(1)
-            print(wifi_interface)
+            #print(wifi_interface)
             rospy.Subscriber('PowerVoltage', Float32, get_power_level)
-
-            if wifi_interface[0] == "wlx642943a66a33" and wifi_interface[1] == "wlx0c9d92b71f61":
+            try:
+                if wifi_interface[0] == "wlx642943a66a33" and wifi_interface[1] == "wlx0c9d92b71f61":
+                    signal_strength = get_wifi_signal_strength(wifi_interface[0])
+                    signal_strength_2 = get_wifi_signal_strength(wifi_interface[1])
+                elif wifi_interface[1] == "wlx642943a66a33" and wifi_interface[0] == "wlx0c9d92b71f61":
+                    signal_strength = get_wifi_signal_strength(wifi_interface[1])
+                    signal_strength_2 = get_wifi_signal_strength(wifi_interface[0])
+                else:
+                    signal_strength = get_wifi_signal_strength(wifi_interface[0])
+                    signal_strength_2 = get_wifi_signal_strength(wifi_interface[0])
+                    #print("EXCEPTION!")
+            except:
                 signal_strength = get_wifi_signal_strength(wifi_interface[0])
-                signal_strength_2 = get_wifi_signal_strength(wifi_interface[1])
-            elif wifi_interface[1] == "wlx642943a66a33" and wifi_interface[0] == "wlx0c9d92b71f61":
-                signal_strength = get_wifi_signal_strength(wifi_interface[1])
                 signal_strength_2 = get_wifi_signal_strength(wifi_interface[0])
-            else:
-                print("EXCEPTION!")
-            
+                #print("EXCCCC")
+
+            # signal_strength = get_wifi_signal_strength(wifi_interface[0])
+            # signal_strength_2 = get_wifi_signal_strength(wifi_interface[0])
+
+
             if signal_strength is not None:
                 if "/" in signal_strength:
                     numerator, denominator = signal_strength.split("/")
                     signal_strength = int(numerator) * 100 // int(denominator)  # Convert to percentage
                 else:
                     signal_strength = int(signal_strength)
-                    print(signal_strength)
-                    print(signal_strength_2)
+                    # print(signal_strength)
+                    # print(signal_strength_2)
                 if signal_strength <= 100 and signal_strength >= 60:
                     wifi_lcd_strength.setStyleSheet("QLCDNumber { background-color: black; color: lime }")
                 elif signal_strength < 60 and signal_strength >= 40:
@@ -719,8 +1012,9 @@ class Worker(QObject):
 
                 wifi_lcd_strength.display(signal_strength)
                 wifi_lcd_strength_2.display(signal_strength_2)
-                print("Signal strength: " + str(signal_strength) + "%")
+                # print("Signal strength: " + str(signal_strength) + "%")
                 
             else:
-                print('Unable to retrieve signal strength.')
+                pass
+                # print('Unable to retrieve signal strength.')
 

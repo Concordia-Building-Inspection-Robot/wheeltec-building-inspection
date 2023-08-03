@@ -135,6 +135,15 @@ class RobotHandler():
     def reset_goal(self, data):
         if len(data.status_list) > 0 and data.status_list[0].text == "Goal reached.":
             self.current_goal = MoveBaseActionGoal()
+
+
+    def open_visual_follower(self):
+        if not self.proc_manager.is_subprocess_running('vis_follower'):
+            self.robotHandlerStatusPub.publish('start ' + 'visual follower')
+            self.proc_manager.create_new_subprocess('vis_follower', 'roslaunch ' + 'simple_follower' + ' ' + 'visual_follower.launch' + ' ' + '')
+        else:
+            self.robotHandlerStatusPub.publish('Visual Follower is already running')
+    
     def close_object_window(self):
         if self.proc_manager.is_subprocess_running('dark_net'):
             self.proc_manager.close_subprocess('dark_net')
@@ -287,6 +296,8 @@ if __name__ == '__main__':
             robot_handler.close_skeleton_window()
         elif cmd[0] == 'close_obj_window':
             robot_handler.close_object_window()
+        elif cmd[0] == 'run_visual_follower':
+            robot_handler.open_visual_follower()
         # Robot operations
         elif cmd[0] == 'stop_all':
             robot_handler.stop_all()

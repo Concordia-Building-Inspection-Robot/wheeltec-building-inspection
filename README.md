@@ -63,9 +63,9 @@ The camera launch files are mostly operational; however some problems occur when
 
 ## 2.1 Networking
 
-The laptop is fitted with both its internal WIFI network adapter along with an external USB WIFI adapter. Both are used
-simultaneously. With the internal adapter connected to the Concordia University network for internet access and the external
-being connected to the network hotspot of the Wheeltec robot.
+The laptop is fitted with two external USB WIFI adapter. Both can be used simultaneously. With one connected to the big robot and the other connected to the smaller robot.
+Recommended: Wifi adapter "wlx0c9d92b71f61" connected to the smaller robot and "wlx642943a66a33" to the bigger robot.
+Tip: To know the name of the wifi adapter just run the command "iwconfig"
 
 ### 2.1.1 Troubleshooting Internet Issues With Dual Adapter Setup
 
@@ -88,16 +88,20 @@ ASUSTek Computer 802.11ac NIC.
 The driver installed for the device to be functional on Ubuntu 18.04 was an updated driver for rtl88x2bu. Which can be found
 [here](https://github.com/cilynx/rtl88x2bu). It was installed using the deploy.sh script localed in the repository.
 
+The second wifi adapter is a D-Link wifi adapter and its drivers are already installed. 
+PLEASE NOTE: To use the D-Link wifi adapter you should open windows first from the boot menu of the lab pc and then restart from windows directly to ubuntu.
+
 # 3. Wheeltec Robot Info
 
 ## 3.1 Basic Use
 
-You can remotely access a terminal shell session using the following command:
+You can remotely access both robots terminal shell session using the following command:
 
--   `ssh wheeltec@wheeltec` The first "wheeltec" is the username, the second one is the hostname for 192.168.0.100
+-   `ssh wheeltec@wheeltec1` (for the small robot)The first "wheeltec" is the username, the second one is the hostname for 192.168.1.101.
+    'ssh wheeltec' (for the small robot)
     Sudo and login password is: 'dongguan'
     To remotely update the UI and other in house packages on board you can use:
--   `scp -r ~/catkin_ws/src/wheeltec-building-inspection/ wheeltec@wheeltec:catkin_workspace/src/`
+-   `scp -r ~/catkin_ws/src/wheeltec-building-inspection/ wheeltec@wheeltec1:catkin_workspace/src/`
     Then its ROS software can be restarted using:
 -   `sudo systemctl restart robot_handler.service`
     Then part of its console output and status can be checked using:
@@ -107,10 +111,10 @@ You can remotely access a terminal shell session using the following command:
 
 ## 3.2 Battery Info
 
-Battery level should not go too much below ~10.5V. Robot will beep as a warning if its battery level is starting to get
+Battery level for the smaller robot should not go too much below ~10.5V and for the big robot not below 20.5V. Robot will beep as a warning if its battery level is starting to get
 low and should be placed on charge.
 
-NOTE: DO NOT KEEP ROBOT POWERED WHILE ON CHARGE. THIS IS NOT HEALTHY FOR THE BATTERY AND WILL SIGNIFICANTLY DEGRADE ITS
+NOTE: DO NOT KEEP ROBOTS POWERED WHILE ON CHARGE. THIS IS NOT HEALTHY FOR THE BATTERY AND WILL SIGNIFICANTLY DEGRADE ITS
 LIFESPAN.
 
 Power info and other telemetry info can be read off of the robot's small LED display as shown in the image below:
@@ -164,14 +168,18 @@ for visualizing robots and data surrounding them.
 
 Manual robot control is allowed in any operation mode through UI. W, S, A, D, and spacebar keys can be used for driving as follows:
 
+First press on the "Enable Keyboard" button and select the "Control Here" entry. Now you can Control the robot using:
+
 -   W - Drive forwards
 -   S - Drive backwards
 -   A - Rotate to left
 -   D - Rotate to right
--   K - Halt movement
--   Spacebar - Kill current operation and stop movement
+-   E - Drive to the right
+-   Q - Drive to the left
+-   p - Halt movement
+-   Spacebar - Kill current operation and stop movement (Only for the slider)
 
-RViz also allows placing 2d goals from the UI, this can be done by clicking the "2d Nav Goal" button in the top middle of the UI and then clicking on any part of the map.
+RViz also allows placing 2d goals from the UI, this can be done by clicking the "2d Nav Goal" button in the top middle of the UI and then clicking on any part of the map. Also for multi-point navigation we can use the Publish Point button and select several destinations for the robot.
 
 The rover has three different operation types which the operator can start using the UI:
 
@@ -221,15 +229,16 @@ Delete the currently selected data capture file from the robot.
 
 ### 4.2.4 General Control
 
-#### Stop Operations (Space)
+#### Stop Operations
 
 This kills the current operation (SLAM, RTABMAP, Mapping, Navigation) and sets the rover to Idle mode, until another operation is started. This button should be used when switching from one operation to another.
 
-#### Halt Movement (K)
+#### Halt Movement
 
 This button publishes the halt command to the rover, which stops the rover in its place.
 
 # 5. Manual use without UI (For development)
+# This file will specify all the built-in capailities on the robot [click here](./Important%20Notes.txt)
 
 ## 5.1 Autonomous navigation
 

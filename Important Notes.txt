@@ -63,7 +63,7 @@ The app can control the car's movement.
 // The main car should create a 2D map in advance and save it.
 // Place the main car at the starting point of the map and the secondary car near the initial position (default formation position).
 // After logging in remotely to different car terminals, synchronize the time.
-sudo date -s "2022-04-01 15:15:00"
+sudo date -s "2023-06-10 13:39:00"
 // Step 1: Open 2D navigation on the main car side.
 roslaunch turn_on_wheeltec_robot navigation.launch
 // Step 2: Run the formation program on the secondary car side.
@@ -72,6 +72,11 @@ roslaunch wheeltec_multi wheeltec_slave.launch
 roslaunch wheeltec_robot_rc keyboard_teleop.launch
 // Step 4 (optional): Run rviz to observe the movement of the cars.
 rviz
+
+commands:
+export ROS_MASTER_URI='192.168.0.100:11311'
+export ROS_HOSTNAME=192.168.0.148
+
 
 13. Display Camera in a Web Browser
 Main Host: roslaunch usb_cam usb_cam-test.launch

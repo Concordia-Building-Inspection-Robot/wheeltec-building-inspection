@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>978</width>
+    <height>797</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(138, 226, 52);</string>
+  </property>
+  <widget class="QPushButton" name="show_param">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>20</y>
+     <width>141</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:hover {
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 0 8px;
+  background: DarkSalmon;
+}
+QPushButton:pressed{
+	border: 2px solid gray;
+	border-radius: 10px;
+	padding: 0 8px;
+	background: DarkSalmon
+}</string>
+   </property>
+   <property name="text">
+    <string>Show Parameters</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="param_table_widget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>951</width>
+     <height>721</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>261</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Note: 1 = True, 2 = False</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="param_search_bar">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>24</y>
+     <width>301</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
