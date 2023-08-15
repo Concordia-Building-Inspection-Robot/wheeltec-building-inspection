@@ -6,10 +6,12 @@ import rosbag
 import subprocess
 import re
 import time
+import datetime
 import threading
 
 import webbrowser
 
+from geometry_msgs.msg import Vector3
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import PointStamped
@@ -18,6 +20,7 @@ from darknet_ros_msgs.msg import BoundingBoxes
 from sensor_msgs.msg import CompressedImage
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import PointCloud2
+import sensor_msgs.point_cloud2 as pc2
 from sensor_msgs.msg import Imu
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QDialog
@@ -200,6 +203,12 @@ class NavControl(Plugin):
         self.hide_button = self._widget.findChild(QPushButton, 'hide_signal_strength').clicked.connect(self.hide_signal_strength)
         self._widget.findChild(QPushButton, 'open_recorder_window').clicked.connect(lambda: self.open_recorder_window(context))
         self._widget.findChild(QPushButton, 'movement_control').clicked.connect(self.open_movement_control_window)
+        self._widget.findChild(QPushButton, 'kill_lidar').clicked.connect(self.kill_lidar)
+        self._widget.findChild(QPushButton, 'show_coordinates').clicked.connect(self.run_tf_echo)
+        self._widget.findChild(QPushButton, 'turn_off_coordinates').clicked.connect(self.turn_off_gps)
+        self.lidar_on = self._widget.findChild(QPushButton, 'turn_on_lidar')
+        self.lidar_on.setEnabled(False)
+        self.lidar_on.clicked.connect(self.turn_on_lidar)
         # General
         self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
             lambda: self.robotHandlerCommandPub.publish('stop_all'))
@@ -229,6 +238,34 @@ class NavControl(Plugin):
         self.timer.start()
 
         self.rec_window = QWidget()
+
+    def turn_off_gps(self):
+        try:
+            subprocess.call(['rosnode', 'kill', '/tf_echo'])
+        except:
+            pass
+
+    def run_tf_echo(self):
+        def threadd():
+            try:
+                subprocess.call(['rosrun', 'wheeltec-building-inspection-ui', 'tf_echo', '/map', '/base_link'])
+            except:
+                print("Exception")
+            
+        try:
+            thread1 = threading.Thread(target=threadd, args=())
+            thread1.start()
+            #subprocess.call(['rosrun', 'wheeltec-building-inspection-ui', 'tf_echo', '/map', '/base_link'])
+        except:
+            print("Exception")
+
+    def kill_lidar(self):
+        self.lidar_on.setEnabled(True)
+        try:
+            subprocess.call(['rosnode', 'kill', '/lslidar_driver_node'])
+            print("Killing the Lidar Node")
+        except:
+            print("Error Occured while turning off the Lidar")
 
 
     def open_movement_control_window(self):
@@ -289,6 +326,8 @@ class NavControl(Plugin):
                 type1 = Imu
             elif topic_name == '/point_cloud_raw':
                 type1 = PointCloud2
+            elif topic_name == '/darknet_ros/bounding_boxes':
+                type1 = BoundingBoxes
             try:
                 rospy.wait_for_message(topic_name, type1, timeout=2)
                 print("Topic " + topic_name + " is active and receiving messages.")
@@ -304,13 +343,37 @@ class NavControl(Plugin):
             th_1 = threading.Thread(target=record_imu, args=())
             th_1.start()
         
+
+
+
         def record_imu():
+
+            def  extract_imu_data_from_bag(input_bag_file, output_text_file):
+                with rosbag.Bag(input_bag_file, 'r') as bag:
+                    with open(output_text_file, 'w') as output_file:
+                        for topic, msg, t in bag.read_messages(topics=['/imu_raw']):  # Replace '/imu_topic' with your actual IMU topic name
+                            if topic == '/imu_raw' and msg._type == 'sensor_msgs/Imu':  # Make sure the message type is 'sensor_msgs/Imu'
+                                imu_data = "Timestamp: {}, " \
+                                        "Orientation (x, y, z, w): {}, {}, {}, {}, " \
+                                        "Angular velocity (x, y, z): {}, {}, {}, " \
+                                        "Linear acceleration (x, y, z): {}, {}, {}\n".format(
+                                    msg.header.stamp,
+                                    msg.orientation.x, msg.orientation.y, msg.orientation.z, msg.orientation.w,
+                                    msg.angular_velocity.x, msg.angular_velocity.y, msg.angular_velocity.z,
+                                    msg.linear_acceleration.x, msg.linear_acceleration.y, msg.linear_acceleration.z
+                                )
+                                output_file.write(imu_data)
 
             def callback(data):
                 if rospy.Time.now() - start_time >= recording_duration:
                     print("BAG CLOSING...")
                     subscribe_pcl.unregister()
                     bag.close()
+
+                    input_bag_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/imu_recordings/IMU-RECORDING.bag'
+                    output_text_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/imu_recordings/IMU-RECORDING.txt'
+                    extract_imu_data_from_bag(input_bag_file, output_text_file)
+
                 else:
                     print(rospy.Time.now())
                     bag.write('/imu_raw', data)
@@ -331,11 +394,26 @@ class NavControl(Plugin):
 
         def record_point_cloud():
 
+            def extract_lidar_data_from_bag(input_bag_file, output_text_file):
+                with rosbag.Bag(input_bag_file, 'r') as bag:
+                    with open(output_text_file, 'w') as output_file:
+                        for topic, msg, t in bag.read_messages(topics=['/point_cloud_raw']):
+                            if topic == '/point_cloud_raw' and msg._type == 'sensor_msgs/PointCloud2':
+                                for p in pc2.read_points(msg, field_names=("x", "y", "z"), skip_nans=True):
+                                    lidar_data = "X: {:.2f}, Y: {:.2f}, Z: {:.2f}\n".format(p[0], p[1], p[2])
+                                    output_file.write(lidar_data)
+
             def callback(data):
                 if rospy.Time.now() - start_time >= recording_duration:
                     print("BAG CLOSING...")
                     subscribe_pcl.unregister()
                     bag.close()
+
+                    input_bag_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/Lidar_recordings/Lidar-RECORDING.bag'
+                    output_text_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/Lidar_recordings/Lidar-RECORDING.txt'
+                    extract_lidar_data_from_bag(input_bag_file, output_text_file)
+
+
                 else:
                     print(rospy.Time.now())
                     bag.write('/point_cloud_raw', data)
@@ -350,12 +428,46 @@ class NavControl(Plugin):
                 start_time = rospy.Time.now()
                 print("Start Time: " + str(start_time))
                 subscribe_pcl = rospy.Subscriber('/point_cloud_raw', PointCloud2, callback)
-                # rospy.spin()
             else:
                 print("Topic /point_cloud_raw is not active")
             
 
-        #rec_window = QWidget()
+        def record_object_detected():
+
+
+            def backcall(data):
+                if rospy.Time.now() - start_time1 >= recording_duration:
+                    print("Recording Stopping...")
+                    with open('/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/object_detection/detected_object.txt', "w") as file:
+                        for object1 in object_set:
+                            file.write(object1 +"\n")
+                    subscribe_yolo.unregister()
+                else:
+                    print(rospy.Time.now())
+                    for box in data.bounding_boxes:
+                        detected_class = box.Class
+                        detected_class1 = str(detected_class)
+
+                        top_left_x = box.xmin
+                        top_left_y = box.ymin
+                        bottom_right_x = box.xmax
+                        bottom_right_y = box.ymax
+                        center_x = (top_left_x + bottom_right_x) / 2
+                        center_y = (top_left_y + bottom_right_y) / 2
+                        confidence = box.probability
+
+                        object_set.append("Detected: "+detected_class1 + " at " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " at " + "X: " +str(center_x) + ", Y: " + str(center_y) + " with confidence " + str(confidence))
+
+            is_topic_active1 = check_topic_active("/darknet_ros/bounding_boxes")
+            if is_topic_active1:
+                record_duration1 = self.rec_window.findChild(QSpinBox, 'record_duration').value()
+                object_set = []
+                recording_duration = rospy.Duration.from_sec(record_duration1)
+                start_time1 = rospy.Time.now()
+                print("Start Time: ") + str(start_time1)
+                subscribe_yolo = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, backcall)
+
+
         if self.rec_window.isVisible():
             print("Window is already open")
         
@@ -365,6 +477,14 @@ class NavControl(Plugin):
         
         self.rec_window.findChild(QPushButton, 'record_lidar_point_cloud').clicked.connect(record_pcl)
         self.rec_window.findChild(QPushButton, 'record_imu').clicked.connect(record_imu_thread)
+        self.rec_window.findChild(QPushButton, 'record_objects').clicked.connect(record_object_detected)
+
+    def turn_on_lidar(self):
+        self.robotHandlerCommandPub.publish('turn_on_lidar')
+        self.lidar_on.setEnabled(False)
+
+        
+
 
     def hide_signal_strength(self):
         lcd1 = self._widget.findChild(QLCDNumber, 'WifiStrength')
@@ -694,7 +814,6 @@ class NavControl(Plugin):
                 counter = 0
                 label_off.setVisible(True)
         
-        
         self.robotHandlerCommandPub.publish('obj_detection') 
         new_window = QDialog()
         loadUi("/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/resource/object-detection-display.ui", new_window)
@@ -716,8 +835,9 @@ class NavControl(Plugin):
         new_window.timer.start(30)
 
         new_window.findChild(QPushButton, 'check_topics').clicked.connect(checkProgress)
+        
         checkProgress()
-        new_window.finished.connect(self.obj_detection_exit_window)
+        #new_window.finished.connect(self.obj_detection_exit_window)
         new_window.exec_()
 
 
@@ -848,12 +968,35 @@ class NavControl(Plugin):
             topic_types = rospy.get_published_topics()
             available_topics = [topic[0] for topic in topic_types]
             return topic_name in available_topics
+        
+        l1 = self._widget.findChild(QSpinBox, 'spinboxP1').value()
+        l2 = self._widget.findChild(QSpinBox, 'spinboxP2').value()
+        l3 = self._widget.findChild(QSpinBox, 'spinboxP3').value()
+        l4 = self._widget.findChild(QSpinBox, 'spinboxP4').value()
+
+        list_l = [l1,l2,l3,l4]
+        
+
+        gps1 = {'x': 0.831, 'y': 0.844, 'z': 0}
+        gps2 = {'x': 4.668, 'y': 0.917, 'z': 0}
+        gps3 = {'x': 4.705, 'y': -0.257, 'z': 0}
+        gps4 = {'x': 0.675, 'y': -0.150, 'z': 0}
+
+        gps = [gps1,gps2,gps3,gps4]
+
+        p1 = gps[list_l[0] - 1]
+        p2 = gps[list_l[1] - 1]
+        p3 = gps[list_l[2] - 1]
+        p4 = gps[list_l[3] - 1]
+                
         if is_topic_available("/clicked_point"):
             locations = [
-                {'x': 0.831, 'y': 0.844, 'z': 0},
-                {'x': 4.668, 'y': 0.917, 'z': 0},
-                {'x': 4.705, 'y': -0.257, 'z': 0},
-                {'x': 0.675, 'y': -0.150, 'z': 0}
+                p1,
+                p2,
+                p3,
+                p4,
+
+
                  #{'x': 2.5380358696, 'y': 0.392, 'z': 0}
                 # {'x': -13.092622757, 'y': 3.63729691505, 'z': 0.00315856933594},
                 # {'x': -12.4344749451, 'y': 18.3455543518, 'z': 0.00156402587891},
@@ -917,6 +1060,16 @@ class Worker(QObject):
     def run_thread(self):
         wifi_lcd_strength = self._widget.findChild(QLCDNumber, 'WifiStrength')
         wifi_lcd_strength_2 = self._widget.findChild(QLCDNumber, 'WifiStrength_2')
+
+        entry_x = self._widget.findChild(QLineEdit, 'entry_x')
+        entry_y = self._widget.findChild(QLineEdit, 'entry_y')
+        def set_entry_gps(data):
+            x = str(data.x)
+            y = str(data.y)
+            entry_x.setText(x)
+            entry_y.setText(y)
+            
+
         def get_power_level(data):
             power_level_lcd = self._widget.findChild(QLCDNumber, 'power_level')
             voltage = data.data
@@ -970,6 +1123,7 @@ class Worker(QObject):
             time.sleep(1)
             #print(wifi_interface)
             rospy.Subscriber('PowerVoltage', Float32, get_power_level)
+            rospy.Subscriber('tf_echo_translation', Vector3, set_entry_gps)
             try:
                 if wifi_interface[0] == "wlx642943a66a33" and wifi_interface[1] == "wlx0c9d92b71f61":
                     signal_strength = get_wifi_signal_strength(wifi_interface[0])

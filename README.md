@@ -16,21 +16,23 @@ Wheel odometry is a method of estimating the movement of a mobile robot by measu
 It works by using sensors, such as encoders or tachometers, to measure the rotations of the robot's wheels and then
 using this information to calculate the distance and direction that the robot has moved.
 
-it is also prone to errors and drift over time, so it must be used in combination with other sensors and algorithms to
+It is also prone to errors and drift over time, so it must be used in combination with other sensors and algorithms to
 provide accurate pose estimates.
 
 ### 1.2.2 IMU
 
-There is an IMU built in the Wheeltec robot and it is published to /imu .
+IMU type: WHEELTEC N100 IMU Module w/ Metal Shell 9-Axis Attitude Sensor Magnetometer USB Serial Port Output
+
+There is an IMU (inertial measurement unit) built in the Wheeltec robot and it is published to /imu on the small robot and /imu_raw on the big robot.
 As an initial idea, we can use the imu topic to figure out the rate of change of the acceleration,
 this helps us detect sudden decelerations, which indicate the possibility of a collision.
 A new node named monitors keeps track of the current and previous accelerations,
 and uses them to find the rate of change.
 This node is written in C++ and allows the rover to stop in case of collisions for both autonomous driving and manual controls.
 
-IMU (inertial measurement unit) and wheel odometry are often used together in order to provide accurate pose estimates
+IMU and wheel odometry are often used together in order to provide accurate pose estimates
 for a mobile robot. An IMU is a sensor that measures the linear and angular accelerations of a moving body, using a
-combination of accelerometers, gyroscopes, and sometimes magnetometers. It can be used to estimate the robot's orientation
+combination of accelerometers and gyroscopes. It can be used to estimate the robot's orientation
 and linear velocity, but it is subject to errors and drift over time.
 
 To combine the measurements from an IMU and wheel odometry, a sensor fusion algorithm is used. The sensor fusion algorithm
@@ -41,23 +43,32 @@ pose, and then it updates the prediction based on the new measurements as they a
 
 ### 1.2.3 LiDAR
 
-The LiDAR installed on the Wheeltec robot is the result of a cooperation between Wheeltec and LSLiDAR. It is part of the
+A LIDAR (light detection and ranging), uses a laser light to measure distances to objects and create detailed 2D or 3D maps of the surrounding environment and to estimate its own pose.
+The LiDAR installed on the small Wheeltec robot is the result of a cooperation between Wheeltec and LSLiDAR. It is part of the
 N10 series, a high-performance single-line mechanical TOF LiDAR. Which means it is only capable of 2D mapping on its own.
 Its output is published to /scan.
+On the Big Robot we are using the LSLIDAR C16 by Leishen Intellignet System which can create a 3D point cloud (not only 2D).
 
-The LiDAR is used to build a map of its surroundings and estimate its own pose (i.e., its position and orientation)
-in the environment.
+To use the lidar in our project we will be using the package that will turn on the lidar and the AMCL package. The AMCL, known as the adaptive monte carlo localization, is a commonly used algorithm for estimating a robot's position and orientation (pose) within its environment. It's a probabilistic localization algorithm that uses a particle filter to represent the robot's possible poses and updates these poses based on sensor measurements. When using a LiDAR sensor with AMCL in ROS1, the primary goal is to improve the accuracy of the robot's localization by integrating the LiDAR's data into the estimation process.
+
+The Lidar has already hard coded values for the minimum and maximum angle and range to scan. We can change these values by first connecting to the robot via SSH and on the robot we can go to this directory "/home/wheeltec/wheeltec_lidar/src/pointcloud_to_lasescan/launch" and edit the "pointcloud_scan.launch" file. The parameters are well shown. (Note that the angles are in radian and not degree)
 
 ### 1.2.4 Stereo Camera
 
-The stereo camera installed on the Wheeltec robot is the ASTRA PRO.
+The stereo camera installed on the Wheeltec robot is the ASTRA PRO. It has two cameras.
 
-The camera captures images of the environemnt, these images contain RGB and depth information about the environment. An algorithm is used to translate this data into maps, a 2d map used for the navigation algorithm, and a 3d map (Point Cloud data) that can be saved and later looked at or instantaneously rendered to the GUI. When stereo camera navigation is enabeled, the rover uses an algorithm known as RTABMAP for trajectory estimation.
+The RGB Camera: Used for object detection, skeleton detection, visual follower and coloring the 3D map that we want to build.
+The Infrared Camera (depth camera): Used with the Lidar for collision avoidance and building a 3D pointcloud map.
+
+An algorithm is used to translate the images captured from the RGB and depth camera into maps, and a 3d map (Point Cloud data) that can be saved and later looked at or instantaneously rendered to the GUI. When stereo camera navigation is enabeled, the rover uses an algorithm known as RTABMAP (Real-Time Appearance-Based Mapping) for trajectory estimation.
+
+To achieve the 3D scan: run the rrt_slam.launch and the rtabmap_mapping.launch or rtabmap_nav.launch files then start moving the robot really slowly for it to scan. After stopping the files from running a database file will be generated on the robot so we can secure copy the file to the lab pc and use the command "rtabmap-databaseViewer <name_of_file.db>"
+Now to view the 3D map: Press "Edit" on the top bar then "View 3D map". Select "4" and hit "OK".
 
 The camera has a built in launch file which allows us to publish infrared, depth, and RGB images to the /camera namespace
-Running turn_on_wheeltec_rover wheeltec_camera.launch file will initiate the camera node with the needed parameters (30fps, 720x480). In order to run this launch file a small change needs to be made to the astra_camera.launch file and correcting the name of the camera driver's source file from astra_camera to libuvc since the latter is not preinstalled.
+Running turn_on_wheeltec_rover wheeltec_camera.launch file will initiate the camera node with the needed parameters (30fps, 720x480).
 
-The camera launch files are mostly operational; however some problems occur when attempting to use both lidar and camera data for navigation.
+The camera can be used for object detection and skeleton tracking. Usin the "darknet" and "bodyreader" package.
 
 # 2. Lab PC Info
 
@@ -89,7 +100,7 @@ The driver installed for the device to be functional on Ubuntu 18.04 was an upda
 [here](https://github.com/cilynx/rtl88x2bu). It was installed using the deploy.sh script localed in the repository.
 
 The second wifi adapter is a D-Link wifi adapter and its drivers are already installed. 
-PLEASE NOTE: To use the D-Link wifi adapter you should open windows first from the boot menu of the lab pc and then restart from windows directly to ubuntu.
+PLEASE NOTE: To use the D-Link wifi adapter you should open windows OS first from the boot menu of the lab pc and then restart from windows directly to ubuntu.
 
 # 3. Wheeltec Robot Info
 
@@ -151,11 +162,42 @@ If this also fails, you would have to load the components manually, by clicking 
 
 ## UI Use
 
-The UI uses RQT. The main operation control UI is the component on the right. There are currently three states of operation
-within the UI: SLAM, Mapping and Navigation. When any of these is clicked, the current state is stopped, and operation is moved to the new launch file.
-(not currently in any of the three state of operations). The GUI is currently being updated to include RTABMAP (which is the algorithm used for 3d mapping and navigation)
+The UI uses RQT. The main operation control UI is the component on the right.
 
-Currently the UI only allows for control using 2D mapping and navigation.
+![img.png](docs/res/ui-guide/in-depth-ui.png "User Interface In Depth")
+
+1: Start SLAM <br>
+2: Start Mapping <br>
+3: Save the Map after doing SLAM<br>
+4 and 5: Load map and start navigation<br>
+6: Stop all nodes. Meaning it will kill all the navigation nodes.<br>
+7: Stop moving the robot. Meaning that when the robot is following a path, the Halt button will stop the robot mid-path<br>
+8: Logs showing when a node is starting or being killed.<br>
+9: Start Stereo Camera node (RGB and Infrared).<br>
+10: Show Power Level.<br>
+11: Show Signal Strength. For the D-link wifi adapter the signal strength should always be between 35 and 100 but for the ASUS wifi adapter the signal strength will be between -30 and -90 <br>
+12: Control the robot (press on "Enable Keyboard before controling the robot")<br>
+13: change the speed of the robot (Linear in meters/second and Angular in radian/second)<br>
+14: Turn on Object detection window. We can check the status of the node and see the object detected in a list.<br>
+![img.png](docs/res/ui-guide/object-detection.png "object detection")
+15: Turn on Skeleton Tracking window. We can record the video and the data coming from the skeleton tracking package.<br>
+![img.png](docs/res/ui-guide/skel-track.png "skel-track")
+16: Start the browser and watch the camera feed through the browser. When this node is running, we can connect to the robot using any device that has a browser and look at the camera feed<br>
+17: Experimental button for multi robot communication<br>
+18: Robot will follow anything red in front of the camera.<br>
+19: Show and edit the parameters. Note: Sometimes changing the parameters will not affect the robot because some parameters should be changed dynamically. To change parameters dynamically we can run "rosrun rqt_reconfigure rqt_reconfigure" and change them.<br>
+![img.png](docs/res/ui-guide/param.png "Parameters")
+20: Window to Record for now the IMU, Lidar and object detection data. (Check in the Data Capture section)<br>
+21: Window to make the robot holonomic. In this window to make the robot holonomic we have to press the "Activate Holonomic Movement". This button will dynamically change 3 parameters: the max_velocity and the max_acceleration on the y axis and the weight_kinematics_nh. The checkbox "Overwrite Orientation" if it is checked it means that the robot will only move forward, if not it can move forward and backward.<br>
+![img.png](docs/res/ui-guide/holo.png "Holo")
+22: Turn off the Lidar node.<br>
+23: Turn on the Lidar node.<br>
+24: Start the coordinates_show node.<br>
+25: Turn off the coordinates_show node<br>
+
+This is the Path tab where we can give 4 points to the robot and it will follow the path given.
+![img.png](docs/res/ui-guide/path.png "Path")
+
 
 ### 4.2.1 Robot Visualization
 
@@ -185,7 +227,7 @@ The rover has three different operation types which the operator can start using
 
 1. SLAM
 
-[SLAM](https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping) is short for Simultaneous Localization and Mapping, this is the algorithm used with the data received from the Lidar to be able to navigate the 2d map created. Slam allows both goal setting and map creation at the same time. This allows the operator to the environment, while at the environment and set goals for the rover to navigate to within that map.
+[SLAM](https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping) is short for Simultaneous Localization and Mapping, this is the algorithm used with the data received from the Lidar to be able to navigate the 2d map created. Slam allows both goal setting and map creation at the same time. This allows the operator to control the environment, while at the environment and set goals for the rover to navigate to within that map.
 
 2. Mapping
 
@@ -197,35 +239,24 @@ Navigation mode loads the saved map, it then localizes robot within that map and
 
 ### 4.2.3 Data Capture Tab
 
-![screenshot-ui-data-cap-tab.png](docs/res/ui-guide/screenshot-ui-data-cap-tab.png "Data Capture Tab")
+![screenshot-ui-data-cap-tab.png](docs/res/ui-guide/recorder-window.png "Data Capture Tab")
 
 Fig. 5: Data Capture Tab
 
-All captures are stored on board the internal storage of the robot.
+All captures are stored on the laptop in the '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings' directory
+You can just select the number of seconds you want to record and press a button to start recording.
 
-#### Device Selection
+These are examples of the data type of every sensor:
 
-This dropdown allows the operator to choose the source of the data that is being captured, this includes either lidar or camera.
+Lidar: X: -0.01, Y: 1.47, Z: -0.23
+       X: -0.01, Y: 1.98, Z: 0.24
 
-#### Toggle Capture
+IMU: Timestamp: 1666160868481861048, Orientation (x, y, z, w): 0.0062186983414, -0.00795513577759, 0.783027589321, 0.61918926239, Angular velocity (x, y, z):    -0.0218480806798, 0.0143877603114, -0.0796655640006, Linear acceleration (x, y, z): 0.258397936821, 0.521580994129, 9.58225727081
 
-Toggles the capturing the raw output of the selected device.
+Object Detection: Detected: person at 2023-08-14 11:28:52 at X: 126, Y: 147 with confidence 0.3162766397
+                  Detected: person at 2023-08-14 11:28:52 at X: 128, Y: 146 with confidence 0.35608240962
+                  Detected: person at 2023-08-14 11:28:52 at X: 123, Y: 151 with confidence 0.30072581768
 
-#### Item List View
-
-Display a list of all the files for each capture stored on the robot for the currently selected device.
-
-#### Transfer
-
-Transfer selected capture to lab laptop over wireless connection using SCP.
-
-#### Playback
-
-Play back the currently selected captured data in real time to be viewed in visualisation.
-
-#### Delete
-
-Delete the currently selected data capture file from the robot.
 
 ### 4.2.4 General Control
 
@@ -287,9 +318,33 @@ In two separate terminal sessions:
 -   `roslaunch turn_on_wheeltec_robot turn_on_wheeltec_robot.launch`
 -   `rosrun teleop_twist_keyboard teleop_twist_keyboard.py`
 
-# 6. Development tips
 
-## 6.1 What runs where?
+# 6. Safety Measures
+
+## 6.1 Collision Avoidance
+
+Using the Lidar and Depth Camera the robot is able to avoid obstacles
+
+## 6.2 Virtual Fence
+
+When saving a new map, we can manually add obstacle to the map saved using a picture editor like GIMP. We use the black color to add obstacles.
+
+## 6.3 Collision Detection
+
+Using the IMU we can detect when a collision happens.
+
+## 6.4 Physical Red Buttons
+
+There are two emergency buttons on the robot. The hardware button will cut the electricity running in the robot. The software button will stop the operating system from running.
+
+## 6.5 Signal
+
+When the connection signal between the robot and the laptop is weak the robot will stop from moving until we fix the connection.
+
+
+# 7. Development tips
+
+## 7.1 What runs where?
 
 The UI package under the repo contains packages that hold the nodes for the UI that runs on the lab PC and robot itself.
 
@@ -311,7 +366,7 @@ and UI respectively.
 -   /file_cap_list - string message formatted with character '|' used as delimiter between file names
 -   /robot_handler_cmd - string message
 
-## 6.2 UI startup via terminal
+## 7.2 UI startup via terminal
 
 You can run the UI on its own by running `roscore` in its own terminal session then run the following:
 
@@ -322,7 +377,7 @@ in root directory of project:
 
 -   `bash UI/ui-startup/run_rqt_gui.sh`
 
-## 6.3 Building and running packages in this repo
+## 7.3 Building and running packages in this repo
 
 There is a requirements.txt file that lists all the known python requirements for these packages to run.
 It is recommended to create a python virtual environment in the root of this project, install the required
@@ -342,7 +397,7 @@ the following had to be added to `~/.bashrc`:
 This is more of a workaround for import errors as it is manually adding this project's root path
 to the python path environment variable, but it does allow all the modules here to be loaded properly.
 
-# 7. Research goals and ideas
+# 8. Research goals and ideas
 
 The long term goal of this project is to develop a fleet of autonomous robots capable of helping perform building
 inspection with the use of its sensors on board. Using the Lidar and Stereo camera in order to map the environment it

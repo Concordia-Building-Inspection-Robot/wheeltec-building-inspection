@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   rqt_gui
   rqt_gui_py
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -134,6 +135,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
+add_executable(tf_echo src/wheeltec-building-inspection/tf_echo.cpp)
 add_executable(cpp_monitor scripts/cpp_monitor.cpp)
 add_executable(follower src/wheeltec-building-inspection/follower.cpp)
 ## Rename C++ executable without prefix
@@ -147,11 +149,13 @@ add_executable(follower src/wheeltec-building-inspection/follower.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
+target_link_libraries(tf_echo ${catkin_LIBRARIES})
+
 target_link_libraries(cpp_monitor
   ${catkin_LIBRARIES}
 )
-
 target_link_libraries(follower ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############

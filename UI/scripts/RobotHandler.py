@@ -137,6 +137,14 @@ class RobotHandler():
             self.current_goal = MoveBaseActionGoal()
 
 
+    def turn_on_lidar(self):
+        if not self.proc_manager.is_subprocess_running('lidar'):
+            self.robotHandlerStatusPub.publish('start ' + 'lidar')
+            self.proc_manager.create_new_subprocess('lidar', 'roslaunch ' + 'turn_on_wheeltec_robot' + ' ' + 'wheeltec_lidar.launch' + ' ' + '')
+        else:
+            self.robotHandlerStatusPub.publish('Lidar is already running')
+
+
     def open_visual_follower(self):
         if not self.proc_manager.is_subprocess_running('vis_follower'):
             self.robotHandlerStatusPub.publish('start ' + 'visual follower')
@@ -296,6 +304,8 @@ if __name__ == '__main__':
             robot_handler.close_skeleton_window()
         elif cmd[0] == 'close_obj_window':
             robot_handler.close_object_window()
+        elif cmd [0] == 'turn_on_lidar':
+            robot_handler.turn_on_lidar()
         elif cmd[0] == 'run_visual_follower':
             robot_handler.open_visual_follower()
         # Robot operations
