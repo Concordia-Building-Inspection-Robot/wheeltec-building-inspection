@@ -1,312 +1,555 @@
-Detected: traffic light at 2023-08-14 11:28:51 at X: 128, Y: 150 with confidence 0.332209736109
-Detected: person at 2023-08-14 11:28:51 at X: 126, Y: 149 with confidence 0.317635536194
-Detected: person at 2023-08-14 11:28:51 at X: 128, Y: 150 with confidence 0.318814486265
-Detected: person at 2023-08-14 11:28:51 at X: 127, Y: 150 with confidence 0.334635168314
-Detected: person at 2023-08-14 11:28:52 at X: 126, Y: 152 with confidence 0.499557733536
-Detected: person at 2023-08-14 11:28:52 at X: 125, Y: 148 with confidence 0.320409983397
-Detected: person at 2023-08-14 11:28:52 at X: 126, Y: 147 with confidence 0.3162766397
-Detected: person at 2023-08-14 11:28:52 at X: 128, Y: 146 with confidence 0.35608240962
-Detected: person at 2023-08-14 11:28:52 at X: 123, Y: 151 with confidence 0.30072581768
-Detected: person at 2023-08-14 11:28:52 at X: 164, Y: 142 with confidence 0.409337192774
-Detected: person at 2023-08-14 11:28:52 at X: 131, Y: 150 with confidence 0.338027834892
-Detected: traffic light at 2023-08-14 11:28:52 at X: 131, Y: 150 with confidence 0.377103507519
-Detected: suitcase at 2023-08-14 11:28:52 at X: 375, Y: 224 with confidence 0.313372820616
-Detected: person at 2023-08-14 11:28:52 at X: 173, Y: 140 with confidence 0.339883506298
-Detected: person at 2023-08-14 11:28:52 at X: 171, Y: 141 with confidence 0.346230715513
-Detected: person at 2023-08-14 11:28:52 at X: 168, Y: 142 with confidence 0.491525709629
-Detected: person at 2023-08-14 11:28:52 at X: 170, Y: 141 with confidence 0.691981196404
-Detected: person at 2023-08-14 11:28:53 at X: 174, Y: 141 with confidence 0.687786102295
-Detected: person at 2023-08-14 11:28:53 at X: 223, Y: 136 with confidence 0.3486751616
-Detected: person at 2023-08-14 11:28:53 at X: 174, Y: 147 with confidence 0.553584396839
-Detected: person at 2023-08-14 11:28:53 at X: 175, Y: 146 with confidence 0.478322267532
-Detected: person at 2023-08-14 11:28:53 at X: 175, Y: 145 with confidence 0.60648983717
-Detected: person at 2023-08-14 11:28:53 at X: 175, Y: 145 with confidence 0.60648983717
-Detected: person at 2023-08-14 11:28:53 at X: 178, Y: 148 with confidence 0.603137433529
-Detected: person at 2023-08-14 11:28:53 at X: 219, Y: 143 with confidence 0.702839851379
-Detected: person at 2023-08-14 11:28:53 at X: 216, Y: 142 with confidence 0.717053472996
-Detected: person at 2023-08-14 11:28:53 at X: 177, Y: 143 with confidence 0.601413309574
-Detected: person at 2023-08-14 11:28:53 at X: 180, Y: 138 with confidence 0.647449612617
-Detected: person at 2023-08-14 11:28:53 at X: 216, Y: 149 with confidence 0.602084636688
-Detected: person at 2023-08-14 11:28:53 at X: 215, Y: 153 with confidence 0.796782910824
-Detected: person at 2023-08-14 11:28:53 at X: 215, Y: 155 with confidence 0.862014532089
-Detected: person at 2023-08-14 11:28:53 at X: 222, Y: 153 with confidence 0.778448939323
-Detected: person at 2023-08-14 11:28:53 at X: 225, Y: 152 with confidence 0.527048051357
-Detected: person at 2023-08-14 11:28:53 at X: 228, Y: 155 with confidence 0.519325792789
-Detected: person at 2023-08-14 11:28:53 at X: 228, Y: 155 with confidence 0.642044186592
-Detected: person at 2023-08-14 11:28:53 at X: 230, Y: 175 with confidence 0.704718053341
-Detected: person at 2023-08-14 11:28:53 at X: 228, Y: 157 with confidence 0.799905359745
-Detected: traffic light at 2023-08-14 11:28:53 at X: 501, Y: 97 with confidence 0.307044714689
-Detected: person at 2023-08-14 11:28:53 at X: 231, Y: 156 with confidence 0.796062469482
-Detected: person at 2023-08-14 11:28:53 at X: 232, Y: 177 with confidence 0.474893927574
-Detected: person at 2023-08-14 11:28:53 at X: 306, Y: 152 with confidence 0.305328041315
-Detected: person at 2023-08-14 11:28:53 at X: 264, Y: 153 with confidence 0.567348003387
-Detected: person at 2023-08-14 11:28:53 at X: 265, Y: 156 with confidence 0.6730645895
-Detected: traffic light at 2023-08-14 11:28:53 at X: 501, Y: 98 with confidence 0.302294164896
-Detected: person at 2023-08-14 11:28:53 at X: 267, Y: 156 with confidence 0.562691628933
-Detected: person at 2023-08-14 11:28:53 at X: 267, Y: 156 with confidence 0.562691628933
-Detected: person at 2023-08-14 11:28:53 at X: 270, Y: 155 with confidence 0.654190659523
-Detected: person at 2023-08-14 11:28:53 at X: 269, Y: 157 with confidence 0.654184341431
-Detected: person at 2023-08-14 11:28:53 at X: 272, Y: 159 with confidence 0.525629818439
-Detected: person at 2023-08-14 11:28:54 at X: 269, Y: 174 with confidence 0.558467268944
-Detected: person at 2023-08-14 11:28:54 at X: 270, Y: 176 with confidence 0.441852241755
-Detected: person at 2023-08-14 11:28:54 at X: 270, Y: 174 with confidence 0.735847592354
-Detected: person at 2023-08-14 11:28:54 at X: 273, Y: 173 with confidence 0.65183120966
-Detected: person at 2023-08-14 11:28:54 at X: 275, Y: 174 with confidence 0.716282129288
-Detected: person at 2023-08-14 11:28:54 at X: 280, Y: 175 with confidence 0.722079575062
-Detected: traffic light at 2023-08-14 11:28:54 at X: 501, Y: 99 with confidence 0.337436139584
-Detected: person at 2023-08-14 11:28:54 at X: 281, Y: 175 with confidence 0.696334183216
-Detected: traffic light at 2023-08-14 11:28:54 at X: 501, Y: 98 with confidence 0.383799523115
-Detected: person at 2023-08-14 11:28:54 at X: 276, Y: 176 with confidence 0.56057536602
-Detected: person at 2023-08-14 11:28:54 at X: 276, Y: 176 with confidence 0.56057536602
-Detected: person at 2023-08-14 11:28:54 at X: 280, Y: 176 with confidence 0.511796116829
-Detected: person at 2023-08-14 11:28:54 at X: 277, Y: 175 with confidence 0.729943752289
-Detected: person at 2023-08-14 11:28:54 at X: 277, Y: 174 with confidence 0.701290607452
-Detected: person at 2023-08-14 11:28:54 at X: 281, Y: 175 with confidence 0.684545457363
-Detected: traffic light at 2023-08-14 11:28:54 at X: 501, Y: 98 with confidence 0.31623801589
-Detected: person at 2023-08-14 11:28:54 at X: 278, Y: 176 with confidence 0.571137487888
-Detected: person at 2023-08-14 11:28:54 at X: 278, Y: 176 with confidence 0.571137487888
-Detected: person at 2023-08-14 11:28:54 at X: 321, Y: 173 with confidence 0.656357288361
-Detected: person at 2023-08-14 11:28:54 at X: 320, Y: 173 with confidence 0.715546190739
-Detected: person at 2023-08-14 11:28:54 at X: 319, Y: 173 with confidence 0.734866201878
-Detected: person at 2023-08-14 11:28:54 at X: 320, Y: 174 with confidence 0.772616565228
-Detected: person at 2023-08-14 11:28:54 at X: 320, Y: 173 with confidence 0.753369987011
-Detected: person at 2023-08-14 11:28:54 at X: 321, Y: 173 with confidence 0.744591236115
-Detected: person at 2023-08-14 11:28:54 at X: 321, Y: 173 with confidence 0.783951163292
-Detected: chair at 2023-08-14 11:28:54 at X: 73, Y: 199 with confidence 0.329805344343
-Detected: person at 2023-08-14 11:28:54 at X: 321, Y: 173 with confidence 0.783951163292
-Detected: chair at 2023-08-14 11:28:54 at X: 73, Y: 199 with confidence 0.329805344343
-Detected: person at 2023-08-14 11:28:54 at X: 321, Y: 173 with confidence 0.820747971535
-Detected: person at 2023-08-14 11:28:54 at X: 320, Y: 173 with confidence 0.80711388588
-Detected: traffic light at 2023-08-14 11:28:54 at X: 500, Y: 99 with confidence 0.300417453051
-Detected: person at 2023-08-14 11:28:54 at X: 320, Y: 172 with confidence 0.762589812279
-Detected: person at 2023-08-14 11:28:54 at X: 321, Y: 172 with confidence 0.796229958534
-Detected: person at 2023-08-14 11:28:54 at X: 322, Y: 174 with confidence 0.832938492298
-Detected: person at 2023-08-14 11:28:54 at X: 323, Y: 173 with confidence 0.80654668808
-Detected: person at 2023-08-14 11:28:54 at X: 324, Y: 173 with confidence 0.759223222733
-Detected: person at 2023-08-14 11:28:54 at X: 324, Y: 173 with confidence 0.789490401745
-Detected: traffic light at 2023-08-14 11:28:54 at X: 500, Y: 97 with confidence 0.307048469782
-Detected: person at 2023-08-14 11:28:55 at X: 320, Y: 173 with confidence 0.813775658607
-Detected: chair at 2023-08-14 11:28:55 at X: 71, Y: 197 with confidence 0.312668144703
-Detected: person at 2023-08-14 11:28:55 at X: 325, Y: 173 with confidence 0.76065069437
-Detected: person at 2023-08-14 11:28:55 at X: 325, Y: 173 with confidence 0.76065069437
-Detected: person at 2023-08-14 11:28:55 at X: 322, Y: 172 with confidence 0.797380268574
-Detected: traffic light at 2023-08-14 11:28:55 at X: 501, Y: 98 with confidence 0.337039321661
-Detected: person at 2023-08-14 11:28:55 at X: 325, Y: 173 with confidence 0.752586245537
-Detected: chair at 2023-08-14 11:28:55 at X: 72, Y: 197 with confidence 0.308181017637
-Detected: person at 2023-08-14 11:28:55 at X: 325, Y: 173 with confidence 0.752586245537
-Detected: chair at 2023-08-14 11:28:55 at X: 72, Y: 197 with confidence 0.308181017637
-Detected: person at 2023-08-14 11:28:55 at X: 321, Y: 174 with confidence 0.760523080826
-Detected: chair at 2023-08-14 11:28:55 at X: 72, Y: 198 with confidence 0.306322157383
-Detected: person at 2023-08-14 11:28:55 at X: 325, Y: 174 with confidence 0.778316438198
-Detected: person at 2023-08-14 11:28:55 at X: 325, Y: 173 with confidence 0.670532345772
-Detected: traffic light at 2023-08-14 11:28:55 at X: 500, Y: 98 with confidence 0.324017345905
-Detected: person at 2023-08-14 11:28:55 at X: 323, Y: 173 with confidence 0.701943099499
-Detected: person at 2023-08-14 11:28:55 at X: 321, Y: 173 with confidence 0.663784980774
-Detected: traffic light at 2023-08-14 11:28:55 at X: 501, Y: 98 with confidence 0.344767451286
-Detected: chair at 2023-08-14 11:28:55 at X: 71, Y: 198 with confidence 0.312865197659
-Detected: person at 2023-08-14 11:28:55 at X: 317, Y: 173 with confidence 0.58852738142
-Detected: person at 2023-08-14 11:28:55 at X: 322, Y: 173 with confidence 0.633395373821
-Detected: person at 2023-08-14 11:28:55 at X: 321, Y: 173 with confidence 0.637452244759
-Detected: person at 2023-08-14 11:28:55 at X: 323, Y: 173 with confidence 0.679846167564
-Detected: traffic light at 2023-08-14 11:28:55 at X: 500, Y: 98 with confidence 0.31175583601
-Detected: person at 2023-08-14 11:28:55 at X: 320, Y: 173 with confidence 0.56834423542
-Detected: person at 2023-08-14 11:28:55 at X: 320, Y: 173 with confidence 0.71763074398
-Detected: person at 2023-08-14 11:28:55 at X: 322, Y: 173 with confidence 0.641792535782
-Detected: person at 2023-08-14 11:28:55 at X: 321, Y: 172 with confidence 0.716099143028
-Detected: person at 2023-08-14 11:28:55 at X: 328, Y: 172 with confidence 0.745106637478
-Detected: person at 2023-08-14 11:28:55 at X: 328, Y: 173 with confidence 0.803889453411
-Detected: person at 2023-08-14 11:28:55 at X: 327, Y: 173 with confidence 0.812159597874
-Detected: chair at 2023-08-14 11:28:55 at X: 69, Y: 196 with confidence 0.303625792265
-Detected: person at 2023-08-14 11:28:55 at X: 328, Y: 173 with confidence 0.798108518124
-Detected: chair at 2023-08-14 11:28:55 at X: 71, Y: 198 with confidence 0.310767233372
-Detected: person at 2023-08-14 11:28:55 at X: 325, Y: 173 with confidence 0.767360329628
-Detected: chair at 2023-08-14 11:28:55 at X: 71, Y: 200 with confidence 0.339405089617
-Detected: person at 2023-08-14 11:28:55 at X: 325, Y: 173 with confidence 0.767360329628
-Detected: chair at 2023-08-14 11:28:55 at X: 71, Y: 200 with confidence 0.339405089617
-Detected: person at 2023-08-14 11:28:55 at X: 326, Y: 173 with confidence 0.86135160923
-Detected: person at 2023-08-14 11:28:55 at X: 327, Y: 173 with confidence 0.812882363796
-Detected: person at 2023-08-14 11:28:55 at X: 322, Y: 173 with confidence 0.7911272645
-Detected: person at 2023-08-14 11:28:55 at X: 322, Y: 173 with confidence 0.7869784832
-Detected: person at 2023-08-14 11:28:55 at X: 323, Y: 175 with confidence 0.770150601864
-Detected: person at 2023-08-14 11:28:55 at X: 322, Y: 175 with confidence 0.827617585659
-Detected: person at 2023-08-14 11:28:55 at X: 324, Y: 173 with confidence 0.734979987144
-Detected: person at 2023-08-14 11:28:56 at X: 320, Y: 173 with confidence 0.731035888195
-Detected: chair at 2023-08-14 11:28:56 at X: 71, Y: 199 with confidence 0.311122983694
-Detected: person at 2023-08-14 11:28:56 at X: 320, Y: 173 with confidence 0.731035888195
-Detected: chair at 2023-08-14 11:28:56 at X: 71, Y: 199 with confidence 0.311122983694
-Detected: person at 2023-08-14 11:28:56 at X: 321, Y: 174 with confidence 0.707692623138
-Detected: person at 2023-08-14 11:28:56 at X: 321, Y: 174 with confidence 0.765326321125
-Detected: person at 2023-08-14 11:28:56 at X: 319, Y: 173 with confidence 0.737898766994
-Detected: person at 2023-08-14 11:28:56 at X: 319, Y: 172 with confidence 0.732217013836
-Detected: person at 2023-08-14 11:28:56 at X: 319, Y: 172 with confidence 0.732217013836
-Detected: person at 2023-08-14 11:28:56 at X: 317, Y: 174 with confidence 0.626584291458
-Detected: chair at 2023-08-14 11:28:56 at X: 72, Y: 199 with confidence 0.302058368921
-Detected: person at 2023-08-14 11:28:56 at X: 314, Y: 174 with confidence 0.847923457623
-Detected: person at 2023-08-14 11:28:56 at X: 314, Y: 174 with confidence 0.847923457623
-Detected: person at 2023-08-14 11:28:56 at X: 316, Y: 173 with confidence 0.883105278015
-Detected: person at 2023-08-14 11:28:56 at X: 314, Y: 173 with confidence 0.869689404964
-Detected: traffic light at 2023-08-14 11:28:56 at X: 501, Y: 98 with confidence 0.314099729061
-Detected: chair at 2023-08-14 11:28:56 at X: 71, Y: 198 with confidence 0.321993619204
-Detected: person at 2023-08-14 11:28:56 at X: 310, Y: 173 with confidence 0.908886909485
-Detected: person at 2023-08-14 11:28:56 at X: 309, Y: 173 with confidence 0.905714273453
-Detected: traffic light at 2023-08-14 11:28:56 at X: 500, Y: 97 with confidence 0.348140984774
-Detected: person at 2023-08-14 11:28:56 at X: 307, Y: 172 with confidence 0.810529887676
-Detected: person at 2023-08-14 11:28:56 at X: 308, Y: 172 with confidence 0.81719905138
-Detected: person at 2023-08-14 11:28:56 at X: 287, Y: 174 with confidence 0.83258998394
-Detected: person at 2023-08-14 11:28:56 at X: 285, Y: 173 with confidence 0.938459217548
-Detected: person at 2023-08-14 11:28:56 at X: 280, Y: 173 with confidence 0.955472171307
-Detected: traffic light at 2023-08-14 11:28:56 at X: 501, Y: 98 with confidence 0.304594993591
-Detected: person at 2023-08-14 11:28:56 at X: 282, Y: 173 with confidence 0.915383815765
-Detected: person at 2023-08-14 11:28:56 at X: 278, Y: 174 with confidence 0.919829487801
-Detected: traffic light at 2023-08-14 11:28:56 at X: 500, Y: 98 with confidence 0.320969134569
-Detected: person at 2023-08-14 11:28:56 at X: 275, Y: 174 with confidence 0.907639622688
-Detected: person at 2023-08-14 11:28:56 at X: 275, Y: 174 with confidence 0.907639622688
-Detected: person at 2023-08-14 11:28:56 at X: 273, Y: 173 with confidence 0.909380674362
-Detected: person at 2023-08-14 11:28:56 at X: 273, Y: 173 with confidence 0.909380674362
-Detected: person at 2023-08-14 11:28:56 at X: 272, Y: 174 with confidence 0.747191131115
-Detected: person at 2023-08-14 11:28:56 at X: 269, Y: 175 with confidence 0.69346600771
-Detected: person at 2023-08-14 11:28:56 at X: 269, Y: 174 with confidence 0.711533367634
-Detected: traffic light at 2023-08-14 11:28:56 at X: 501, Y: 99 with confidence 0.31218624115
-Detected: person at 2023-08-14 11:28:56 at X: 266, Y: 175 with confidence 0.689675033092
-Detected: person at 2023-08-14 11:28:56 at X: 265, Y: 159 with confidence 0.779791891575
-Detected: person at 2023-08-14 11:28:56 at X: 265, Y: 173 with confidence 0.747729659081
-Detected: person at 2023-08-14 11:28:57 at X: 237, Y: 156 with confidence 0.687022209167
-Detected: person at 2023-08-14 11:28:57 at X: 234, Y: 156 with confidence 0.889495968819
-Detected: person at 2023-08-14 11:28:57 at X: 232, Y: 156 with confidence 0.873796164989
-Detected: traffic light at 2023-08-14 11:28:57 at X: 501, Y: 98 with confidence 0.368945509195
-Detected: person at 2023-08-14 11:28:57 at X: 231, Y: 157 with confidence 0.861439824104
-Detected: person at 2023-08-14 11:28:57 at X: 231, Y: 150 with confidence 0.853090107441
-Detected: person at 2023-08-14 11:28:57 at X: 232, Y: 151 with confidence 0.76708984375
-Detected: person at 2023-08-14 11:28:57 at X: 233, Y: 154 with confidence 0.842863559723
-Detected: person at 2023-08-14 11:28:57 at X: 231, Y: 150 with confidence 0.81897187233
-Detected: person at 2023-08-14 11:28:57 at X: 232, Y: 150 with confidence 0.652009427547
-Detected: person at 2023-08-14 11:28:57 at X: 232, Y: 145 with confidence 0.810820698738
-Detected: chair at 2023-08-14 11:28:57 at X: 65, Y: 198 with confidence 0.362654775381
-Detected: person at 2023-08-14 11:28:57 at X: 232, Y: 147 with confidence 0.809084236622
-Detected: person at 2023-08-14 11:28:57 at X: 229, Y: 144 with confidence 0.867575645447
-Detected: traffic light at 2023-08-14 11:28:57 at X: 501, Y: 98 with confidence 0.331349283457
-Detected: person at 2023-08-14 11:28:57 at X: 229, Y: 144 with confidence 0.867575645447
-Detected: traffic light at 2023-08-14 11:28:57 at X: 501, Y: 98 with confidence 0.331349283457
-Detected: person at 2023-08-14 11:28:57 at X: 223, Y: 146 with confidence 0.853259086609
-Detected: person at 2023-08-14 11:28:57 at X: 225, Y: 140 with confidence 0.868480145931
-Detected: traffic light at 2023-08-14 11:28:57 at X: 501, Y: 99 with confidence 0.390457779169
-Detected: person at 2023-08-14 11:28:57 at X: 220, Y: 144 with confidence 0.893949627876
-Detected: person at 2023-08-14 11:28:57 at X: 218, Y: 139 with confidence 0.764708220959
-Detected: person at 2023-08-14 11:28:57 at X: 217, Y: 144 with confidence 0.720187425613
-Detected: person at 2023-08-14 11:28:57 at X: 217, Y: 148 with confidence 0.667208909988
-Detected: person at 2023-08-14 11:28:57 at X: 176, Y: 146 with confidence 0.506122648716
-Detected: person at 2023-08-14 11:28:57 at X: 176, Y: 150 with confidence 0.489792138338
-Detected: person at 2023-08-14 11:28:57 at X: 175, Y: 152 with confidence 0.598460376263
-Detected: person at 2023-08-14 11:28:57 at X: 176, Y: 151 with confidence 0.639239132404
-Detected: person at 2023-08-14 11:28:57 at X: 209, Y: 80 with confidence 0.311100065708
-Detected: person at 2023-08-14 11:28:57 at X: 176, Y: 151 with confidence 0.639239132404
-Detected: person at 2023-08-14 11:28:57 at X: 209, Y: 80 with confidence 0.311100065708
-Detected: person at 2023-08-14 11:28:57 at X: 172, Y: 150 with confidence 0.74632781744
-Detected: person at 2023-08-14 11:28:57 at X: 171, Y: 149 with confidence 0.77774900198
-Detected: person at 2023-08-14 11:28:57 at X: 171, Y: 149 with confidence 0.77774900198
-Detected: person at 2023-08-14 11:28:57 at X: 171, Y: 149 with confidence 0.538003563881
-Detected: person at 2023-08-14 11:28:57 at X: 171, Y: 150 with confidence 0.559699356556
-Detected: person at 2023-08-14 11:28:57 at X: 172, Y: 153 with confidence 0.394785910845
-Detected: person at 2023-08-14 11:28:57 at X: 170, Y: 154 with confidence 0.473413616419
-Detected: person at 2023-08-14 11:28:58 at X: 131, Y: 156 with confidence 0.644699156284
-Detected: person at 2023-08-14 11:28:58 at X: 127, Y: 155 with confidence 0.646441817284
-Detected: person at 2023-08-14 11:28:58 at X: 126, Y: 155 with confidence 0.647394001484
-Detected: person at 2023-08-14 11:28:58 at X: 126, Y: 153 with confidence 0.590190887451
-Detected: person at 2023-08-14 11:28:58 at X: 128, Y: 154 with confidence 0.724870026112
-Detected: person at 2023-08-14 11:28:58 at X: 125, Y: 153 with confidence 0.485432714224
-Detected: person at 2023-08-14 11:28:58 at X: 128, Y: 151 with confidence 0.50183224678
-Detected: person at 2023-08-14 11:28:58 at X: 123, Y: 152 with confidence 0.309010982513
-Detected: person at 2023-08-14 11:28:58 at X: 122, Y: 147 with confidence 0.365610361099
-Detected: person at 2023-08-14 11:28:58 at X: 125, Y: 148 with confidence 0.487115174532
-Detected: suitcase at 2023-08-14 11:28:58 at X: 375, Y: 223 with confidence 0.347233146429
-Detected: person at 2023-08-14 11:28:58 at X: 122, Y: 147 with confidence 0.49191147089
-Detected: person at 2023-08-14 11:28:58 at X: 122, Y: 147 with confidence 0.585673987865
-Detected: person at 2023-08-14 11:28:58 at X: 115, Y: 146 with confidence 0.58149766922
-Detected: person at 2023-08-14 11:28:58 at X: 116, Y: 148 with confidence 0.55763053894
-Detected: person at 2023-08-14 11:28:58 at X: 119, Y: 146 with confidence 0.476313322783
-Detected: person at 2023-08-14 11:28:58 at X: 122, Y: 149 with confidence 0.499310165644
-Detected: person at 2023-08-14 11:28:58 at X: 120, Y: 144 with confidence 0.394855976105
-Detected: person at 2023-08-14 11:28:58 at X: 122, Y: 144 with confidence 0.388661175966
-Detected: person at 2023-08-14 11:28:58 at X: 121, Y: 143 with confidence 0.394992977381
-Detected: person at 2023-08-14 11:28:58 at X: 123, Y: 145 with confidence 0.446570366621
-Detected: person at 2023-08-14 11:28:58 at X: 131, Y: 148 with confidence 0.526508927345
-Detected: person at 2023-08-14 11:28:58 at X: 126, Y: 145 with confidence 0.655707538128
-Detected: person at 2023-08-14 11:28:58 at X: 129, Y: 147 with confidence 0.431499689817
-Detected: person at 2023-08-14 11:28:58 at X: 124, Y: 148 with confidence 0.338995307684
-Detected: person at 2023-08-14 11:28:58 at X: 128, Y: 150 with confidence 0.375237941742
-Detected: person at 2023-08-14 11:28:58 at X: 129, Y: 150 with confidence 0.43685439229
-Detected: person at 2023-08-14 11:28:58 at X: 127, Y: 148 with confidence 0.409340441227
-Detected: person at 2023-08-14 11:28:58 at X: 127, Y: 148 with confidence 0.327681839466
-Detected: person at 2023-08-14 11:28:58 at X: 128, Y: 145 with confidence 0.409214168787
-Detected: person at 2023-08-14 11:28:59 at X: 123, Y: 148 with confidence 0.420804798603
-Detected: person at 2023-08-14 11:28:59 at X: 126, Y: 148 with confidence 0.382274180651
-Detected: person at 2023-08-14 11:28:59 at X: 127, Y: 149 with confidence 0.403815716505
-Detected: person at 2023-08-14 11:28:59 at X: 128, Y: 149 with confidence 0.553348839283
-Detected: person at 2023-08-14 11:28:59 at X: 127, Y: 146 with confidence 0.327432453632
-Detected: person at 2023-08-14 11:28:59 at X: 127, Y: 151 with confidence 0.486596345901
-Detected: person at 2023-08-14 11:28:59 at X: 123, Y: 147 with confidence 0.309012264013
-Detected: person at 2023-08-14 11:28:59 at X: 123, Y: 147 with confidence 0.309012264013
-Detected: person at 2023-08-14 11:28:59 at X: 126, Y: 147 with confidence 0.406719952822
-Detected: person at 2023-08-14 11:28:59 at X: 126, Y: 147 with confidence 0.406719952822
-Detected: person at 2023-08-14 11:28:59 at X: 129, Y: 145 with confidence 0.391048967838
-Detected: person at 2023-08-14 11:28:59 at X: 129, Y: 147 with confidence 0.405132740736
-Detected: person at 2023-08-14 11:28:59 at X: 126, Y: 148 with confidence 0.446978181601
-Detected: person at 2023-08-14 11:28:59 at X: 125, Y: 146 with confidence 0.526543617249
-Detected: person at 2023-08-14 11:28:59 at X: 123, Y: 146 with confidence 0.522730827332
-Detected: person at 2023-08-14 11:28:59 at X: 126, Y: 144 with confidence 0.401195168495
-Detected: person at 2023-08-14 11:29:00 at X: 127, Y: 142 with confidence 0.521110057831
-Detected: person at 2023-08-14 11:29:00 at X: 124, Y: 143 with confidence 0.524488568306
-Detected: person at 2023-08-14 11:29:00 at X: 128, Y: 142 with confidence 0.658965706825
-Detected: person at 2023-08-14 11:29:00 at X: 131, Y: 145 with confidence 0.603193461895
-Detected: person at 2023-08-14 11:29:00 at X: 128, Y: 148 with confidence 0.531588733196
-Detected: person at 2023-08-14 11:29:00 at X: 127, Y: 151 with confidence 0.59892809391
-Detected: person at 2023-08-14 11:29:00 at X: 128, Y: 156 with confidence 0.504873096943
-Detected: chair at 2023-08-14 11:29:00 at X: 212, Y: 191 with confidence 0.313608020544
-Detected: person at 2023-08-14 11:29:00 at X: 129, Y: 151 with confidence 0.451305478811
-Detected: chair at 2023-08-14 11:29:00 at X: 213, Y: 194 with confidence 0.560955286026
-Detected: person at 2023-08-14 11:29:00 at X: 172, Y: 143 with confidence 0.563990592957
-Detected: person at 2023-08-14 11:29:00 at X: 132, Y: 150 with confidence 0.597128450871
-Detected: person at 2023-08-14 11:29:00 at X: 167, Y: 140 with confidence 0.666784703732
-Detected: person at 2023-08-14 11:29:00 at X: 168, Y: 140 with confidence 0.826036274433
-Detected: person at 2023-08-14 11:29:00 at X: 168, Y: 145 with confidence 0.760713160038
-Detected: person at 2023-08-14 11:29:00 at X: 171, Y: 148 with confidence 0.703158676624
-Detected: person at 2023-08-14 11:29:00 at X: 174, Y: 144 with confidence 0.708809733391
-Detected: person at 2023-08-14 11:29:00 at X: 174, Y: 143 with confidence 0.811131477356
-Detected: person at 2023-08-14 11:29:00 at X: 174, Y: 141 with confidence 0.716427505016
-Detected: person at 2023-08-14 11:29:00 at X: 171, Y: 145 with confidence 0.655647873878
-Detected: person at 2023-08-14 11:29:00 at X: 181, Y: 148 with confidence 0.702440917492
-Detected: person at 2023-08-14 11:29:00 at X: 181, Y: 148 with confidence 0.702440917492
-Detected: person at 2023-08-14 11:29:00 at X: 213, Y: 150 with confidence 0.903022944927
-Detected: person at 2023-08-14 11:29:00 at X: 214, Y: 150 with confidence 0.896180927753
-Detected: suitcase at 2023-08-14 11:29:00 at X: 376, Y: 222 with confidence 0.382722198963
-Detected: person at 2023-08-14 11:29:00 at X: 220, Y: 155 with confidence 0.835659563541
-Detected: suitcase at 2023-08-14 11:29:00 at X: 376, Y: 223 with confidence 0.381446927786
-Detected: person at 2023-08-14 11:29:00 at X: 224, Y: 153 with confidence 0.680357336998
-Detected: person at 2023-08-14 11:29:00 at X: 222, Y: 154 with confidence 0.85285282135
-Detected: person at 2023-08-14 11:29:00 at X: 222, Y: 154 with confidence 0.85285282135
-Detected: person at 2023-08-14 11:29:00 at X: 224, Y: 155 with confidence 0.882853329182
-Detected: person at 2023-08-14 11:29:00 at X: 224, Y: 155 with confidence 0.882853329182
-Detected: person at 2023-08-14 11:29:00 at X: 232, Y: 151 with confidence 0.746399998665
-Detected: person at 2023-08-14 11:29:01 at X: 232, Y: 151 with confidence 0.746399998665
-Detected: person at 2023-08-14 11:29:01 at X: 234, Y: 154 with confidence 0.744023382664
-Detected: person at 2023-08-14 11:29:01 at X: 232, Y: 155 with confidence 0.564281344414
-Detected: person at 2023-08-14 11:29:01 at X: 265, Y: 156 with confidence 0.626809358597
-Detected: traffic light at 2023-08-14 11:29:01 at X: 500, Y: 99 with confidence 0.329753279686
-Detected: person at 2023-08-14 11:29:01 at X: 268, Y: 176 with confidence 0.526270627975
-Detected: traffic light at 2023-08-14 11:29:01 at X: 500, Y: 98 with confidence 0.318310171366
-Detected: person at 2023-08-14 11:29:01 at X: 266, Y: 159 with confidence 0.734683036804
-Detected: person at 2023-08-14 11:29:01 at X: 268, Y: 176 with confidence 0.749056994915
-Detected: person at 2023-08-14 11:29:01 at X: 268, Y: 159 with confidence 0.834071815014
-Detected: person at 2023-08-14 11:29:01 at X: 276, Y: 175 with confidence 0.733270406723
-Detected: person at 2023-08-14 11:29:01 at X: 276, Y: 176 with confidence 0.728752851486
-Detected: person at 2023-08-14 11:29:01 at X: 276, Y: 176 with confidence 0.728752851486
-Detected: person at 2023-08-14 11:29:01 at X: 283, Y: 174 with confidence 0.711977243423
-Detected: person at 2023-08-14 11:29:01 at X: 283, Y: 174 with confidence 0.711977243423
-Detected: person at 2023-08-14 11:29:01 at X: 282, Y: 174 with confidence 0.744058668613
-Detected: chair at 2023-08-14 11:29:01 at X: 71, Y: 199 with confidence 0.31859895587
-Detected: person at 2023-08-14 11:29:01 at X: 283, Y: 173 with confidence 0.716779172421
-Detected: person at 2023-08-14 11:29:01 at X: 313, Y: 173 with confidence 0.75424695015
-Detected: person at 2023-08-14 11:29:01 at X: 311, Y: 173 with confidence 0.776823222637
-Detected: person at 2023-08-14 11:29:01 at X: 309, Y: 173 with confidence 0.88285368681
-Detected: person at 2023-08-14 11:29:01 at X: 311, Y: 174 with confidence 0.89761787653
-Detected: chair at 2023-08-14 11:29:01 at X: 71, Y: 198 with confidence 0.35660803318
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 219 with confidence 0.628088593483 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 217, Y: 220 with confidence 0.564643144608 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 287, Y: 204 with confidence 0.328129559755 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 219 with confidence 0.528462409973 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 217, Y: 220 with confidence 0.48612472415 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 285, Y: 203 with confidence 0.380722343922 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 219 with confidence 0.528462409973 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 217, Y: 220 with confidence 0.48612472415 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 285, Y: 203 with confidence 0.380722343922 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 219 with confidence 0.588503539562 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 218, Y: 220 with confidence 0.469765543938 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 285, Y: 202 with confidence 0.367082297802 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 219 with confidence 0.588503539562 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 218, Y: 220 with confidence 0.469765543938 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 285, Y: 202 with confidence 0.367082297802 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 219 with confidence 0.680306136608 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 215, Y: 220 with confidence 0.597283542156 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 286, Y: 202 with confidence 0.341159135103 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 220 with confidence 0.724143326283 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 217, Y: 220 with confidence 0.6906722188 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 287, Y: 203 with confidence 0.355099827051 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 219 with confidence 0.645379543304 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 217, Y: 221 with confidence 0.613381683826 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 285, Y: 202 with confidence 0.304867863655 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 220 with confidence 0.646263837814 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 217, Y: 220 with confidence 0.503833413124 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 285, Y: 204 with confidence 0.300197064877 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 219 with confidence 0.742731273174 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 216, Y: 219 with confidence 0.631780922413 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 286, Y: 202 with confidence 0.311816453934 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 220 with confidence 0.652732849121 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 216, Y: 221 with confidence 0.550338387489 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 286, Y: 203 with confidence 0.347602367401 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 219 with confidence 0.561522722244 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 218, Y: 220 with confidence 0.543528616428 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 285, Y: 203 with confidence 0.344865888357 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 213, Y: 220 with confidence 0.513815045357 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:23 at X: 220, Y: 220 with confidence 0.471980571747 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 220 with confidence 0.513815045357 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 220, Y: 220 with confidence 0.471980571747 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.557547748089 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 221 with confidence 0.460964024067 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 220 with confidence 0.546508789062 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 219, Y: 221 with confidence 0.404941886663 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 231, Y: 209 with confidence 0.341870039701 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.316520422697 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.684476912022 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 215, Y: 220 with confidence 0.600049674511 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 220 with confidence 0.662375032902 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 215, Y: 221 with confidence 0.552624702454 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 285, Y: 203 with confidence 0.306091666222 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 220 with confidence 0.662097930908 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 220 with confidence 0.569001615047 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.306122094393 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.674174904823 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 214, Y: 220 with confidence 0.639126002789 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 285, Y: 203 with confidence 0.349783927202 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 220 with confidence 0.647768557072 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 215, Y: 221 with confidence 0.52890008688 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.363194406033 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.629012405872 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 220 with confidence 0.560134530067 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 202 with confidence 0.320237278938 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 219 with confidence 0.591917455196 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 221 with confidence 0.43098834157 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 231, Y: 209 with confidence 0.319995582104 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 219 with confidence 0.591917455196 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 221 with confidence 0.43098834157 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 231, Y: 209 with confidence 0.319995582104 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.703757703304 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 220 with confidence 0.574258446693 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.331261068583 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.703757703304 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 220 with confidence 0.574258446693 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.331261068583 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 221 with confidence 0.713550448418 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 220 with confidence 0.689350247383 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 204 with confidence 0.328228592873 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 221 with confidence 0.713550448418 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 220 with confidence 0.689350247383 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 204 with confidence 0.328228592873 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 220 with confidence 0.669419109821 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 221 with confidence 0.486251145601 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 202 with confidence 0.306911498308 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.752495348454 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 220 with confidence 0.584972143173 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.354327350855 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.752495348454 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 220 with confidence 0.584972143173 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.354327350855 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 220 with confidence 0.661637663841 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 215, Y: 221 with confidence 0.570805191994 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 220 with confidence 0.620544493198 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 218, Y: 220 with confidence 0.595793128014 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 204 with confidence 0.467445790768 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 220 with confidence 0.662779569626 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 214, Y: 220 with confidence 0.479210346937 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.354863911867 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 220 with confidence 0.662779569626 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 214, Y: 220 with confidence 0.479210346937 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.354863911867 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 219 with confidence 0.621398210526 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 218, Y: 221 with confidence 0.537373304367 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.331467658281 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 209 with confidence 0.514013111591 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 207 with confidence 0.392807453871 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.610394120216 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 220 with confidence 0.539899110794 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.610394120216 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 220 with confidence 0.539899110794 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 219 with confidence 0.677888870239 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 220 with confidence 0.588112533092 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.364394128323 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 220 with confidence 0.675970375538 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 214, Y: 220 with confidence 0.522637605667 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 285, Y: 202 with confidence 0.399710744619 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.628244996071 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 221 with confidence 0.505429923534 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 204 with confidence 0.324489980936 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 212, Y: 220 with confidence 0.645265161991 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 220 with confidence 0.538774490356 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.382339179516 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 220 with confidence 0.617750167847 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 221 with confidence 0.479830086231 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.383369594812 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 214, Y: 209 with confidence 0.478778481483 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 207 with confidence 0.402781456709 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 202 with confidence 0.322053045034 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 220 with confidence 0.61758774519 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 216, Y: 220 with confidence 0.463431447744 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 286, Y: 203 with confidence 0.335538566113 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 213, Y: 219 with confidence 0.550404727459 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 217, Y: 220 with confidence 0.484556317329 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:24 at X: 285, Y: 202 with confidence 0.309107363224 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.685788154602 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 220 with confidence 0.587443828583 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.685788154602 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 220 with confidence 0.587443828583 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.674192011356 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 215, Y: 220 with confidence 0.600166201591 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 202 with confidence 0.410443037748 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.559778869152 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 218, Y: 220 with confidence 0.461383879185 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 204 with confidence 0.304654806852 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.667915523052 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 220 with confidence 0.522261857986 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 285, Y: 203 with confidence 0.356958031654 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.628788232803 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 218, Y: 220 with confidence 0.560159444809 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.690022706985 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 218, Y: 221 with confidence 0.630743324757 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 204 with confidence 0.326521188021 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.640241324902 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 217, Y: 220 with confidence 0.500808537006 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 202 with confidence 0.337651699781 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.640241324902 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 217, Y: 220 with confidence 0.500808537006 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 202 with confidence 0.337651699781 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.635675132275 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 215, Y: 220 with confidence 0.543537557125 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 203 with confidence 0.305972099304 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.736218690872 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 219, Y: 219 with confidence 0.644757568836 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 285, Y: 203 with confidence 0.330960154533 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.579032957554 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 215, Y: 220 with confidence 0.432257026434 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 202 with confidence 0.352964997292 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 212, Y: 219 with confidence 0.640958070755 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 215, Y: 220 with confidence 0.549306154251 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.542979300022 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 219, Y: 220 with confidence 0.451955407858 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 212, Y: 220 with confidence 0.658249437809 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 221 with confidence 0.504722118378 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 212, Y: 220 with confidence 0.658249437809 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 221 with confidence 0.504722118378 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.579071640968 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 215, Y: 220 with confidence 0.482480376959 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 204 with confidence 0.3068831563 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.579071640968 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 215, Y: 220 with confidence 0.482480376959 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 204 with confidence 0.3068831563 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 209 with confidence 0.51046526432 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 207 with confidence 0.394063323736 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 200 with confidence 0.332536756992 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 214, Y: 219 with confidence 0.577335834503 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 218, Y: 221 with confidence 0.492348134518 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 202 with confidence 0.45925655961 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.776206970215 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 219 with confidence 0.676042914391 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 285, Y: 202 with confidence 0.428658276796 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.561665594578 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 218, Y: 220 with confidence 0.520756721497 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 285, Y: 203 with confidence 0.349922388792 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 212, Y: 220 with confidence 0.575420856476 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 220 with confidence 0.441803306341 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 285, Y: 202 with confidence 0.397214114666 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.598989069462 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 220 with confidence 0.500410914421 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 203 with confidence 0.350992143154 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.672771751881 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 221 with confidence 0.595467627048 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 203 with confidence 0.332302212715 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.672771751881 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 221 with confidence 0.595467627048 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 203 with confidence 0.332302212715 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.629873156548 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 221 with confidence 0.475206971169 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.598098278046 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 220 with confidence 0.520587444305 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 202 with confidence 0.307329207659 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.721136748791 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 218, Y: 221 with confidence 0.592508912086 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 285, Y: 203 with confidence 0.320198386908 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 212, Y: 219 with confidence 0.497067898512 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 218, Y: 220 with confidence 0.427024960518 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 219 with confidence 0.654940962791 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 215, Y: 220 with confidence 0.538463652134 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 287, Y: 203 with confidence 0.315670281649 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 213, Y: 220 with confidence 0.583009958267 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 217, Y: 221 with confidence 0.487522751093 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 286, Y: 203 with confidence 0.312606841326 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 212, Y: 220 with confidence 0.714614808559 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 214, Y: 221 with confidence 0.590650320053 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 212, Y: 220 with confidence 0.681423127651 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:25 at X: 216, Y: 221 with confidence 0.536072313786 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 220 with confidence 0.681423127651 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 221 with confidence 0.536072313786 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 220 with confidence 0.560191988945 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 221 with confidence 0.459286600351 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 220 with confidence 0.560191988945 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 221 with confidence 0.459286600351 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 220 with confidence 0.560191988945 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 221 with confidence 0.459286600351 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.567308247089 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 220 with confidence 0.442926108837 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 285, Y: 202 with confidence 0.381307423115 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.730445504189 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 214, Y: 220 with confidence 0.631154239178 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 203 with confidence 0.35800126195 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 214, Y: 219 with confidence 0.724277973175 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 218, Y: 220 with confidence 0.668789625168 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 203 with confidence 0.308104425669 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.667379975319 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 215, Y: 220 with confidence 0.52243155241 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 203 with confidence 0.348010033369 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.667379975319 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 215, Y: 220 with confidence 0.52243155241 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 203 with confidence 0.348010033369 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 219 with confidence 0.76040238142 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 220 with confidence 0.625008106232 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 204 with confidence 0.335634976625 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 219 with confidence 0.76040238142 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 220 with confidence 0.625008106232 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 204 with confidence 0.335634976625 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 209 with confidence 0.529749393463 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 207 with confidence 0.406023412943 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 287, Y: 202 with confidence 0.333905786276 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 220 with confidence 0.717235326767 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 215, Y: 220 with confidence 0.585167229176 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 287, Y: 204 with confidence 0.344205796719 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 219 with confidence 0.652941346169 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 220 with confidence 0.494134455919 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 285, Y: 202 with confidence 0.323935925961 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 220 with confidence 0.56861114502 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 220 with confidence 0.471694529057 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 201 with confidence 0.33128002286 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.732763946056 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 219 with confidence 0.65669298172 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 204 with confidence 0.389991283417 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 220 with confidence 0.667754530907 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 221 with confidence 0.486246675253 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 202 with confidence 0.397997230291 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.598313212395 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 220 with confidence 0.51172721386 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.598313212395 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 220 with confidence 0.51172721386 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 214, Y: 208 with confidence 0.481469422579 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 205 with confidence 0.356373071671 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 285, Y: 200 with confidence 0.354978442192 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 220 with confidence 0.659644305706 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 220 with confidence 0.550855696201 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 219 with confidence 0.677762687206 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 220 with confidence 0.55670440197 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 202 with confidence 0.332920461893 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.703822374344 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 220 with confidence 0.623518407345 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 285, Y: 204 with confidence 0.345339179039 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 220 with confidence 0.692747592926 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 215, Y: 220 with confidence 0.527140796185 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.634811639786 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 218, Y: 220 with confidence 0.574524998665 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 287, Y: 203 with confidence 0.36224848032 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 220 with confidence 0.709579586983 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 221 with confidence 0.557694911957 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 285, Y: 201 with confidence 0.401845186949 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 220 with confidence 0.709579586983 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 221 with confidence 0.557694911957 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 285, Y: 201 with confidence 0.401845186949 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 219 with confidence 0.646170675755 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 215, Y: 220 with confidence 0.467205733061 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 201 with confidence 0.34100151062 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 213, Y: 219 with confidence 0.70727711916 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 215, Y: 220 with confidence 0.641854703426 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 202 with confidence 0.333138823509 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 219 with confidence 0.737003386021 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 217, Y: 221 with confidence 0.640819966793 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 204 with confidence 0.302404612303 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 220 with confidence 0.671423435211 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 216, Y: 221 with confidence 0.480686485767 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 212, Y: 220 with confidence 0.767040908337 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 214, Y: 221 with confidence 0.64204454422 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:26 at X: 286, Y: 203 with confidence 0.342345744371 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.70968991518 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 218, Y: 221 with confidence 0.590363204479 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.363898515701 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.677586734295 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 218, Y: 221 with confidence 0.577374994755 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.323270052671 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.536986470222 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 220 with confidence 0.494496315718 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.313738018274 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.681320309639 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 215, Y: 220 with confidence 0.565933823586 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.654596686363 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 215, Y: 207 with confidence 0.430464625359 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.683015406132 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 215, Y: 220 with confidence 0.612587034702 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 204 with confidence 0.365045368671 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.559917271137 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 217, Y: 220 with confidence 0.458420008421 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.333737701178 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.663372516632 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 217, Y: 221 with confidence 0.508712887764 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 204 with confidence 0.321571797132 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.663372516632 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 217, Y: 221 with confidence 0.508712887764 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 204 with confidence 0.321571797132 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.66252887249 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 218, Y: 221 with confidence 0.582258105278 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.33527725935 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.584130048752 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 220 with confidence 0.466184675694 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.380588799715 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.584130048752 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 220 with confidence 0.466184675694 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.380588799715 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 220 with confidence 0.747381925583 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 215, Y: 220 with confidence 0.61915153265 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.353876382113 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.615683853626 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 217, Y: 220 with confidence 0.51287728548 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.350304871798 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.577203989029 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 217, Y: 220 with confidence 0.425861775875 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 285, Y: 202 with confidence 0.353270202875 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 219 with confidence 0.633617520332 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.549958050251 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.342428654432 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.674876391888 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 220 with confidence 0.479166418314 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.343887656927 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 219 with confidence 0.662476539612 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 214, Y: 207 with confidence 0.478890031576 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.361110717058 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 219 with confidence 0.662476539612 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 214, Y: 207 with confidence 0.478890031576 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.361110717058 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.699777841568 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 220 with confidence 0.584671258926 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.300726085901 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.603940308094 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 218, Y: 220 with confidence 0.447657227516 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 285, Y: 203 with confidence 0.369392603636 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 214, Y: 219 with confidence 0.556419610977 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 220 with confidence 0.449913591146 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.386599302292 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 220 with confidence 0.714186489582 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 217, Y: 221 with confidence 0.580096840858 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.388175457716 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 220 with confidence 0.582825124264 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 221 with confidence 0.511650204659 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.300773739815 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 220 with confidence 0.582825124264 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 221 with confidence 0.511650204659 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.300773739815 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 220 with confidence 0.582825124264 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 221 with confidence 0.511650204659 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 203 with confidence 0.300773739815 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 219 with confidence 0.584070146084 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 217, Y: 220 with confidence 0.4613301754 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 209 with confidence 0.539260208607 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 207 with confidence 0.421505302191 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.342371881008 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 209 with confidence 0.539260208607 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 207 with confidence 0.421505302191 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.342371881008 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 219 with confidence 0.638771414757 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 218, Y: 220 with confidence 0.560166180134 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 212, Y: 220 with confidence 0.581588685513 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 216, Y: 220 with confidence 0.469941288233 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 287, Y: 203 with confidence 0.37515053153 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 209 with confidence 0.500295937061 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 219, Y: 220 with confidence 0.435668975115 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 285, Y: 203 with confidence 0.335054993629 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.618035972118 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 218, Y: 221 with confidence 0.542355656624 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.326827168465 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 213, Y: 220 with confidence 0.539671719074 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 220, Y: 221 with confidence 0.445722281933 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 231, Y: 209 with confidence 0.322269529104 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:27 at X: 286, Y: 202 with confidence 0.30355116725 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 212, Y: 219 with confidence 0.647700846195 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 215, Y: 220 with confidence 0.513142466545 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 203 with confidence 0.417023330927 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 214, Y: 220 with confidence 0.583205342293 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 221 with confidence 0.534376561642 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 202 with confidence 0.370912432671 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 214, Y: 219 with confidence 0.572195410728 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 218, Y: 221 with confidence 0.529248178005 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 203 with confidence 0.415519088507 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 214, Y: 219 with confidence 0.616784214973 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 216, Y: 220 with confidence 0.507488846779 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 285, Y: 201 with confidence 0.310162752867 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 214, Y: 219 with confidence 0.616784214973 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 216, Y: 220 with confidence 0.507488846779 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 285, Y: 201 with confidence 0.310162752867 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 221 with confidence 0.676485657692 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 216, Y: 222 with confidence 0.595013201237 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 202 with confidence 0.314724326134 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 212, Y: 219 with confidence 0.520048260689 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 220 with confidence 0.416247099638 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 287, Y: 203 with confidence 0.375017940998 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.572612226009 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 220 with confidence 0.510106623173 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 285, Y: 203 with confidence 0.402679890394 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 212, Y: 219 with confidence 0.5891700387 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 216, Y: 220 with confidence 0.542770206928 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 201 with confidence 0.32844388485 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.684093534946 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 220 with confidence 0.603828012943 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 285, Y: 203 with confidence 0.326865851879 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.625225007534 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 220 with confidence 0.515569508076 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.587758302689 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 219, Y: 220 with confidence 0.509333252907 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 287, Y: 203 with confidence 0.321180790663 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.587758302689 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 219, Y: 220 with confidence 0.509333252907 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 287, Y: 203 with confidence 0.321180790663 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.617808640003 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 220 with confidence 0.556259214878 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 212, Y: 219 with confidence 0.656061291695 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 220 with confidence 0.516561567783 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 285, Y: 202 with confidence 0.342414498329 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 220 with confidence 0.768556833267 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 215, Y: 221 with confidence 0.603397607803 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 287, Y: 203 with confidence 0.350932180882 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.641851902008 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 221 with confidence 0.534656643867 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.641851902008 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 221 with confidence 0.534656643867 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 220 with confidence 0.675070166588 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 218, Y: 221 with confidence 0.619031071663 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 203 with confidence 0.322768062353 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 220 with confidence 0.675070166588 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 218, Y: 221 with confidence 0.619031071663 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 203 with confidence 0.322768062353 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.643009841442 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 220 with confidence 0.533172488213 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 204 with confidence 0.327146708965 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.610531032085 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 216, Y: 220 with confidence 0.50545412302 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 285, Y: 202 with confidence 0.322049289942 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.679649233818 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 215, Y: 220 with confidence 0.578941106796 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 220 with confidence 0.493207097054 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 218, Y: 220 with confidence 0.432765007019 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 203 with confidence 0.330913215876 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 214, Y: 219 with confidence 0.531674742699 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 219, Y: 220 with confidence 0.454142093658 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 285, Y: 202 with confidence 0.409826129675 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 212, Y: 220 with confidence 0.569209039211 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 221 with confidence 0.498108834028 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 209 with confidence 0.485505908728 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 219, Y: 221 with confidence 0.399139106274 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 209 with confidence 0.485505908728 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 219, Y: 221 with confidence 0.399139106274 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.734148561954 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 215, Y: 219 with confidence 0.602078855038 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 203 with confidence 0.311474502087 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.734148561954 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 215, Y: 219 with confidence 0.602078855038 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 203 with confidence 0.311474502087 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 212, Y: 219 with confidence 0.67953056097 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 218, Y: 221 with confidence 0.594168186188 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 285, Y: 203 with confidence 0.353581190109 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 220 with confidence 0.494009196758 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 217, Y: 221 with confidence 0.417671471834 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 286, Y: 202 with confidence 0.34361243248 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 213, Y: 219 with confidence 0.553054630756 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 219, Y: 220 with confidence 0.514791429043 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:28 at X: 285, Y: 202 with confidence 0.336907714605 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 213, Y: 219 with confidence 0.62936770916 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 220 with confidence 0.538665354252 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 203 with confidence 0.383435219526 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 219 with confidence 0.64098995924 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 218, Y: 220 with confidence 0.454759091139 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 202 with confidence 0.35297986865 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 230, Y: 209 with confidence 0.355300486088 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 220 with confidence 0.66699630022 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 217, Y: 220 with confidence 0.582244694233 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 213, Y: 219 with confidence 0.721083819866 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 217, Y: 220 with confidence 0.64343547821 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 203 with confidence 0.323309868574 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 220 with confidence 0.650038540363 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 217, Y: 220 with confidence 0.539782464504 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 203 with confidence 0.322770833969 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 213, Y: 220 with confidence 0.674860239029 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 218, Y: 220 with confidence 0.540564119816 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 285, Y: 203 with confidence 0.311860203743 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 219 with confidence 0.707927107811 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 217, Y: 221 with confidence 0.535829901695 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 203 with confidence 0.319486886263 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 219 with confidence 0.667821288109 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 220 with confidence 0.553187668324 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 203 with confidence 0.390024185181 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 219 with confidence 0.667821288109 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 220 with confidence 0.553187668324 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 203 with confidence 0.390024185181 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 213, Y: 219 with confidence 0.706458747387 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 218, Y: 220 with confidence 0.527849137783 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 285, Y: 202 with confidence 0.381618857384 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 213, Y: 219 with confidence 0.59726536274 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 217, Y: 220 with confidence 0.516781032085 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 202 with confidence 0.363285660744 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 213, Y: 219 with confidence 0.55412119627 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 220 with confidence 0.438593387604 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 203 with confidence 0.307117253542 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 220 with confidence 0.597973525524 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 217, Y: 220 with confidence 0.470577716827 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 231, Y: 209 with confidence 0.381108522415 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 203 with confidence 0.345220327377 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 220 with confidence 0.705026865005 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 221 with confidence 0.55376625061 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 219 with confidence 0.542986392975 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 220 with confidence 0.437370151281 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 219 with confidence 0.542986392975 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 220 with confidence 0.437370151281 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 219 with confidence 0.542986392975 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 220 with confidence 0.437370151281 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 212, Y: 219 with confidence 0.542986392975 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 220 with confidence 0.437370151281 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 213, Y: 220 with confidence 0.659195184708 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 216, Y: 221 with confidence 0.555430531502 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793
+Detected: chair at 2023-08-16 13:56:29 at X: 286, Y: 203 with confidence 0.334038048983 while position of the ROBOT on the map is X: 2.26729076569 Y: 0.332980416793

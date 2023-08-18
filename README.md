@@ -57,6 +57,8 @@ The Lidar has already hard coded values for the minimum and maximum angle and ra
 
 The stereo camera installed on the Wheeltec robot is the ASTRA PRO. It has two cameras.
 
+Field of View at 58.4° Horizontal and 45.5° Vertical
+
 The RGB Camera: Used for object detection, skeleton detection, visual follower and coloring the 3D map that we want to build.
 The Infrared Camera (depth camera): Used with the Lidar for collision avoidance and building a 3D pointcloud map.
 
@@ -69,13 +71,14 @@ The camera has a built in launch file which allows us to publish infrared, depth
 Running turn_on_wheeltec_rover wheeltec_camera.launch file will initiate the camera node with the needed parameters (30fps, 720x480).
 
 The camera can be used for object detection and skeleton tracking. Usin the "darknet" and "bodyreader" package.
+We can use "raw" or "compressed" data for the camera. Compressed is always better to have really low delay.
 
 # 2. Lab PC Info
 
 ## 2.1 Networking
 
 The laptop is fitted with two external USB WIFI adapter. Both can be used simultaneously. With one connected to the big robot and the other connected to the smaller robot.
-Recommended: Wifi adapter "wlx0c9d92b71f61" connected to the smaller robot and "wlx642943a66a33" to the bigger robot.
+Recommended: Wifi adapter "wlx0c9d92b71f61" (ASUS) connected to the smaller robot and "wlx642943a66a33" (D-Link) to the bigger robot.
 Tip: To know the name of the wifi adapter just run the command "iwconfig"
 
 ### 2.1.1 Troubleshooting Internet Issues With Dual Adapter Setup
@@ -182,14 +185,14 @@ The UI uses RQT. The main operation control UI is the component on the right.
 ![img.png](docs/res/ui-guide/object-detection.png "object detection")
 15: Turn on Skeleton Tracking window. We can record the video and the data coming from the skeleton tracking package.<br>
 ![img.png](docs/res/ui-guide/skel-track.png "skel-track")
-16: Start the browser and watch the camera feed through the browser. When this node is running, we can connect to the robot using any device that has a browser and look at the camera feed<br>
+16: Start the browser and watch the camera feed through the browser. When this node is running, we can connect to the robot using any device that has a browser and look at the camera feed. NOTE: turn on camera before running the Cam browser.<br>
 17: Experimental button for multi robot communication<br>
-18: Robot will follow anything red in front of the camera.<br>
+18: Robot will follow anything red in front of the camera. NOTE: turn off the navigation nodes before running the visual follower.<br>
 19: Show and edit the parameters. Note: Sometimes changing the parameters will not affect the robot because some parameters should be changed dynamically. To change parameters dynamically we can run "rosrun rqt_reconfigure rqt_reconfigure" and change them.<br>
 ![img.png](docs/res/ui-guide/param.png "Parameters")
 20: Window to Record for now the IMU, Lidar and object detection data. (Check in the Data Capture section)<br>
-21: Window to make the robot holonomic. In this window to make the robot holonomic we have to press the "Activate Holonomic Movement". This button will dynamically change 3 parameters: the max_velocity and the max_acceleration on the y axis and the weight_kinematics_nh. The checkbox "Overwrite Orientation" if it is checked it means that the robot will only move forward, if not it can move forward and backward.<br>
-![img.png](docs/res/ui-guide/holo.png "Holo")
+21: Window to make the robot holonomic. In this window to make the robot holonomic we have to press the "Activate Holonomic Movement". This button will dynamically change 3 parameters: the max_velocity and the max_acceleration on the y axis (default is 0.5 m/s and m/s^2) and the weight_kinematics_nh. The checkbox "Overwrite Orientation" if it is checked it means that the robot will only move forward, if not it can move forward and backward.<br>
+![img.png](docs/res/ui-guide/holo.png "Holo") <br>
 22: Turn off the Lidar node.<br>
 23: Turn on the Lidar node.<br>
 24: Start the coordinates_show node.<br>
@@ -336,10 +339,15 @@ Using the IMU we can detect when a collision happens.
 ## 6.4 Physical Red Buttons
 
 There are two emergency buttons on the robot. The hardware button will cut the electricity running in the robot. The software button will stop the operating system from running.
+The Hardware emergancy stop button is the closest button to the charging port. And the other button is the Software emergancy stop button.
 
 ## 6.5 Signal
 
 When the connection signal between the robot and the laptop is weak the robot will stop from moving until we fix the connection.
+
+## 6.6 Max Speed Limit
+
+The max speed limit is set to 0.5 meters per second and can be changed on the UI.
 
 
 # 7. Development tips

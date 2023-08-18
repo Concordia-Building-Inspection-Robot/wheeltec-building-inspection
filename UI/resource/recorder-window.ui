@@ -32,8 +32,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>335</y>
+     <x>50</x>
+     <y>425</y>
      <width>111</width>
      <height>17</height>
     </rect>
@@ -45,8 +45,8 @@
   <widget class="QSpinBox" name="record_duration">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>330</y>
+     <x>170</x>
+     <y>420</y>
      <width>48</width>
      <height>31</height>
     </rect>
@@ -79,6 +79,32 @@
    </property>
    <property name="text">
     <string>Record Objects</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="record_skeleton">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>330</y>
+     <width>221</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Record Skeleton</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="record_object_detected_video">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>240</y>
+     <width>221</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Record Object Detected Video</string>
    </property>
   </widget>
  </widget>

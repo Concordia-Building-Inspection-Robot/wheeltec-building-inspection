@@ -321,53 +321,53 @@ QPushButton:pressed{
     <widget class="QLabel" name="label_12">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>100</y>
-       <width>21</width>
-       <height>17</height>
+       <width>41</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>P:</string>
+      <string>Stop:</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_13">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>130</y>
-       <width>21</width>
-       <height>17</height>
+       <width>41</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>P:</string>
+      <string>Stop:</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_14">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>160</y>
-       <width>21</width>
-       <height>17</height>
+       <width>41</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>P:</string>
+      <string>Stop:</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_15">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>190</y>
-       <width>21</width>
+       <width>41</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>P:</string>
+      <string>Stop:</string>
      </property>
     </widget>
     <widget class="QSpinBox" name="spinboxP1">
@@ -1469,9 +1469,9 @@ QPushButton:hover {
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>510</y>
-     <width>181</width>
-     <height>31</height>
+     <y>490</y>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1577,9 +1577,9 @@ QPushButton:hover {
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>550</y>
-     <width>181</width>
-     <height>31</height>
+     <y>540</y>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">

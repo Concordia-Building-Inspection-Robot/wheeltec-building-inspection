@@ -137,7 +137,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(tf_echo src/wheeltec-building-inspection/tf_echo.cpp)
 add_executable(cpp_monitor scripts/cpp_monitor.cpp)
-add_executable(follower src/wheeltec-building-inspection/follower.cpp)
+#add_executable(follower src/wheeltec-building-inspection/follower.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -154,7 +154,7 @@ target_link_libraries(tf_echo ${catkin_LIBRARIES})
 target_link_libraries(cpp_monitor
   ${catkin_LIBRARIES}
 )
-target_link_libraries(follower ${catkin_LIBRARIES})
+#target_link_libraries(follower ${catkin_LIBRARIES})
 
 #############
 ## Install ##

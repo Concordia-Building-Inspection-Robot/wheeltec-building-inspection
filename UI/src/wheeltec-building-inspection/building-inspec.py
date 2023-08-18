@@ -22,6 +22,7 @@ from sensor_msgs.msg import Image
 from sensor_msgs.msg import PointCloud2
 import sensor_msgs.point_cloud2 as pc2
 from sensor_msgs.msg import Imu
+from bodyreader.msg import bodyposture
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QDialog
 
@@ -269,7 +270,11 @@ class NavControl(Plugin):
 
 
     def open_movement_control_window(self):
-        self.holonomic_state = rospy.get_param('/move_base/TebLocalPlannerROS/global_plan_overwrite_orientation')
+        try:
+            self.holonomic_state = rospy.get_param('/move_base/TebLocalPlannerROS/global_plan_overwrite_orientation')
+        except:
+            self.holonomic_state = False
+            
 
         def overwrite_orientation():
             if self.holonomic_state == True:
@@ -328,6 +333,8 @@ class NavControl(Plugin):
                 type1 = PointCloud2
             elif topic_name == '/darknet_ros/bounding_boxes':
                 type1 = BoundingBoxes
+            elif topic_name == '/darknet_ros/detection_image':
+                type1 = Image
             try:
                 rospy.wait_for_message(topic_name, type1, timeout=2)
                 print("Topic " + topic_name + " is active and receiving messages.")
@@ -432,6 +439,68 @@ class NavControl(Plugin):
                 print("Topic /point_cloud_raw is not active")
             
 
+        def record_skeleton_data():
+
+            list_1 = []
+            def backcall(data):
+                if rospy.Time.now() - start_time1 >= recording_duration:
+                    print("Recording Stopping...")
+                    with open('/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/skeleton_detection/skeleton.txt', "w") as file:
+                        for list1 in list_1:
+                            file.write(list1 +"\n")
+                    subscribe_skel.unregister()
+                else:
+                    print(rospy.Time.now())
+                    list_1.append(str(data))
+                        ##########################################
+                        ##############################################
+                        #############################################
+
+
+            is_topic_active2 = True
+            if is_topic_active2:
+                record_duration1 = self.rec_window.findChild(QSpinBox, 'record_duration').value()
+                recording_duration = rospy.Duration.from_sec(record_duration1)
+                start_time1 = rospy.Time.now()
+                print("Start Time: ") + str(start_time1)
+                subscribe_skel = rospy.Subscriber('/body_posture', bodyposture, backcall)
+
+        def record_video_thread():
+            bag = rosbag.Bag('/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/object_detection/VIDEO-GENERATED.bag', 'w')
+            recording_duration = rospy.Duration.from_sec(self.rec_window.findChild(QSpinBox, 'record_duration').value())
+            start_time = rospy.Time.now()
+            print("Start Time: " + str(start_time))
+
+            def callback(data):
+                if rospy.Time.now() - start_time >= recording_duration:
+                    # Close the rosbag file when the recording duration ends
+                    bag.close()
+                    print("BAG CLOSING....")
+                    subscriber.unregister()
+                    command_1 = ['python2.7', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/src/wheeltec-building-inspection/rosbag2video.py', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/object_detection/VIDEO-GENERATED.bag']
+                    subprocess.call(command_1)
+                    
+                else:
+                    print(rospy.Time.now())
+                    bag.write('/darknet_ros/detection_image', data)
+
+            subscriber = rospy.Subscriber('/darknet_ros/detection_image', Image, callback)
+            rospy.spin()
+
+        def record_object_detected_video():
+            path1 = "/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/object_detection/VIDEO-GENERATED_darknet_ros_detection_image.mp4"
+            try:
+                if os.path.exists(path1):
+                    print("OVERWRITING...")
+                    os.remove(path1)
+
+                is_active = check_topic_active('/darknet_ros/detection_image')
+                if is_active:
+                    my_thread = threading.Thread(target=record_video_thread)
+                    my_thread.start()
+            except:
+                print("Topic /darknet_ros/detection_image is not active")
+
         def record_object_detected():
 
 
@@ -455,8 +524,9 @@ class NavControl(Plugin):
                         center_x = (top_left_x + bottom_right_x) / 2
                         center_y = (top_left_y + bottom_right_y) / 2
                         confidence = box.probability
-
-                        object_set.append("Detected: "+detected_class1 + " at " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " at " + "X: " +str(center_x) + ", Y: " + str(center_y) + " with confidence " + str(confidence))
+                        x_coord = self._widget.findChild(QLineEdit, 'entry_x').text()
+                        y_coord = self._widget.findChild(QLineEdit, 'entry_y').text()
+                        object_set.append("Detected: "+detected_class1 + " at " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " at " + "X: " +str(center_x) + ", Y: " + str(center_y) + " with confidence " + str(confidence) + " while position of the ROBOT on the map is X: " + x_coord + " Y: " + y_coord)
 
             is_topic_active1 = check_topic_active("/darknet_ros/bounding_boxes")
             if is_topic_active1:
@@ -478,6 +548,8 @@ class NavControl(Plugin):
         self.rec_window.findChild(QPushButton, 'record_lidar_point_cloud').clicked.connect(record_pcl)
         self.rec_window.findChild(QPushButton, 'record_imu').clicked.connect(record_imu_thread)
         self.rec_window.findChild(QPushButton, 'record_objects').clicked.connect(record_object_detected)
+        self.rec_window.findChild(QPushButton, 'record_skeleton').clicked.connect(record_skeleton_data)
+        self.rec_window.findChild(QPushButton, 'record_object_detected_video').clicked.connect(record_object_detected_video)
 
     def turn_on_lidar(self):
         self.robotHandlerCommandPub.publish('turn_on_lidar')
@@ -684,20 +756,53 @@ class NavControl(Plugin):
                 new_window_1.videoLabel_1.setPixmap(pixmap)
             except:
                 print("Image Callback Error")
-        def toggle_record():
+
+        def start_record_thread():
+            path1 = "/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/skeleton_detection/VIDEO-GENERATED_repub_body_body_display_compressed.mp4"
+            try:
+                if os.path.exists(path1):
+                    print("OVERWRITING...")
+                    os.remove(path1)
+            except:
+                print("EXX")
+
+            bag = rosbag.Bag('/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/skeleton_detection/VIDEO-GENERATED.bag', 'w')
             value = new_window_1.findChild(QSpinBox, 'record_duration').value()
-            if not self.thread_1.isRunning():
-                self.worker_1 = Worker(self._widget, self.robotHandlerCommandPub, value, record_label, record_label_1)
-                self.worker_1.moveToThread(self.thread_1)
-                self.thread_1.started.connect(self.worker_1.run_record)
-                self.worker_1.finished.connect(self.worker_1.deleteLater)
-                self.thread_1.finished.connect(self.thread_1.deleteLater)
-                self.thread_1.start()
-                record_label.setVisible(True)
-                record_label_1.setVisible(True)
-            else:
-                print("Recording already in progress...")
-                print(value)
+
+            recording_duration = rospy.Duration.from_sec(value)
+            start_time = rospy.Time.now()
+            print("Start Time: " + str(start_time))
+
+            def callback(data):
+                if rospy.Time.now() - start_time >= recording_duration:
+                    # Close the rosbag file when the recording duration ends
+                    bag.close()
+                    record_label.setVisible(False)
+                    record_label_1.setVisible(False)
+                    subscriber.unregister()
+                    command_1 = ['python2.7', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/src/wheeltec-building-inspection/rosbag2video.py', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/skeleton_detection/VIDEO-GENERATED.bag']
+                    subprocess.call(command_1) 
+                else:
+                    bag.write('/repub/body/body_display/compressed', data)
+
+            subscriber = rospy.Subscriber('/repub/body/body_display/compressed', CompressedImage, callback)
+        def toggle_record():
+            # if not self.thread_1.isRunning():
+
+            # self.worker_1 = Worker(self._widget, self.robotHandlerCommandPub, value, record_label, record_label_1)
+            # self.worker_1.moveToThread(self.thread_1)
+            # self.thread_1.started.connect(self.worker_1.run_record)
+            # self.thread_1.start()
+            # self.thread_1.finished.connect(self.thread_1.deleteLater)
+            # self.worker_1.finished.connect(self.worker_1.deleteLater)
+            thread1 = threading.Thread(target=start_record_thread, args=())
+            thread1.start()
+
+            record_label.setVisible(True)
+            record_label_1.setVisible(True)
+            # else:
+            #     print("Recording already in progress...")
+            #     print(value)
  
         is_on = False
         self.robotHandlerCommandPub.publish('skel_tracking') 
@@ -721,7 +826,7 @@ class NavControl(Plugin):
         new_window_1.findChild(QPushButton, 'check_status').clicked.connect(check_progress)
         check_progress()
         
-        new_window_1.finished.connect(self.skeleton_exit_window)
+        #new_window_1.finished.connect(self.skeleton_exit_window)
 
         new_window_1.exec_()
     def obj_detection_exit_window(self):
@@ -1020,7 +1125,7 @@ class NavControl(Plugin):
             print("Can't set points...")
 
 ################################################################################
-#Signal Checker Class
+
 class Worker(QObject):
     finished = pyqtSignal()
     progress = pyqtSignal(int)
@@ -1032,9 +1137,17 @@ class Worker(QObject):
         self.time = seconds
         self.la = label
         self.la1 = label1
-    def run_record(self):
 
-        bag = rosbag.Bag('VIDEO-GENERATED.bag', 'w')
+    def run_record(self):
+        path1 = "/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/skeleton_detection/VIDEO-GENERATED_repub_body_body_display_compressed.mp4"
+        try:
+            if os.path.exists(path1):
+                print("OVERWRITING...")
+                os.remove(path1)
+        except:
+            print("EXX")
+
+        bag = rosbag.Bag('/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/skeleton_detection/VIDEO-GENERATED.bag', 'w')
         recording_duration = rospy.Duration.from_sec(self.time)
         start_time = rospy.Time.now()
         print("Start Time: " + str(start_time))
@@ -1046,14 +1159,13 @@ class Worker(QObject):
                 self.la.setVisible(False)
                 self.la1.setVisible(False)
                 subscriber.unregister()
-                command_1 = ['python2.7', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/src/wheeltec-building-inspection/rosbag2video.py', '/home/concordia/VIDEO-GENERATED.bag']
-                subprocess.call(command_1)
-                
+                command_1 = ['python2.7', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/src/wheeltec-building-inspection/rosbag2video.py', '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/camera_recordings/skeleton_detection/VIDEO-GENERATED.bag']
+                subprocess.call(command_1) 
             else:
                 bag.write('/repub/body/body_display/compressed', data)
 
         subscriber = rospy.Subscriber('/repub/body/body_display/compressed', CompressedImage, callback)
-        rospy.spin()
+        # rospy.spin()
 
 
 
