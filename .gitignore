@@ -5,3 +5,7 @@ venv/
 build/
 dist/
 .vscode/
+*.mp4
+*.bag
+data_recordings/
+saved_images/

@@ -4,9 +4,6 @@ import os
 
 import rospy
 
-
-import subprocess
-
 from std_msgs.msg import String
 from actionlib_msgs.msg import GoalID
 from move_base_msgs.msg import MoveBaseActionGoal
@@ -118,11 +115,11 @@ class RobotHandler():
         if force or (not self.halt_state):
             self.halt_goal_publisher.publish(GoalID())
             self.robotHandlerStatusPub.publish('Halting Rover')
-            #self.halt_state = True
-        # else:
-        #     self.goal_publisher.publish(self.current_goal)
-        #     self.robotHandlerStatusPub.publish('Resuming Path')
-        #     self.halt_state = False
+            self.halt_state = True
+        else:
+            self.goal_publisher.publish(self.current_goal)
+            self.robotHandlerStatusPub.publish('Resuming Path')
+            self.halt_state = False
 
     def set_max_speed(self, max_speed):
         # TODO: Set max speed
@@ -195,7 +192,10 @@ class RobotHandler():
         else:
             self.robotHandlerStatusPub.publish('Skeleton Tracking is already running')
 
-    def start_cam(self):
+    def start_cam(self, state):
+        if bool(int(state)) == self.camera_state: # blocks UI inconsistencies (wrong radio button status)
+            return
+            
         if not self.camera_state:
             self.camera_state = True
             self.run_launch_file('turn_on_wheeltec_robot', 'wheeltec_camera.launch', mode='camera')
@@ -291,7 +291,7 @@ if __name__ == '__main__':
             robot_handler.del_data_cap(cmd[1], cmd[2])
 
         elif cmd[0] == 'start_cam':
-            robot_handler.start_cam()
+            robot_handler.start_cam(cmd[1])
         elif cmd[0] == 'load_map':
             robot_handler.start_map_loader()
         elif cmd[0] == 'obj_detection':

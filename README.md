@@ -53,6 +53,8 @@ To use the lidar in our project we will be using the package that will turn on t
 
 The Lidar has already hard coded values for the minimum and maximum angle and range to scan. We can change these values by first connecting to the robot via SSH and on the robot we can go to this directory "/home/wheeltec/wheeltec_lidar/src/pointcloud_to_lasescan/launch" and edit the "pointcloud_scan.launch" file. The parameters are well shown. (Note that the angles are in radian and not degree)
 
+The lidar c16 has a 360 degrees in horizontal view and 115 degrees in vertical view 
+
 ### 1.2.4 Stereo Camera
 
 The stereo camera installed on the Wheeltec robot is the ASTRA PRO. It has two cameras.
@@ -199,6 +201,9 @@ The UI uses RQT. The main operation control UI is the component on the right.
 25: Turn off the coordinates_show node<br>
 
 This is the Path tab where we can give 4 points to the robot and it will follow the path given.
+It can also spin 360 degrees if we set the angular speed to 1.1 rad/seconds on the UI. It will spin for 6 seconds and with a speed of 1.1 rad/sec it will do a 360.
+The "Go Task Planning" button will send 4 destinations for the robots (the destinations are still hard coded) and the robot will go do that path.
+The difference between the "GO" and "Go Task Planning" button is that the "GO" button will always repeat the path given by the 4 points and we can't control what the robot can do in between each point. The "Go Task Planning" button will let us use functions when the robot arrives to a certain point (like wait for 10 seconds, spin and then turn on the camera).
 ![img.png](docs/res/ui-guide/path.png "Path")
 
 
@@ -259,7 +264,29 @@ IMU: Timestamp: 1666160868481861048, Orientation (x, y, z, w): 0.0062186983414, 
 Object Detection: Detected: person at 2023-08-14 11:28:52 at X: 126, Y: 147 with confidence 0.3162766397
                   Detected: person at 2023-08-14 11:28:52 at X: 128, Y: 146 with confidence 0.35608240962
                   Detected: person at 2023-08-14 11:28:52 at X: 123, Y: 151 with confidence 0.30072581768
+Skeleton Tracking: 
+                    bodyid: 0
+                    CenterOfMass_X: 0.0
+                    CenterOfMass_Y: 0.0
+                    CenterOfMass_Z: 0.0
+                    left_arm_out: 0
+                    right_arm_out: 0
+                    left_hand_raised: 0
+                    right_hand_raised: 0
+                    akimibo: 0
+                    left_foot_up: 0
+                    right_foot_up: 0
+                    fall: 0
+                    tips: 0
+                    lock_status: 0
 
+In the absence of explicit documentation, I can offer some educated guesses based on the context:
+
+    1 - bodyid: This could be an identifier for the detected body. It is likely a unitless integer.
+
+    2 - CenterOfMass_X, CenterOfMass_Y, CenterOfMass_Z: These likely represent the coordinates of the center of mass of the detected body in three-dimensional space. The units for these coordinates might depend on the unit of measurement used by your camera system, such as meters (m) or millimeters (mm).
+
+    3 - left_arm_out, right_arm_out, left_hand_raised, right_hand_raised, akimibo, left_foot_up, right_foot_up, fall, tips, lock_status: These seem to be binary indicators (0 or 1) for various aspects of the body posture. These do not have units as they represent discrete states.
 
 ### 4.2.4 General Control
 
@@ -405,7 +432,14 @@ the following had to be added to `~/.bashrc`:
 This is more of a workaround for import errors as it is manually adding this project's root path
 to the python path environment variable, but it does allow all the modules here to be loaded properly.
 
-# 8. Research goals and ideas
+# 8. Recording Topic Data
+We will be using this concept in order to store LiDar data for further analysis, recording of this data can be done using the
+`rosbag record -O FILENAME.bag /TOPIC_NAME` this will start the recording node which will store the data in TOPIC_NAME into
+FILENAME.bag file, recording can be stopped using the Ctrl-C command which will halt the recording node.
+
+To rewatch the data that was recorded, make sure to transfer the data to the lab computer, then on the lab computer, start a roscore node, and then run the command `rosbag play FILENAME.bag`, this will publish all the data that was recorded into a new topic called "/TOPIC_NAME". We can now observe the data that was recorded using RViz's built-in PointCloud data type.
+
+# 9. Research goals and ideas
 
 The long term goal of this project is to develop a fleet of autonomous robots capable of helping perform building
 inspection with the use of its sensors on board. Using the Lidar and Stereo camera in order to map the environment it

@@ -15,6 +15,12 @@
     <pointsize>14</pointsize>
    </font>
   </property>
+  <property name="tabletTracking">
+   <bool>false</bool>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::WheelFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -37,7 +43,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="MapAndNavTab">
     <attribute name="title">
@@ -294,15 +300,18 @@ QPushButton:pressed{
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <attribute name="title">
      <string>Path</string>
     </attribute>
     <widget class="QPushButton" name="SetPoints">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>220</y>
-       <width>121</width>
+       <x>0</x>
+       <y>170</y>
+       <width>61</width>
        <height>51</height>
       </rect>
      </property>
@@ -321,8 +330,8 @@ QPushButton:pressed{
     <widget class="QLabel" name="label_12">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>100</y>
+       <x>20</x>
+       <y>50</y>
        <width>41</width>
        <height>16</height>
       </rect>
@@ -334,8 +343,8 @@ QPushButton:pressed{
     <widget class="QLabel" name="label_13">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>130</y>
+       <x>20</x>
+       <y>80</y>
        <width>41</width>
        <height>16</height>
       </rect>
@@ -347,8 +356,8 @@ QPushButton:pressed{
     <widget class="QLabel" name="label_14">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>160</y>
+       <x>20</x>
+       <y>110</y>
        <width>41</width>
        <height>16</height>
       </rect>
@@ -360,8 +369,8 @@ QPushButton:pressed{
     <widget class="QLabel" name="label_15">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>190</y>
+       <x>20</x>
+       <y>140</y>
        <width>41</width>
        <height>16</height>
       </rect>
@@ -373,8 +382,8 @@ QPushButton:pressed{
     <widget class="QSpinBox" name="spinboxP1">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>90</y>
+       <x>70</x>
+       <y>40</y>
        <width>51</width>
        <height>31</height>
       </rect>
@@ -389,8 +398,8 @@ QPushButton:pressed{
     <widget class="QSpinBox" name="spinboxP2">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>120</y>
+       <x>70</x>
+       <y>70</y>
        <width>51</width>
        <height>31</height>
       </rect>
@@ -408,8 +417,8 @@ QPushButton:pressed{
     <widget class="QSpinBox" name="spinboxP3">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>150</y>
+       <x>70</x>
+       <y>100</y>
        <width>51</width>
        <height>31</height>
       </rect>
@@ -427,8 +436,8 @@ QPushButton:pressed{
     <widget class="QSpinBox" name="spinboxP4">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>180</y>
+       <x>70</x>
+       <y>130</y>
        <width>51</width>
        <height>31</height>
       </rect>
@@ -446,14 +455,56 @@ QPushButton:pressed{
     <widget class="QLabel" name="label_20">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>50</y>
+       <x>70</x>
+       <y>0</y>
        <width>51</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>Order</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="task_planning_go">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>230</y>
+       <width>191</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton:hover {
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 0 8px;
+  background: lime;
+}</string>
+     </property>
+     <property name="text">
+      <string>GO Task Planning</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="spin_360_button">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>170</y>
+       <width>61</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton:hover {
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 0 8px;
+  background: lime;
+}</string>
+     </property>
+     <property name="text">
+      <string>Spin</string>
      </property>
     </widget>
    </widget>
@@ -663,11 +714,14 @@ QPushButton:hover {
   <widget class="QDoubleSpinBox" name="max_linear_speed_input">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>270</y>
+     <x>530</x>
+     <y>440</y>
      <width>81</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
    </property>
    <property name="decimals">
     <number>1</number>
@@ -676,7 +730,7 @@ QPushButton:hover {
     <double>10.000000000000000</double>
    </property>
    <property name="singleStep">
-    <double>0.500000000000000</double>
+    <double>0.100000000000000</double>
    </property>
    <property name="value">
     <double>0.500000000000000</double>
@@ -685,10 +739,10 @@ QPushButton:hover {
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>250</y>
+     <x>520</x>
+     <y>416</y>
      <width>101</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
@@ -703,6 +757,9 @@ QPushButton:hover {
      <width>61</width>
      <height>461</height>
     </rect>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
    </property>
    <property name="styleSheet">
     <string notr="true"/>
@@ -776,14 +833,17 @@ QPushButton:hover {
    <property name="text">
     <string>0.0 m/s</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
      <x>880</x>
      <y>10</y>
-     <width>89</width>
-     <height>25</height>
+     <width>81</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -804,7 +864,7 @@ QPushButton:hover {
      <x>830</x>
      <y>10</y>
      <width>31</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -815,9 +875,9 @@ QPushButton:hover {
    <property name="geometry">
     <rect>
      <x>830</x>
-     <y>450</y>
+     <y>440</y>
      <width>31</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -828,9 +888,9 @@ QPushButton:hover {
    <property name="geometry">
     <rect>
      <x>880</x>
-     <y>490</y>
+     <y>480</y>
      <width>31</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -841,9 +901,9 @@ QPushButton:hover {
    <property name="geometry">
     <rect>
      <x>690</x>
-     <y>490</y>
+     <y>480</y>
      <width>31</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -887,7 +947,7 @@ QPushButton:hover {
    </property>
    <property name="styleSheet">
     <string notr="true">QRadioButton {
-    color: #FFFFFF; /* Text color */
+    color: #000; /* Text color */
 }
 
 QRadioButton::indicator {
@@ -919,10 +979,10 @@ QRadioButton::indicator::checked {
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>250</y>
+     <x>400</x>
+     <y>416</y>
      <width>111</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
@@ -932,8 +992,8 @@ QRadioButton::indicator::checked {
   <widget class="QDoubleSpinBox" name="max_angular_speed_input">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>270</y>
+     <x>420</x>
+     <y>440</y>
      <width>81</width>
      <height>41</height>
     </rect>
@@ -945,7 +1005,7 @@ QRadioButton::indicator::checked {
     <double>10.000000000000000</double>
    </property>
    <property name="singleStep">
-    <double>0.500000000000000</double>
+    <double>0.100000000000000</double>
    </property>
    <property name="value">
     <double>0.500000000000000</double>
@@ -954,10 +1014,10 @@ QRadioButton::indicator::checked {
   <widget class="QPushButton" name="EnableKeyboard">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>160</y>
+     <x>220</x>
+     <y>430</y>
      <width>161</width>
-     <height>23</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="tabletTracking">
@@ -978,8 +1038,8 @@ QRadioButton::indicator::checked {
   <widget class="QLineEdit" name="InputCmd">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>210</y>
+     <x>240</x>
+     <y>490</y>
      <width>113</width>
      <height>25</height>
     </rect>
@@ -991,8 +1051,8 @@ QRadioButton::indicator::checked {
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>190</y>
+     <x>240</x>
+     <y>470</y>
      <width>111</width>
      <height>17</height>
     </rect>
@@ -1004,8 +1064,8 @@ QRadioButton::indicator::checked {
   <widget class="QLCDNumber" name="WifiStrength">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>60</y>
+     <x>440</x>
+     <y>90</y>
      <width>61</width>
      <height>31</height>
     </rect>
@@ -1060,8 +1120,8 @@ font: 14pt &quot;Ubuntu&quot;;</string>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>0</y>
+     <x>460</x>
+     <y>20</y>
      <width>121</width>
      <height>20</height>
     </rect>
@@ -1078,8 +1138,8 @@ font: 14pt &quot;Ubuntu&quot;;</string>
   <widget class="QPushButton" name="open_new_window_object">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>340</y>
+     <x>220</x>
+     <y>150</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1109,8 +1169,8 @@ QPushButton:hover {
    </property>
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>30</y>
+     <x>230</x>
+     <y>90</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -1175,9 +1235,9 @@ QLCDNumber:hover{
    <property name="geometry">
     <rect>
      <x>220</x>
-     <y>10</y>
+     <y>60</y>
      <width>111</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
@@ -1187,8 +1247,8 @@ QLCDNumber:hover{
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>40</y>
+     <x>310</x>
+     <y>100</y>
      <width>61</width>
      <height>21</height>
     </rect>
@@ -1200,8 +1260,8 @@ QLCDNumber:hover{
   <widget class="QPushButton" name="open_new_window_skeleton">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>390</y>
+     <x>220</x>
+     <y>200</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1228,8 +1288,8 @@ QPushButton:hover {
   <widget class="QPushButton" name="open_cam_browser">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>440</y>
+     <x>220</x>
+     <y>250</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1257,8 +1317,8 @@ QPushButton:hover {
   <widget class="QLCDNumber" name="WifiStrength_2">
    <property name="geometry">
     <rect>
-     <x>550</x>
-     <y>60</y>
+     <x>630</x>
+     <y>90</y>
      <width>61</width>
      <height>31</height>
     </rect>
@@ -1313,34 +1373,34 @@ font: 14pt &quot;Ubuntu&quot;;</string>
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>30</y>
-     <width>91</width>
+     <x>400</x>
+     <y>60</y>
+     <width>151</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>Big Robot</string>
+    <string>Big Robot Signal</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>30</y>
-     <width>111</width>
-     <height>16</height>
+     <x>590</x>
+     <y>60</y>
+     <width>161</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>Small Robot</string>
+    <string>Small Robot Signal</string>
    </property>
   </widget>
   <widget class="QPushButton" name="visual_follower">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>540</y>
+     <x>220</x>
+     <y>350</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1362,8 +1422,8 @@ QPushButton:hover {
   <widget class="QPushButton" name="robot_follower">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>490</y>
+     <x>220</x>
+     <y>300</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1386,8 +1446,8 @@ QPushButton:hover {
   <widget class="QPushButton" name="show_parameters_button">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>340</y>
+     <x>390</x>
+     <y>150</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1409,9 +1469,9 @@ QPushButton:hover {
   <widget class="QPushButton" name="hide_signal_strength">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>0</y>
-     <width>91</width>
+     <x>590</x>
+     <y>20</y>
+     <width>101</width>
      <height>25</height>
     </rect>
    </property>
@@ -1422,8 +1482,8 @@ QPushButton:hover {
   <widget class="QPushButton" name="open_recorder_window">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>390</y>
+     <x>390</x>
+     <y>200</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1445,8 +1505,8 @@ QPushButton:hover {
   <widget class="QPushButton" name="movement_control">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>440</y>
+     <x>390</x>
+     <y>250</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1468,8 +1528,8 @@ QPushButton:hover {
   <widget class="QPushButton" name="kill_lidar">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>490</y>
+     <x>390</x>
+     <y>300</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1485,34 +1545,40 @@ QPushButton:hover {
 }</string>
    </property>
    <property name="text">
-    <string>Kill Lidar (Experimental)</string>
+    <string>Kill Lidar</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="entry_x">
+  <widget class="QLineEdit" name="coordinate_x_output">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>640</y>
+     <x>110</x>
+     <y>600</y>
      <width>131</width>
      <height>31</height>
     </rect>
    </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
   </widget>
-  <widget class="QLineEdit" name="entry_y">
+  <widget class="QLineEdit" name="coordinate_y_output">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>640</y>
+     <x>270</x>
+     <y>600</y>
      <width>131</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="label_9">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>650</y>
+     <x>90</x>
+     <y>610</y>
      <width>16</width>
      <height>17</height>
     </rect>
@@ -1524,8 +1590,8 @@ QPushButton:hover {
   <widget class="QLabel" name="label_10">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>650</y>
+     <x>250</x>
+     <y>610</y>
      <width>16</width>
      <height>17</height>
     </rect>
@@ -1537,8 +1603,8 @@ QPushButton:hover {
   <widget class="QLabel" name="label_11">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>610</y>
+     <x>200</x>
+     <y>570</y>
      <width>111</width>
      <height>17</height>
     </rect>
@@ -1550,10 +1616,10 @@ QPushButton:hover {
   <widget class="QPushButton" name="show_coordinates">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>680</y>
-     <width>131</width>
-     <height>25</height>
+     <x>50</x>
+     <y>640</y>
+     <width>191</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
@@ -1563,10 +1629,10 @@ QPushButton:hover {
   <widget class="QPushButton" name="turn_off_coordinates">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>710</y>
-     <width>151</width>
-     <height>25</height>
+     <x>260</x>
+     <y>640</y>
+     <width>191</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
@@ -1576,8 +1642,8 @@ QPushButton:hover {
   <widget class="QPushButton" name="turn_on_lidar">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>540</y>
+     <x>390</x>
+     <y>350</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -1594,6 +1660,43 @@ QPushButton:hover {
    </property>
    <property name="text">
     <string>Turn ON Lidar</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="path_planner_button">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>300</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+
+QPushButton:hover {
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 0 8px;
+  background: lime;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Path Planning</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="save_coordinates_button">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>700</y>
+     <width>161</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Save Current Coords</string>
    </property>
   </widget>
  </widget>

@@ -1,4 +1,7 @@
 import os
+import pickle
+
+import cv2
 import rospy
 import rospkg
 import rosbag
@@ -6,39 +9,42 @@ import rosbag
 import subprocess
 import re
 import time
+import math
+
 import datetime
 import threading
 
 import webbrowser
 
-from geometry_msgs.msg import Vector3
-from std_msgs.msg import String
-from geometry_msgs.msg import Twist
-from geometry_msgs.msg import PointStamped
-from std_msgs.msg import Float32
-from darknet_ros_msgs.msg import BoundingBoxes
-from sensor_msgs.msg import CompressedImage
-from sensor_msgs.msg import Image
-from sensor_msgs.msg import PointCloud2
-import sensor_msgs.point_cloud2 as pc2
 from sensor_msgs.msg import Imu
+from std_msgs.msg import String, Header, Float32
+from geometry_msgs.msg import PointStamped, PoseStamped, Twist, Vector3
+from move_base_msgs.msg import MoveBaseActionResult
+from darknet_ros_msgs.msg import BoundingBoxes
+from sensor_msgs.msg import CompressedImage, Image, PointCloud2
+import sensor_msgs.point_cloud2 as pc2
 from bodyreader.msg import bodyposture
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QDialog, QScrollArea
 
-from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut, QRadioButton, QSlider, QLabel, QCheckBox, QLineEdit, QLCDNumber, QTableWidget, QProgressBar, QSpinBox, QTableWidgetItem
+from PyQt5.QtWidgets import QPushButton, QListWidget, QComboBox, QDoubleSpinBox, QShortcut, QRadioButton, QSlider, QLabel, QCheckBox, QLineEdit, QLCDNumber, QTableWidget, QProgressBar, QSpinBox, QTableWidgetItem, QSizePolicy
 from PyQt5.QtCore import QTimer, QThread, pyqtSignal, QObject, Qt, qRegisterResourceData
 from PyQt5.QtGui import QColor, QImage, QPixmap
 
 
 from cv_bridge import CvBridge, CvBridgeError
 
+from PIL import Image as PIM
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
 from python_qt_binding.QtWidgets import QWidget
 
 from utils.Definitions import *
 from utils.SubProcessManager import *
+from point_input import Point_input
+
+
+COORDINATE_FILE = "/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/src/wheeltec-building-inspection/possible_targets.pickle"
 
 class TransferState():
     IDLE = 0
@@ -48,32 +54,39 @@ class NavControl(Plugin):
     def __init__(self, context):
         super(NavControl, self).__init__(context)
 
-
         self.proc_manager = SubProcessManager()
         self.transfer_state = TransferState.IDLE
 
-        
+
         # Give QObjects reasonable names
         self.setObjectName('NavControl')
 
         # Register publishers
         self.robotHandlerCommandPub = rospy.Publisher('robot_handler_cmd', String, queue_size=10)
         self.velocityCommandPub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-        
+
         self.pointClickedCommandPub = rospy.Publisher('clicked_point', PointStamped, queue_size=10)
 
         # Register subscribers
         self.robotHandlerStatusSub = rospy.Subscriber('robot_handler_status', String, self.add_to_log_console)
         self.robotHandlerCapListRequest = rospy.Subscriber('robot_handler_cap_file_list', String, self.refresh_robot_cap_list)
         self.robotHandlerCommandSub = rospy.Subscriber('robot_handler_cmd', String, self.handle_commands)
-        self.thread_1 = QThread()
 
         # Create QWidget
-        self._widget = QWidget()
+        self.scroll_area = QScrollArea()
+        self.content_widget = QWidget()
+        self._widget = QMainWindow()
         ui_file = os.path.join(rospkg.RosPack().get_path('wheeltec-building-inspection-ui'), 'resource',
                                'building-inspec-control.ui')
-        loadUi(ui_file, self._widget)
+        loadUi(ui_file, self.content_widget)
         self._widget.setObjectName('NavControlUi')
+        self.scroll_area.setWidget(self.content_widget)
+        self._widget.setCentralWidget(self.scroll_area)
+
+        self.path_planner_window = QDialog()
+        self.path_planner_ui_file = os.path.join(rospkg.RosPack().get_path('wheeltec-building-inspection-ui'), 'resource',
+                        'path-planner.ui')
+        self.path_plan_ui = loadUi(self.path_planner_ui_file, self.path_planner_window)
 
         if context.serial_number() > 1:
             self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
@@ -137,7 +150,15 @@ class NavControl(Plugin):
             lambda: self.robotHandlerCommandPub.publish('save_map'))
 
         self._widget.findChild(QPushButton, 'StartNav').clicked.connect(
-            lambda: self.robotHandlerCommandPub.publish('start_nav'))  
+            lambda: self.robotHandlerCommandPub.publish('start_nav'))
+        
+        self.x_coord = self._widget.findChild(QLineEdit, 'coordinate_x_output')
+        self.y_coord = self._widget.findChild(QLineEdit, 'coordinate_y_output')
+
+       
+        self._widget.findChild(QPushButton, 'save_coordinates_button').pressed.connect(
+            lambda: self.save_coordinates([float(self.x_coord.text()), float(self.y_coord.text())], name=(str(rospy.get_time())))
+        )
         
         # Halts the rover's movement
         self.halt_sequence = QShortcut("Space", self._widget)
@@ -176,8 +197,9 @@ class NavControl(Plugin):
         self._widget.findChild(QPushButton, 'TransferCapButton').clicked.connect(
             lambda: self.transfer_cap_file())
         
-        self._widget.findChild(QRadioButton, 'EnableCamButton').toggled.connect(
-            lambda: self.robotHandlerCommandPub.publish('start_cam')
+        self.camera_button = self._widget.findChild(QRadioButton, 'EnableCamButton')
+        self.camera_button.toggled.connect(
+            lambda: self.robotHandlerCommandPub.publish('start_cam ' + str(int(self.camera_button.isChecked())))
         )
         
         #Enable Keyboard for controller to start
@@ -198,7 +220,8 @@ class NavControl(Plugin):
         self._widget.findChild(QPushButton, 'open_new_window_skeleton').clicked.connect(self.open_new_window_skeleton_detection)
         self._widget.findChild(QPushButton, 'open_cam_browser').clicked.connect(self.open_browser)
         self._widget.findChild(QPushButton, 'visual_follower').clicked.connect(self.visual_follower)
-        self._widget.findChild(QPushButton, 'robot_follower').clicked.connect(self.robot_follower)
+        # self._widget.findChild(QPushButton, 'robot_follower').clicked.connect(self.robot_follower)
+        self._widget.findChild(QPushButton, 'robot_follower').hide()
         self._widget.findChild(QPushButton, 'show_parameters_button').clicked.connect(self.open_new_window_param_list)
         self.hide_button_state = True
         self.hide_button = self._widget.findChild(QPushButton, 'hide_signal_strength').clicked.connect(self.hide_signal_strength)
@@ -207,9 +230,16 @@ class NavControl(Plugin):
         self._widget.findChild(QPushButton, 'kill_lidar').clicked.connect(self.kill_lidar)
         self._widget.findChild(QPushButton, 'show_coordinates').clicked.connect(self.run_tf_echo)
         self._widget.findChild(QPushButton, 'turn_off_coordinates').clicked.connect(self.turn_off_gps)
+        self._widget.findChild(QPushButton, 'task_planning_go').clicked.connect(self.task_planning_go)
+        self._widget.findChild(QPushButton, 'spin_360_button').clicked.connect(self.spin)
         self.lidar_on = self._widget.findChild(QPushButton, 'turn_on_lidar')
         self.lidar_on.setEnabled(False)
         self.lidar_on.clicked.connect(self.turn_on_lidar)
+
+        self._widget.findChild(QPushButton, 'path_planner_button').clicked.connect(self.open_path_planner)
+
+        self.goal_pub = rospy.Publisher('/move_base_simple/goal', PoseStamped, queue_size=1)
+
         # General
         self._widget.findChild(QPushButton, 'StopAll').clicked.connect(
             lambda: self.robotHandlerCommandPub.publish('stop_all'))
@@ -239,6 +269,181 @@ class NavControl(Plugin):
         self.timer.start()
 
         self.rec_window = QWidget()
+        self.goal_reached = True
+        self.queue_state = 0
+        self.demo_path = [
+            [(2.07, -0.23, 0, 1), 0, 0], 
+            [(3, 1, 0, 1), 0, 0], 
+            [(4.5, 0.4, 1, 0), 0, 0], 
+            [(2.4, 0.4, -0.72, 0.69), 0, 0]
+        ]
+        self.goal_list = []
+
+
+    def spin_360(self, rotation_duration):
+            start_time = rospy.Time.now()
+
+            while rospy.Time.now() - start_time <= rotation_duration:
+
+                msg = Twist()
+                msg.linear.x = 0
+                msg.linear.y = 0
+                msg.linear.z = 0
+                msg.angular.x = 0
+                msg.angular.y = 0
+                msg.angular.z = self._widget.findChild(QDoubleSpinBox, 'max_angular_speed_input').value()
+                self.velocityCommandPub.publish(msg)
+                rospy.sleep(0.1)
+#lol
+            stop_msg = Twist()
+            self.velocityCommandPub.publish(stop_msg)
+
+    def spin(self, angle):
+        recording_duration = angle / self._widget.findChild(QDoubleSpinBox, 'max_angular_speed_input').value()
+        thread1 = threading.Thread(target=self.spin_360, args=(rospy.Duration.from_sec(recording_duration),))
+        thread1.start()
+        time.sleep(recording_duration)
+
+    def capture_image(self):
+        save_path = "saved_images/image_" + str(rospy.get_time()) + ".jpg"
+        topic = "/camera/rgb/image_raw"
+        
+        def image_callback(msg):
+            try:
+                bridge = CvBridge()
+                # Convert ROS Image message to OpenCV image
+                cv_image = bridge.imgmsg_to_cv2(msg, "bgr8")
+                cv2.imwrite(save_path, cv_image)
+                print("Image saved to " + save_path)
+                self.robotHandlerCommandPub.publish(String("Image saved to " + save_path))
+            except CvBridgeError as e:
+                print(e)
+
+        subscriber = rospy.Subscriber(topic, Image, image_callback)
+        rospy.wait_for_message(topic, Image)
+        subscriber.unregister()
+
+
+    #task planning
+    def task_planning_go(self, goal_list = []):
+        # if True:
+        #     rospy.loginfo("Navigation should be enabled")
+        #     return
+
+        def send_new_nav_goal(goal_list):
+            for goal in goal_list:
+                if self.goal_reached == True:
+                    # x, y, z, w = 0, 0, 0, 0
+                    # if goal[0][0]:
+                    #     x = goal[0][0]
+                    # if goal[0][1]:
+                    #     y = goal[0][1]
+                    # if goal[0][2]:
+                    #     z = goal[0][2]
+                    # if goal[0][3]:
+                    #     w = goal[0][3]
+
+                    x, y, z, w = goal[0]
+
+                    wait_time = goal[1]
+                    angle = goal[2]
+                    take_picture = goal[3]
+
+                    rospy.loginfo("Sending goal to: " + "(" + str(x) + " , " + str(y) + ")")
+
+                    goal_msg = PoseStamped()
+                    goal_msg.header = Header()
+                    goal_msg.header.stamp = rospy.Time.now()
+
+
+                    goal_msg.pose.position.x = x
+                    goal_msg.pose.position.y = y
+                    goal_msg.pose.orientation.z = z
+                    goal_msg.pose.orientation.w = w
+                    goal_msg.header.frame_id = "map"
+
+                    self.goal_pub.publish(goal_msg)
+                    rospy.loginfo("Navigation goal sent!")
+                    self.goal_reached = False
+                    while not self.goal_reached:
+                        pass
+                    if angle:
+                        self.spin(angle)
+                    if take_picture:
+                        self.capture_image()
+                    if wait_time:
+                        rospy.sleep(wait_time)
+                        print("Wait Time Over")
+            # while self.queue_state < len(goal_list):
+            #     if self.goal_reached == True:
+                
+            #         if self.queue_state < len(goal_list):
+                        # x, y, z, w = 0, 0, 0, 0
+                        # if goal_list[self.queue_state][0][0]:
+                        #     x = goal_list[self.queue_state][0][0]
+                        # if goal_list[self.queue_state][0][1]:
+                        #     y = goal_list[self.queue_state][0][1]
+                        # if goal_list[self.queue_state][0][2]:
+                        #     z = goal_list[self.queue_state][0][2]
+                        # if goal_list[self.queue_state][0][3]:
+                        #     w = goal_list[self.queue_state][0][3]
+
+                        # wait_time = goal_list[self.queue_state][1]
+                        # angle = goal_list[self.queue_state][2]
+                        # take_picture = goal_list[self.queue_state][3]
+
+                        # rospy.loginfo("Sending goal to: " + "(" + str(x) + " , " + str(y) + ")")
+
+                        # goal_msg = PoseStamped()
+                        # goal_msg.header = Header()
+                        # goal_msg.header.stamp = rospy.Time.now()
+
+
+                        # goal_msg.pose.position.x = x
+                        # goal_msg.pose.position.y = y
+                        # goal_msg.pose.orientation.z = z
+                        # goal_msg.pose.orientation.w = w
+                        # goal_msg.header.frame_id = "map"
+
+                        # self.goal_pub.publish(goal_msg)
+                        # rospy.loginfo("Navigation goal sent!")
+                        # self.goal_reached = False
+                        # while not self.goal_reached:
+                        #     pass
+                        # if angle:
+                        #     self.spin(angle)
+                        # if take_picture:
+                        #     self.capture_image()
+                        # if wait_time:
+                        #     rospy.sleep(wait_time)
+                        #     print("Wait Time Over")
+
+        def goal_result_callback(msg):
+            if msg.status.status == 3:
+                print("REACHED")
+                if self.goal_reached == False:
+                    self.goal_reached = True
+                    print("Goal is True")
+                    self.queue_state += 1
+
+            
+        try:
+            self.queue_state = 0
+            rospy.Subscriber('/move_base/result', MoveBaseActionResult, goal_result_callback)
+
+            if not goal_list:
+                goal_list = self.demo_path
+
+            def goal():
+                send_new_nav_goal(goal_list)
+
+            thread1 = threading.Thread(target=goal)
+            thread1.start()
+                
+
+        except rospy.ROSInterruptException:
+            pass
+        # self.queue_state = 0
 
     def turn_off_gps(self):
         try:
@@ -327,16 +532,16 @@ class NavControl(Plugin):
     def open_recorder_window(self, cont):
 
         def check_topic_active(topic_name):
-            if topic_name == '/imu_raw':
-                type1 = Imu
-            elif topic_name == '/point_cloud_raw':
-                type1 = PointCloud2
-            elif topic_name == '/darknet_ros/bounding_boxes':
-                type1 = BoundingBoxes
-            elif topic_name == '/darknet_ros/detection_image':
-                type1 = Image
+            type_map = {
+                '/imu_raw': Imu,
+                '/point_cloud_raw': PointCloud2,
+                '/darknet_ros': BoundingBoxes,
+                'darknet_ros/detection_image': Image,
+            }
+
+            topic_type = type_map[topic_name]
             try:
-                rospy.wait_for_message(topic_name, type1, timeout=2)
+                rospy.wait_for_message(topic_name, topic_type, timeout=2)
                 print("Topic " + topic_name + " is active and receiving messages.")
                 return True
             except rospy.exceptions.ROSException:
@@ -407,7 +612,7 @@ class NavControl(Plugin):
                         for topic, msg, t in bag.read_messages(topics=['/point_cloud_raw']):
                             if topic == '/point_cloud_raw' and msg._type == 'sensor_msgs/PointCloud2':
                                 for p in pc2.read_points(msg, field_names=("x", "y", "z"), skip_nans=True):
-                                    lidar_data = "X: {:.2f}, Y: {:.2f}, Z: {:.2f}\n".format(p[0], p[1], p[2])
+                                    lidar_data = "X: {:.2f} Y: {:.2f} Z: {:.2f}\n".format(p[0], p[1], p[2])
                                     output_file.write(lidar_data)
 
             def callback(data):
@@ -564,10 +769,7 @@ class NavControl(Plugin):
         label1 = self._widget.findChild(QLabel, 'label_7')
         label2 = self._widget.findChild(QLabel, 'label_8')
 
-        if self.hide_button_state == False:
-            self.hide_button_state = True
-        else:
-            self.hide_button_state = False
+        self.hide_button_state = not self.hide_button_state
 
         lcd1.setVisible(self.hide_button_state)
         lcd2.setVisible(self.hide_button_state)
@@ -926,18 +1128,21 @@ class NavControl(Plugin):
         list_wid = new_window.findChild(QTableWidget, 'object_found_list')
         list_wid.setColumnCount(1)
         list_wid.setHorizontalHeaderLabels(['Number'])
+        label_off = new_window.findChild(QLabel, 'darknet_off_label')
 
         self.objectDetectedListSub = rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, updateObjectDetectedList)
         bar = new_window.findChild(QProgressBar, 'darknet_node_prog_bar')
         label_on = new_window.findChild(QLabel, 'darknet_on_label')
-        label_off = new_window.findChild(QLabel, 'darknet_off_label')
 
         new_window.bridge = CvBridge()
         
         self.subscriber = rospy.Subscriber('/darknet_ros/detection_image', Image, image_callback)
         
-        new_window.timer = QTimer()
+        new_window.timer = QTimer()        
         new_window.timer.start(30)
+
+
+
 
         new_window.findChild(QPushButton, 'check_topics').clicked.connect(checkProgress)
         
@@ -945,8 +1150,95 @@ class NavControl(Plugin):
         #new_window.finished.connect(self.obj_detection_exit_window)
         new_window.exec_()
 
+    
+    def load_coordinates(self):
+        saved_coords = {}
+        with open(COORDINATE_FILE, "rb") as f:
+            saved_coords = pickle.load(f)
+        return saved_coords
 
-   
+
+    def save_coordinates(self, coords, name=rospy.get_time()):
+        coords.append(0)
+        coords.append(0)
+        old_data = self.load_coordinates()
+        old_data.update({name: tuple([round(coord, 3) for coord in coords])})
+        with open(COORDINATE_FILE, "wb") as f:
+            pickle.dump(old_data, f, protocol=2)
+
+    def open_path_planner(self):
+        self.possible_targets = self.load_coordinates()
+        self.goals = []
+
+        path_node_input = self.path_plan_ui.findChild(QComboBox, 'path_node_input')
+        path_node_input.clear()
+        path_node_input.addItems(self.possible_targets.keys())
+        path_node_input.addItem("Custom")
+
+        custom_x_input = self.path_plan_ui.findChild(QDoubleSpinBox, 'custom_x_input')
+        custom_y_input = self.path_plan_ui.findChild(QDoubleSpinBox, 'custom_y_input')
+        go_button = self.path_plan_ui.findChild(QPushButton, 'go_button')
+        reset_button = self.path_plan_ui.findChild(QPushButton, 'reset_button')
+        submit_button = self.path_plan_ui.findChild(QPushButton, 'submit_button')
+        image_collection_input = self.path_plan_ui.findChild(QComboBox, 'image_collection_input')
+        orientation_input = self.path_plan_ui.findChild(QSpinBox, 'orientation_input')
+        wait_time_input = self.path_plan_ui.findChild(QSpinBox, 'wait_time_input')
+
+        goal_manager = self.path_plan_ui.findChild(QListWidget, 'goal_list')
+        goal_manager.clear()
+
+        def manage_input(data):
+            if data == "Custom":
+                custom_x_input.setEnabled(True)
+                custom_y_input.setEnabled(True)
+            else:
+                custom_x_input.setEnabled(False)
+                custom_y_input.setEnabled(False)
+
+        def reset_targets_widget(hard = False):
+            if hard:
+                self.goals = []
+                goal_manager.clear()
+            custom_x_input.setValue(0)
+            custom_y_input.setValue(0)
+            orientation_input.setValue(0)
+            wait_time_input.setValue(0)
+
+
+        def navigate_to_targets():
+            # Use shallow copy to avoid overwriting the goals
+            self.task_planning_go([goal.return_data() for goal in self.goals])
+            self.goals = []
+
+        def append_new_target():
+            try:
+                coords = self.possible_targets[path_node_input.currentText()]
+            except KeyError:
+                coords = custom_x_input.value(), custom_y_input.value(), 0, 1
+            point = Point_input(coords, orientation_input.value(), image_collection_input.currentText(), wait_time_input.value())
+            self.goals.append(point)
+            goal_manager.addItems([str(point)])
+            reset_targets_widget()
+
+        submit_button.pressed.connect(
+            append_new_target
+        )
+
+        path_node_input.currentTextChanged.connect(
+            manage_input
+        )
+
+        reset_button.pressed.connect(
+            lambda: reset_targets_widget(True)
+        )
+
+        go_button.pressed.connect(
+            navigate_to_targets
+        )
+
+        self.path_planner_window.exec_()
+
+
     def handle_commands(self, data):
         cmd = data.data
         if cmd == "halt 1":
@@ -975,6 +1267,16 @@ class NavControl(Plugin):
             slider.setValue(slider.value() - 10)
 
     def reset_velocities(self):
+        zero_vector = Twist()
+        zero_vector.linear.x = 0
+        zero_vector.linear.y = 0
+        zero_vector.linear.z = 0
+        zero_vector.angular.x = 0
+        zero_vector.angular.y = 0
+        zero_vector.angular.z = 0
+
+        self.velocityCommandPub.publish(zero_vector)
+
         self._widget.findChild(QSlider, 'linear_velocity_slider').setValue(0)
         self._widget.findChild(QSlider, 'angular_velocity_slider').setValue(0)
 
@@ -1011,12 +1313,13 @@ class NavControl(Plugin):
 
     def add_to_log_console(self, log_message):
         self.log_console.addItems([log_message.data])
+        self.log_console.scrollToBottom()
 
 ################################################################################
     #Enable Keyboard
     def keyboard_on(self):        
         self._widget.findChild(QLineEdit, 'InputCmd').textChanged.connect(self.controller_robot)
-    #Controller of the Robot using W, A, S, D and P
+    #Controller of the Robot using W, A, S, D, Q, E and P
     def controller_robot(self, text):
 
         linear_velocity = self._widget.findChild(QDoubleSpinBox, 'max_linear_speed_input')
@@ -1173,8 +1476,8 @@ class Worker(QObject):
         wifi_lcd_strength = self._widget.findChild(QLCDNumber, 'WifiStrength')
         wifi_lcd_strength_2 = self._widget.findChild(QLCDNumber, 'WifiStrength_2')
 
-        entry_x = self._widget.findChild(QLineEdit, 'entry_x')
-        entry_y = self._widget.findChild(QLineEdit, 'entry_y')
+        entry_x = self._widget.findChild(QLineEdit, 'coordinate_x_output')
+        entry_y = self._widget.findChild(QLineEdit, 'coordinate_y_output')
         def set_entry_gps(data):
             x = str(data.x)
             y = str(data.y)

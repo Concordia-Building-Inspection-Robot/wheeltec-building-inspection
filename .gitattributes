@@ -1,0 +1,13 @@
+*.bag filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.txt filter=lfs diff=lfs merge=lfs -text
+data_recordings/camera_recordings filter=lfs diff=lfs merge=lfs -text
+data_recordings/imu_recordings filter=lfs diff=lfs merge=lfs -text
+data_recordings/Lidar_recordings filter=lfs diff=lfs merge=lfs -text
+data_recordings/camera_recordings/object_detection filter=lfs diff=lfs merge=lfs -text
+data_recordings/camera_recordings/skeleton_detection filter=lfs diff=lfs merge=lfs -text
+data_recordings/imu_recordings/IMU-RECORDING.bag filter=lfs diff=lfs merge=lfs -text
+data_recordings/imu_recordings/IMU-RECORDING.txt filter=lfs diff=lfs merge=lfs -text
+data_recordings/Lidar_recordings/Lidar-RECORDING.bag filter=lfs diff=lfs merge=lfs -text
+data_recordings/Lidar_recordings/Lidar-RECORDING.txt filter=lfs diff=lfs merge=lfs -text
+data_recordings/camera_recordings/object_detection/VIDEO-GENERATED.bag filter=lfs diff=lfs merge=lfs -text
