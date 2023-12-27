@@ -394,8 +394,7 @@ The UI package under the repo contains packages that hold the nodes for the UI t
 
 ### UI communication with robot
 
-The following three topics are currently used for sending information such as statuses, file lists and commands between the robot
-and UI respectively.
+The following three topics are currently used for sending information such as statuses, file lists and commands between the robot and UI respectively.
 
 -   /robot_handler_status - string message formatted with space character as delimiter between command and arguments
 -   /file_cap_list - string message formatted with character '|' used as delimiter between file names
@@ -407,8 +406,7 @@ You can run the UI on its own by running `roscore` in its own terminal session t
 
 -   `rqt --standalone wheeltec-building-inspection-ui`
 
-To run the full RQT layout that communicates with the robot with console output for troubleshooting, you can run the following
-in root directory of project:
+To run the full RQT layout that communicates with the robot with console output for troubleshooting, you can run the following in root directory of project:
 
 -   `bash UI/ui-startup/run_rqt_gui.sh`
 
@@ -433,9 +431,7 @@ This is more of a workaround for import errors as it is manually adding this pro
 to the python path environment variable, but it does allow all the modules here to be loaded properly.
 
 # 8. Recording Topic Data
-We will be using this concept in order to store LiDar data for further analysis, recording of this data can be done using the
-`rosbag record -O FILENAME.bag /TOPIC_NAME` this will start the recording node which will store the data in TOPIC_NAME into
-FILENAME.bag file, recording can be stopped using the Ctrl-C command which will halt the recording node.
+We will be using this concept in order to store LiDar data for further analysis, recording of this data can be done using the `rosbag record -O FILENAME.bag /TOPIC_NAME` this will start the recording node which will store the data in TOPIC_NAME into FILENAME.bag file, recording can be stopped using the Ctrl-C command which will halt the recording node.
 
 To rewatch the data that was recorded, make sure to transfer the data to the lab computer, then on the lab computer, start a roscore node, and then run the command `rosbag play FILENAME.bag`, this will publish all the data that was recorded into a new topic called "/TOPIC_NAME". We can now observe the data that was recorded using RViz's built-in PointCloud data type.
 

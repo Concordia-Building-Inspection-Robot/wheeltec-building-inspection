@@ -326,25 +326,11 @@ class NavControl(Plugin):
 
     #task planning
     def task_planning_go(self, goal_list = []):
-        # if True:
-        #     rospy.loginfo("Navigation should be enabled")
-        #     return
 
         def send_new_nav_goal(goal_list):
             for goal in goal_list:
                 if self.goal_reached == True:
-                    # x, y, z, w = 0, 0, 0, 0
-                    # if goal[0][0]:
-                    #     x = goal[0][0]
-                    # if goal[0][1]:
-                    #     y = goal[0][1]
-                    # if goal[0][2]:
-                    #     z = goal[0][2]
-                    # if goal[0][3]:
-                    #     w = goal[0][3]
-
                     x, y, z, w = goal[0]
-
                     wait_time = goal[1]
                     angle = goal[2]
                     take_picture = goal[3]
@@ -374,49 +360,6 @@ class NavControl(Plugin):
                     if wait_time:
                         rospy.sleep(wait_time)
                         print("Wait Time Over")
-            # while self.queue_state < len(goal_list):
-            #     if self.goal_reached == True:
-                
-            #         if self.queue_state < len(goal_list):
-                        # x, y, z, w = 0, 0, 0, 0
-                        # if goal_list[self.queue_state][0][0]:
-                        #     x = goal_list[self.queue_state][0][0]
-                        # if goal_list[self.queue_state][0][1]:
-                        #     y = goal_list[self.queue_state][0][1]
-                        # if goal_list[self.queue_state][0][2]:
-                        #     z = goal_list[self.queue_state][0][2]
-                        # if goal_list[self.queue_state][0][3]:
-                        #     w = goal_list[self.queue_state][0][3]
-
-                        # wait_time = goal_list[self.queue_state][1]
-                        # angle = goal_list[self.queue_state][2]
-                        # take_picture = goal_list[self.queue_state][3]
-
-                        # rospy.loginfo("Sending goal to: " + "(" + str(x) + " , " + str(y) + ")")
-
-                        # goal_msg = PoseStamped()
-                        # goal_msg.header = Header()
-                        # goal_msg.header.stamp = rospy.Time.now()
-
-
-                        # goal_msg.pose.position.x = x
-                        # goal_msg.pose.position.y = y
-                        # goal_msg.pose.orientation.z = z
-                        # goal_msg.pose.orientation.w = w
-                        # goal_msg.header.frame_id = "map"
-
-                        # self.goal_pub.publish(goal_msg)
-                        # rospy.loginfo("Navigation goal sent!")
-                        # self.goal_reached = False
-                        # while not self.goal_reached:
-                        #     pass
-                        # if angle:
-                        #     self.spin(angle)
-                        # if take_picture:
-                        #     self.capture_image()
-                        # if wait_time:
-                        #     rospy.sleep(wait_time)
-                        #     print("Wait Time Over")
 
         def goal_result_callback(msg):
             if msg.status.status == 3:
@@ -425,7 +368,6 @@ class NavControl(Plugin):
                     self.goal_reached = True
                     print("Goal is True")
                     self.queue_state += 1
-
             
         try:
             self.queue_state = 0
@@ -434,16 +376,11 @@ class NavControl(Plugin):
             if not goal_list:
                 goal_list = self.demo_path
 
-            def goal():
-                send_new_nav_goal(goal_list)
-
-            thread1 = threading.Thread(target=goal)
+            thread1 = threading.Thread(target=send_new_nav_goal, args=(goal_list,))
             thread1.start()
-                
 
         except rospy.ROSInterruptException:
             pass
-        # self.queue_state = 0
 
     def turn_off_gps(self):
         try:
@@ -461,7 +398,6 @@ class NavControl(Plugin):
         try:
             thread1 = threading.Thread(target=threadd, args=())
             thread1.start()
-            #subprocess.call(['rosrun', 'wheeltec-building-inspection-ui', 'tf_echo', '/map', '/base_link'])
         except:
             print("Exception")
 
@@ -554,9 +490,6 @@ class NavControl(Plugin):
         def record_imu_thread():
             th_1 = threading.Thread(target=record_imu, args=())
             th_1.start()
-        
-
-
 
         def record_imu():
 
@@ -579,18 +512,19 @@ class NavControl(Plugin):
             def callback(data):
                 if rospy.Time.now() - start_time >= recording_duration:
                     print("BAG CLOSING...")
+                    rospy.loginfo("Saving output to bag file...")
                     subscribe_pcl.unregister()
                     bag.close()
 
                     input_bag_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/imu_recordings/IMU-RECORDING.bag'
                     output_text_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/imu_recordings/IMU-RECORDING.txt'
+                    rospy.loginfo("Extracting PCD to text file...")
                     extract_imu_data_from_bag(input_bag_file, output_text_file)
+                    rospy.loginfo("Data extraction complete")
 
                 else:
                     print(rospy.Time.now())
                     bag.write('/imu_raw', data)
-
-
 
             is_topic_active = check_topic_active('/imu_raw')
             if is_topic_active:
@@ -602,9 +536,10 @@ class NavControl(Plugin):
                 subscribe_pcl = rospy.Subscriber('/imu_raw', Imu, callback)
 
             else:
-                print("Topic /imu_raw is not active")
+                rospy.loginfo("Topic /imu_raw is not active")
 
         def record_point_cloud():
+            t = str(int(time.time()))
 
             def extract_lidar_data_from_bag(input_bag_file, output_text_file):
                 with rosbag.Bag(input_bag_file, 'r') as bag:
@@ -621,10 +556,9 @@ class NavControl(Plugin):
                     subscribe_pcl.unregister()
                     bag.close()
 
-                    input_bag_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/Lidar_recordings/Lidar-RECORDING.bag'
-                    output_text_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/Lidar_recordings/Lidar-RECORDING.txt'
+                    input_bag_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/Lidar_recordings/Lidar-RECORDING' + t + '.bag'
+                    output_text_file = '/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/Lidar_recordings/Lidar-RECORDING' + t + '.txt'
                     extract_lidar_data_from_bag(input_bag_file, output_text_file)
-
 
                 else:
                     print(rospy.Time.now())
@@ -635,7 +569,7 @@ class NavControl(Plugin):
             is_topic_active = check_topic_active('/point_cloud_raw')
             if is_topic_active:
                 record_duration = self.rec_window.findChild(QSpinBox, 'record_duration').value()
-                bag = rosbag.Bag('/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/Lidar_recordings/Lidar-RECORDING.bag', 'w')
+                bag = rosbag.Bag('/home/concordia/catkin_ws/src/wheeltec-building-inspection/data_recordings/Lidar_recordings/Lidar-RECORDING' + t + '.bag', 'w')
                 recording_duration = rospy.Duration.from_sec(record_duration)
                 start_time = rospy.Time.now()
                 print("Start Time: " + str(start_time))
@@ -657,9 +591,6 @@ class NavControl(Plugin):
                 else:
                     print(rospy.Time.now())
                     list_1.append(str(data))
-                        ##########################################
-                        ##############################################
-                        #############################################
 
 
             is_topic_active2 = True
@@ -708,7 +639,6 @@ class NavControl(Plugin):
 
         def record_object_detected():
 
-
             def backcall(data):
                 if rospy.Time.now() - start_time1 >= recording_duration:
                     print("Recording Stopping...")
@@ -731,7 +661,7 @@ class NavControl(Plugin):
                         confidence = box.probability
                         x_coord = self._widget.findChild(QLineEdit, 'entry_x').text()
                         y_coord = self._widget.findChild(QLineEdit, 'entry_y').text()
-                        object_set.append("Detected: "+detected_class1 + " at " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " at " + "X: " +str(center_x) + ", Y: " + str(center_y) + " with confidence " + str(confidence) + " while position of the ROBOT on the map is X: " + x_coord + " Y: " + y_coord)
+                        object_set.append("Detected: "+ detected_class1 + " at " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " at " + "X: " + str(center_x) + ", Y: " + str(center_y) + " with confidence " + str(confidence) + " while position of the ROBOT on the map is X: " + x_coord + " Y: " + y_coord)
 
             is_topic_active1 = check_topic_active("/darknet_ros/bounding_boxes")
             if is_topic_active1:
@@ -759,8 +689,6 @@ class NavControl(Plugin):
     def turn_on_lidar(self):
         self.robotHandlerCommandPub.publish('turn_on_lidar')
         self.lidar_on.setEnabled(False)
-
-        
 
 
     def hide_signal_strength(self):
@@ -989,22 +917,11 @@ class NavControl(Plugin):
 
             subscriber = rospy.Subscriber('/repub/body/body_display/compressed', CompressedImage, callback)
         def toggle_record():
-            # if not self.thread_1.isRunning():
-
-            # self.worker_1 = Worker(self._widget, self.robotHandlerCommandPub, value, record_label, record_label_1)
-            # self.worker_1.moveToThread(self.thread_1)
-            # self.thread_1.started.connect(self.worker_1.run_record)
-            # self.thread_1.start()
-            # self.thread_1.finished.connect(self.thread_1.deleteLater)
-            # self.worker_1.finished.connect(self.worker_1.deleteLater)
             thread1 = threading.Thread(target=start_record_thread, args=())
             thread1.start()
 
             record_label.setVisible(True)
             record_label_1.setVisible(True)
-            # else:
-            #     print("Recording already in progress...")
-            #     print(value)
  
         is_on = False
         self.robotHandlerCommandPub.publish('skel_tracking') 
@@ -1012,7 +929,6 @@ class NavControl(Plugin):
         loadUi("/home/concordia/catkin_ws/src/wheeltec-building-inspection/UI/resource/skeleton-tracking-display.ui", new_window_1)
         new_window_1.bridge = CvBridge()
         self.subscriber = rospy.Subscriber('/repub/body/body_display/compressed', CompressedImage, image_callback)
-        #self.subscriber_1 = rospy.Subscriber('/repub/body/body_display/compressed', CompressedImage, record_image_callback)
         label_on = new_window_1.findChild(QLabel, 'skeleton_on_label')
         label_off = new_window_1.findChild(QLabel, 'skeleton_off_label')
         bar = new_window_1.findChild(QProgressBar, 'skeleton_prog_bar')
@@ -1028,7 +944,6 @@ class NavControl(Plugin):
         new_window_1.findChild(QPushButton, 'check_status').clicked.connect(check_progress)
         check_progress()
         
-        #new_window_1.finished.connect(self.skeleton_exit_window)
 
         new_window_1.exec_()
     def obj_detection_exit_window(self):
@@ -1043,7 +958,6 @@ class NavControl(Plugin):
 
                 try:
                         cv_image = new_window.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-                        #cv_image = new_window.bridge.imgmsg_to_cv2(msg)
                         height, width, _ = cv_image.shape
                         bytes_per_line = 3 * width
                         qt_image = QImage(cv_image.data, width, height, bytes_per_line, QImage.Format_RGB888).rgbSwapped()
@@ -1140,14 +1054,9 @@ class NavControl(Plugin):
         
         new_window.timer = QTimer()        
         new_window.timer.start(30)
-
-
-
-
         new_window.findChild(QPushButton, 'check_topics').clicked.connect(checkProgress)
         
         checkProgress()
-        #new_window.finished.connect(self.obj_detection_exit_window)
         new_window.exec_()
 
     
@@ -1206,7 +1115,7 @@ class NavControl(Plugin):
 
 
         def navigate_to_targets():
-            # Use shallow copy to avoid overwriting the goals
+            # Use deep copy to avoid overwriting the goals
             self.task_planning_go([goal.return_data() for goal in self.goals])
             self.goals = []
 
@@ -1316,10 +1225,10 @@ class NavControl(Plugin):
         self.log_console.scrollToBottom()
 
 ################################################################################
-    #Enable Keyboard
+    # Enable Keyboard
     def keyboard_on(self):        
         self._widget.findChild(QLineEdit, 'InputCmd').textChanged.connect(self.controller_robot)
-    #Controller of the Robot using W, A, S, D, Q, E and P
+    # Controller of the Robot using W, A, S, D, Q, E and P
     def controller_robot(self, text):
 
         linear_velocity = self._widget.findChild(QDoubleSpinBox, 'max_linear_speed_input')
@@ -1370,20 +1279,20 @@ class NavControl(Plugin):
 
         self._widget.findChild(QLineEdit, 'InputCmd').clear()
 
-    #publishing all the points that I want on the map at the same time.
+    # publishing all the points that I want on the map at the same time.
     def set_all_points(self):
         def is_topic_available(topic_name):
             topic_types = rospy.get_published_topics()
             available_topics = [topic[0] for topic in topic_types]
             return topic_name in available_topics
-        
+
         l1 = self._widget.findChild(QSpinBox, 'spinboxP1').value()
         l2 = self._widget.findChild(QSpinBox, 'spinboxP2').value()
         l3 = self._widget.findChild(QSpinBox, 'spinboxP3').value()
         l4 = self._widget.findChild(QSpinBox, 'spinboxP4').value()
 
         list_l = [l1,l2,l3,l4]
-        
+
 
         gps1 = {'x': 0.831, 'y': 0.844, 'z': 0}
         gps2 = {'x': 4.668, 'y': 0.917, 'z': 0}
@@ -1396,23 +1305,15 @@ class NavControl(Plugin):
         p2 = gps[list_l[1] - 1]
         p3 = gps[list_l[2] - 1]
         p4 = gps[list_l[3] - 1]
-                
+
         if is_topic_available("/clicked_point"):
             locations = [
                 p1,
                 p2,
                 p3,
                 p4,
-
-
-                 #{'x': 2.5380358696, 'y': 0.392, 'z': 0}
-                # {'x': -13.092622757, 'y': 3.63729691505, 'z': 0.00315856933594},
-                # {'x': -12.4344749451, 'y': 18.3455543518, 'z': 0.00156402587891},
-                # {'x': -0.678248405457, 'y': 17.7169075012, 'z': 0.00148773193359},
-                # {'x': -1.13597512245, 'y': 3.19778370857, 'z': -0.00111389160156},
-                # {'x': -1.00027537346, 'y': 17.4356002808, 'z': 0.00460243225098}
             ]
-            
+
             for location in locations:
                 msg = PointStamped()
                 msg.header.stamp = rospy.Time.now()
@@ -1468,8 +1369,6 @@ class Worker(QObject):
                 bag.write('/repub/body/body_display/compressed', data)
 
         subscriber = rospy.Subscriber('/repub/body/body_display/compressed', CompressedImage, callback)
-        # rospy.spin()
-
 
 
     def run_thread(self):
@@ -1523,20 +1422,13 @@ class Worker(QObject):
                     return None
             except subprocess.CalledProcessError:
                 return None
-        
-        def stopping():
-            self.command.publish('stop_all')
    
         # Specify your Wi-Fi interface name
-
-        
         wifi_interface = get_wifi_interface()
         wifi_interface.remove("wlp1s0")
         
-        #wifi_interface = 'wlx642943a66a33'
         while True:
             time.sleep(1)
-            #print(wifi_interface)
             rospy.Subscriber('PowerVoltage', Float32, get_power_level)
             rospy.Subscriber('tf_echo_translation', Vector3, set_entry_gps)
             try:
@@ -1549,14 +1441,9 @@ class Worker(QObject):
                 else:
                     signal_strength = get_wifi_signal_strength(wifi_interface[0])
                     signal_strength_2 = get_wifi_signal_strength(wifi_interface[0])
-                    #print("EXCEPTION!")
             except:
                 signal_strength = get_wifi_signal_strength(wifi_interface[0])
                 signal_strength_2 = get_wifi_signal_strength(wifi_interface[0])
-                #print("EXCCCC")
-
-            # signal_strength = get_wifi_signal_strength(wifi_interface[0])
-            # signal_strength_2 = get_wifi_signal_strength(wifi_interface[0])
 
 
             if signal_strength is not None:
@@ -1565,8 +1452,6 @@ class Worker(QObject):
                     signal_strength = int(numerator) * 100 // int(denominator)  # Convert to percentage
                 else:
                     signal_strength = int(signal_strength)
-                    # print(signal_strength)
-                    # print(signal_strength_2)
                 if signal_strength <= 100 and signal_strength >= 60:
                     wifi_lcd_strength.setStyleSheet("QLCDNumber { background-color: black; color: lime }")
                 elif signal_strength < 60 and signal_strength >= 40:
@@ -1574,16 +1459,11 @@ class Worker(QObject):
                 elif signal_strength < 40 and signal_strength >= 25 :
                     wifi_lcd_strength.setStyleSheet("QLCDNumber { background-color: black; color: red }")   
                 else:
-                    #print("Stopping all operations becasuse signal is weak...")
                     wifi_lcd_strength.setStyleSheet("QLCDNumber { background-color: white; color: aqua }")
-                    #stopping()
-                    #break
 
                 wifi_lcd_strength.display(signal_strength)
                 wifi_lcd_strength_2.display(signal_strength_2)
-                # print("Signal strength: " + str(signal_strength) + "%")
                 
             else:
                 pass
-                # print('Unable to retrieve signal strength.')
 
